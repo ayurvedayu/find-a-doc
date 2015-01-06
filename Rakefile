@@ -1,6 +1,21 @@
-# Add your own tasks in files placed in lib/tasks ending in .rake,
-# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
+require 'bundler'
+Bundler::GemHelper.install_tasks
 
-require File.expand_path('../config/application', __FILE__)
+require 'rspec/core/rake_task'
+require 'spree/testing_support/extension_rake'
 
-Rails.application.load_tasks
+RSpec::Core::RakeTask.new
+
+task :default do
+  if Dir["spec/dummy"].empty?
+    Rake::Task[:test_app].invoke
+    Dir.chdir("../../")
+  end
+  Rake::Task[:spec].invoke
+end
+
+desc 'Generates a dummy app for testing'
+task :test_app do
+  ENV['LIB_NAME'] = 'spree_find-a-doc'
+  Rake::Task['extension:test_app'].invoke
+end
