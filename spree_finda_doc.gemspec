@@ -1,14 +1,14 @@
 # encoding: UTF-8
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_find-a-doc'
-  s.version     = '2.4.2'
-  s.summary     = 'TODO: Add gem summary here'
-  s.description = 'TODO: Add (optional) gem description here'
+  s.name        = 'spree_finda_doc'
+  s.version     = '2.3.4'
+  s.summary     = 'Extension for internal use in Ayurvedayu'
+  s.description = 'Doctor search extension for Ayurvedayu'
   s.required_ruby_version = '>= 1.9.3'
 
-  # s.author    = 'You'
-  # s.email     = 'you@example.com'
+  s.author    = 'Anton Murygin'
+  s.email     = 'mibus32@gmail.com'
   # s.homepage  = 'http://www.spreecommerce.com'
 
   #s.files       = `git ls-files`.split("\n")
@@ -16,7 +16,9 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '~> 2.4.2'
+  s.add_dependency 'spree_core', '~> 2.3.4'
+  s.add_dependency 'deface', '~> 1.0.0rc3'
+
 
   s.add_development_dependency 'capybara', '~> 2.4'
   s.add_development_dependency 'coffee-rails'

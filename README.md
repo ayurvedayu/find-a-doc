@@ -1,4 +1,4 @@
-SpreeFind-a-doc
+SpreeFindaDoc
 ===============
 
 Introduction goes here.
@@ -6,17 +6,17 @@ Introduction goes here.
 Installation
 ------------
 
-Add spree_find-a-doc to your Gemfile:
+Add spree_finda_doc to your Gemfile:
 
 ```ruby
-gem 'spree_find-a-doc'
+gem 'spree_finda_doc'
 ```
 
 Bundle your dependencies and run the installation generator:
 
 ```shell
 bundle
-bundle exec rails g spree_find-a-doc:install
+bundle exec rails g spree_finda_doc:install
 ```
 
 Testing
@@ -33,7 +33,7 @@ When testing your applications integration with this extension you may use it's 
 Simply add this require statement to your spec_helper:
 
 ```ruby
-require 'spree_find-a-doc/factories'
+require 'spree_finda_doc/factories'
 ```
 
 Copyright (c) 2015 [name of extension creator], released under the New BSD License
