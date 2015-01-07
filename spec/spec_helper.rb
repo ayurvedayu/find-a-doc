@@ -1,3 +1,4 @@
+require 'capybara/rspec'
 # Run Coverage report
 require 'simplecov'
 SimpleCov.start do
@@ -29,11 +30,17 @@ require 'spree/testing_support/capybara_ext'
 require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/factories'
 require 'spree/testing_support/url_helpers'
+require 'spree/testing_support/caching'
 
-# Requires factories defined in lib/spree_find-a-doc/factories.rb
-require 'spree_find-a-doc/factories'
+
+# Requires factories defined in lib/spree_finda_doc/factories.rb
+require 'spree_finda_doc/factories'
 
 RSpec.configure do |config|
+  config.include Devise::TestHelpers, :type => :controller
+
+  config.include Spree::TestingSupport::ControllerRequests, :type => :controller
+
   config.include FactoryGirl::Syntax::Methods
 
   # Infer an example group's spec type from the file location.
