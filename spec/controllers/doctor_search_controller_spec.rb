@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 describe Spree::DoctorSearchController, :type => :controller do
-  # before(:each) do
-  #   Spree::Core::Engine.routes
-  #   controller.stub :name => 'shit'
-  # end
 
   describe "GET index" do
     it "returns http success" do
