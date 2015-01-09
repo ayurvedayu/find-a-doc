@@ -1,2 +1,2 @@
 <!-- insert_after '#home-link' -->
-Find a Doctor
+<%= link_to 'Find a Doctor', spree.doctor_search_path  %>
