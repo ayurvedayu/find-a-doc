@@ -3,6 +3,14 @@ Spree::User.class_eval do
 
   before_create :update_role
 
+  def doctor?
+    has_spree_role? 'doctor'
+  end
+
+  def clinic?
+    has_spree_role? 'clinic'
+  end
+
   def make_clinic
     self.spree_roles << Spree::Role.clinic
   end
@@ -25,3 +33,4 @@ Spree::User.class_eval do
     end
   end
 end
+

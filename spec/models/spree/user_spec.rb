@@ -19,5 +19,18 @@ describe Spree::User do
       # puts user.has_spree_role? 'doctor'
       expect(user).to have_spree_role Spree::Role.doctor.name
     end
+
+    it 'tells it\'s role correctly' do
+      user = Spree::User.new email: 'test@test.com', password: 'secret'
+      user.make_doctor
+
+      user.save
+
+      expect(user).to be_doctor
+
+      user.make_clinic
+
+      expect(user).to be_clinic
+    end
   end
 end

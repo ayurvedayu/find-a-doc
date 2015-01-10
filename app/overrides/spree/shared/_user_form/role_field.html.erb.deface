@@ -1,5 +1,0 @@
-<!-- insert_after "[data-hook='signup_below_password_fields']" -->
-<div class="form-group">
-	<%= label_tag Spree.t(:role_on_signup) %> <br />
-    <%= select_tag :role, options_for_select(Spree::Role::CIVIL_ROLES.collect {|r| [r.capitalize, r]}), :class => 'form-control', :placeholder => Spree.t(:role_on_signup) %>
-</div> 
