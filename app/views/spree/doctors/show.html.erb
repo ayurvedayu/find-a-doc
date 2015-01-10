@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Clinic:</strong>
+  <%= @spree_doctor.clinic %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @spree_doctor.user %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @spree_doctor.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @spree_doctor.description %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @spree_doctor.phone %>
+</p>
+
+<p>
+  <strong>Is for instance booking:</strong>
+  <%= @spree_doctor.is_for_instance_booking %>
+</p>
+
+<%= link_to 'Edit', edit_spree_doctor_path(@spree_doctor) %> |
+<%= link_to 'Back', spree_doctors_path %>
