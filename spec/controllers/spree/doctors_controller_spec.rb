@@ -54,7 +54,7 @@ RSpec.describe Spree::DoctorsController, :type => :controller do
 
   describe "GET new" do
     it "assigns a new spree_doctor as @spree_doctor" do
-      get :new, {}, valid_session
+      spree_get :new, {}, valid_session
       expect(assigns(:spree_doctor)).to be_a_new(Spree::Doctor)
     end
   end

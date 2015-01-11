@@ -6,6 +6,8 @@ gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-3-stable'
 
 group :development, :test do
   gem 'byebug'
+  gem 'rspec-autotest'
+  gem 'autotest-rails'
 end
 
 group :test do

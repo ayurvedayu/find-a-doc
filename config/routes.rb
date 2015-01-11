@@ -1,7 +1,7 @@
 Spree::Core::Engine.routes.draw do
-  namespace :spree do
-    resources :doctors
-  end
+
+  resources :doctors, only: :show
+
 
   get 'find_a_doctor', to: 'doctor_search#index', as: 'doctor_search'
 
