@@ -20,8 +20,8 @@ RSpec.describe 'New signup process' do
                                   password: 'secret', 
                                   password_confirmation: 'secret', 
                                   make_role: 'doctor'}
-
-    # byebug
+    
+    expect(response).to redirect_to(spree.user_profile_path) 
     # expect(response)
   end
 end
