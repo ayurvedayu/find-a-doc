@@ -1,6 +1,6 @@
 def after_sign_up_or_in_path resource
 	if resource.doctor? || resource.clinic?
-	  spree.user_profile_path
+	  spree.edit_account_path
 	else
 	  super
 	end

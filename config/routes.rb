@@ -2,7 +2,6 @@ Spree::Core::Engine.routes.draw do
 
   resources :doctors, only: :show
 
-  get 'profile', to: 'users#profile', as: 'user_profile'
 
   get 'find_a_doctor', to: 'doctor_search#index', as: 'doctor_search'
 
