@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "spree/doctors/show", :type => :view do
   before(:each) do
-    @routes = Spree::Core::Engine.routes 
+    # @routes = Spree::Core::Engine.routes 
 
     @spree_doctor = assign(:spree_doctor, Spree::Doctor.create!(
       :clinic => nil,
@@ -10,12 +10,12 @@ RSpec.describe "spree/doctors/show", :type => :view do
       :name => "Name",
       :description => "MyText",
       :phone => "MyText",
-      :is_for_instance_booking => false
+      :is_for_instant_booking => false
     ))
   end
 
   it "renders attributes in <p>" do
-    puts @routes.inspect
+    # puts @routes.inspect
     render
     expect(rendered).to match(//)
     expect(rendered).to match(//)
