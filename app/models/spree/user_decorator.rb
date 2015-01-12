@@ -4,6 +4,7 @@ Spree::User.class_eval do
   before_create :update_role
 
   has_one :doctor
+  accepts_nested_attributes_for :doctor
 
   def doctor?
     has_spree_role? 'doctor'
