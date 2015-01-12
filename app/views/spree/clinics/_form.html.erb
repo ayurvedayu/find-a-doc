@@ -16,14 +16,10 @@
       <%= sf.select :city, options_from_collection_for_select(Spree::City.all, "id", "name"), prompt: 'Choose a city please...' %>
     </p>
     <p>
-      <%= sf.label :name %><br />
+      <%= sf.label :suburb_id %><br /> <% # TODO fix to :name %>
       <%= sf.text_field :name %>
     </p>
   <% end %>
-  <p>
-    <%= f.label :suburb_id %><br>
-    <%= f.text_field :suburb_id %>
-  </p>
   <p>
     <%= f.label :user_id %><br>
     <%= f.text_field :user_id %>
