@@ -5,7 +5,7 @@
   <div data-hook="account_edit">
     <%= form_for Spree::User.new, :as => @user, :url => spree.user_path(@user), :method => :put do |f| %>
     	<% if @user.doctor? %>
-    		<%= fields_for :doctor do |df| %>
+    		<%= f.fields_for :doctor do |df| %>
 	    		<%= render :partial => 'spree/shared/doctor_form', :locals => { :f => df} %>
     		<% end %>
   		<% end %>
