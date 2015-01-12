@@ -10,36 +10,45 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
+  <%= f.fields_for :suburb do |sf| %>
+    <p>
+      <%= sf.label :city %><br />
+      <%= sf.select :city, options_from_collection_for_select(Spree::City.all, "id", "name"), prompt: 'Choose a city please...' %>
+    </p>
+    <p>
+      <%= sf.label :name %><br />
+      <%= sf.text_field :name %>
+    </p>
+  <% end %>
+  <p>
     <%= f.label :suburb_id %><br>
     <%= f.text_field :suburb_id %>
-  </div>
-  <div class="field">
+  </p>
+  <p>
     <%= f.label :user_id %><br>
     <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
+  </p>
+  <p>
     <%= f.label :latitude %><br>
     <%= f.text_field :latitude %>
-  </div>
-  <div class="field">
+  </p>
+  <p>
     <%= f.label :longitude %><br>
     <%= f.text_field :longitude %>
-  </div>
-  <div class="field">
+  </p>
+  <p>
     <%= f.label :description %><br>
     <%= f.text_area :description %>
-  </div>
-  <div class="field">
+  </p>
+  <p>
     <%= f.label :clinic_type_id %><br>
     <%= f.text_field :clinic_type_id %>
-  </div>
-  <div class="field">
+  </p>
+  <p>
     <%= f.label :street %><br>
     <%= f.text_field :street %>
-  </div>
-  <div class="field">
+  </p>
+  <p>
     <%= f.label :building %><br>
     <%= f.text_field :building %>
   </div>

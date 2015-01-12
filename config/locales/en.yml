@@ -5,3 +5,7 @@ en:
   hello: "Hello world"
   spree:
     role_on_signup: "You are"
+  activerecord:
+    attributes:
+      spree/clinic/suburb:
+        name: 'Suburb/Village' # TODO not working
