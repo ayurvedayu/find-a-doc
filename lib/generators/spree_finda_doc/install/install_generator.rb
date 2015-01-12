@@ -26,6 +26,10 @@ module SpreeFindaDoc
           puts 'Skipping rake db:migrate, don\'t forget to run it!'
         end
       end
+
+      def seed_data
+        run 'bundle exec rake db:seed_geoobjects'
+      end
     end
   end
 end
