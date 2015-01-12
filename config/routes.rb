@@ -1,5 +1,9 @@
 Spree::Core::Engine.routes.draw do
 
+  resource :account, :controller => 'users' do
+    resources :clinics, shallow: true
+  end
+
   resources :doctors, only: :show
 
 

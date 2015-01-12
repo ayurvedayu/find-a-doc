@@ -1,0 +1,49 @@
+<%= form_for([:account, @spree_clinic]) do |f| %>
+  <% if @spree_clinic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@spree_clinic.errors.count, "error") %> prohibited this spree_clinic from being saved:</h2>
+
+      <ul>
+      <% @spree_clinic.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :suburb_id %><br>
+    <%= f.text_field :suburb_id %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :latitude %><br>
+    <%= f.text_field :latitude %>
+  </div>
+  <div class="field">
+    <%= f.label :longitude %><br>
+    <%= f.text_field :longitude %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :clinic_type_id %><br>
+    <%= f.text_field :clinic_type_id %>
+  </div>
+  <div class="field">
+    <%= f.label :street %><br>
+    <%= f.text_field :street %>
+  </div>
+  <div class="field">
+    <%= f.label :building %><br>
+    <%= f.text_field :building %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
