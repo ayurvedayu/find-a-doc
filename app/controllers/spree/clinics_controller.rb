@@ -13,8 +13,6 @@ class Spree::ClinicsController < Spree::UsersController
   # GET /spree/clinics/new
   def new
     @spree_clinic = current_spree_user.clinics.new
-    @spree_clinic.build_suburb
-    # @spree_clinic.suburb.build_city
   end
 
   # GET /spree/clinics/1/edit
