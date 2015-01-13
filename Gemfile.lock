@@ -71,6 +71,7 @@ PATH
   specs:
     spree_finda_doc (2.3.4)
       deface (~> 1.0.0rc3)
+      geocoder (~> 1.2)
       spree_core (~> 2.3.4)
 
 GEM
@@ -345,7 +346,7 @@ DEPENDENCIES
   database_cleaner
   factory_girl (~> 4.5)
   ffaker
-  geocoder
+  geocoder (~> 1.2)
   rspec
   rspec-activemodel-mocks
   rspec-autotest

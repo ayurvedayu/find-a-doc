@@ -54,6 +54,6 @@ class Spree::ClinicsController < Spree::UsersController
 
     # Only allow a trusted parameter "white list" through.
     def spree_clinic_params
-      params.require(:spree_clinic).permit(:suburb_attributes, :latitude, :longitude, :description, :clinic_type_id, :street, :building)
+      params.require(:clinic).permit(:latitude, :longitude, :description, :clinic_type_id, :street, :building, suburb_attributes: [:name, :city_id])
     end
 end

@@ -12,8 +12,8 @@
   <% end %>
   <%= f.fields_for :suburb do |sf| %>
     <p>
-      <%= sf.label :city %><br />
-      <%= sf.select :city, options_from_collection_for_select(Spree::City.all, "id", "name"), prompt: 'Choose a city please...' %>
+      <%= sf.label :city_id %><br />
+      <%= sf.select :city_id, options_from_collection_for_select(Spree::City.all, "id", "name"), prompt: 'Choose a city please...' %>
     </p>
     <p>
       <%= sf.label :name %><br /> 
@@ -34,7 +34,7 @@
   </p>
   <p>
     <%= f.label :clinic_type_id %><br>
-    <%= f.text_field :clinic_type_id %>
+    <%= f.select :clinic_type_id, options_from_collection_for_select(Spree::ClinicType.all, :id, :name) %>
   </p>
   <div class="actions">
     <%= f.submit %>

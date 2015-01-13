@@ -1,16 +1,11 @@
-<h1>Listing spree_clinics</h1>
+<h1>Your Clinics</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Suburb</th>
-      <th>User</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
+      <th>Address</th>
       <th>Description</th>
       <th>Clinic type</th>
-      <th>Street</th>
-      <th>Building</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,16 +13,11 @@
   <tbody>
     <% @spree_clinics.each do |spree_clinic| %>
       <tr>
-        <td><%= spree_clinic.suburb %></td>
-        <td><%= spree_clinic.user %></td>
-        <td><%= spree_clinic.latitude %></td>
-        <td><%= spree_clinic.longitude %></td>
+        <td><%= spree_clinic.full_address %></td>
         <td><%= spree_clinic.description %></td>
-        <td><%= spree_clinic.clinic_type %></td>
-        <td><%= spree_clinic.street %></td>
-        <td><%= spree_clinic.building %></td>
+        <td><%= spree_clinic.clinic_type.name %></td>
         <td><%= link_to 'Show', spree_clinic %></td>
-        <td><%= link_to 'Edit', edit_spree_clinic_path(spree_clinic) %></td>
+        <td><%= link_to 'Edit', spree.edit_clinic_path(spree_clinic) %></td>
         <td><%= link_to 'Destroy', spree_clinic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

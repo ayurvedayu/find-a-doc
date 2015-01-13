@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'spree_core', '~> 2.3.4'
   s.add_dependency 'deface', '~> 1.0.0rc3'
+  s.add_dependency 'geocoder', '~> 1.2'
 
 
   s.add_development_dependency 'capybara', '~> 2.4'
