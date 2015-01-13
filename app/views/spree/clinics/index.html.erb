@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>Name</th>
       <th>Address</th>
       <th>Description</th>
       <th>Clinic type</th>
@@ -13,6 +14,7 @@
   <tbody>
     <% @spree_clinics.each do |spree_clinic| %>
       <tr>
+        <td><%= spree_clinic.name %></td>
         <td><%= spree_clinic.full_address %></td>
         <td><%= spree_clinic.description %></td>
         <td><%= spree_clinic.clinic_type.name %></td>

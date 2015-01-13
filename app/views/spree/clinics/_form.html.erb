@@ -10,6 +10,10 @@
       </ul>
     </div>
   <% end %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
   <%= f.fields_for :suburb do |sf| %>
     <p>
       <%= sf.label :city_id %><br />
