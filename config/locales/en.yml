@@ -2,6 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  TrueClass: "Yes"
+  FalseClass: "No"
   hello: "Hello world"
   spree:
     role_on_signup: "You are"

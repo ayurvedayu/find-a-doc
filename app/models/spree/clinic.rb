@@ -15,4 +15,8 @@ class Spree::Clinic < ActiveRecord::Base
   def full_address
     "#{building} #{street}, #{suburb.name}, #{suburb.city.name}, IN"
   end
+
+  def to_s
+    name
+  end
 end
