@@ -1,6 +1,6 @@
   <p>
     <%= f.label :clinic_id %><br>
-    <%= f.select :clinic_id, options_from_collection_for_select(Spree::Clinic.all, "id", "name"), { prompt: 'Select a clinic please..'} %><br />
+    <%= f.collection_select :clinic_id, Spree::Clinic.all, :id, :name, prompt: 'Select a clinic please..' %><br />
   or <%= link_to 'create one', spree.new_account_clinic_path %></p>
   <p>
     <%= f.label :name %><br>

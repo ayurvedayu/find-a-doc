@@ -1,5 +1,7 @@
 class Spree::Clinic < ActiveRecord::Base
   belongs_to :suburb
+  validates_associated :suburb 
+  validates_presence_of :suburb
   accepts_nested_attributes_for :suburb
 
   belongs_to :user
@@ -7,7 +9,7 @@ class Spree::Clinic < ActiveRecord::Base
   has_many :doctors
 
   geocoded_by :full_address
-  after_validation :geocode
+  # after_validation :geocode
 
   def full_address
     "#{building} #{street}, #{suburb.name}, #{suburb.city.name}, IN"
