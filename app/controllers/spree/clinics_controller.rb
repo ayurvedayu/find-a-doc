@@ -25,7 +25,7 @@ class Spree::ClinicsController < Spree::UsersController
     @spree_clinic = current_spree_user.clinics.new(spree_clinic_params)
 
     if @spree_clinic.save
-      redirect_to :back, notice: 'Clinic was successfully created.'
+      redirect_to session[:return_to] || :back, notice: 'Clinic was successfully created.'
     else
       render :new
     end

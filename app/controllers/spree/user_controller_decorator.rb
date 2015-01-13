@@ -1,4 +1,9 @@
 Spree::UsersController.class_eval do
+  before_action :set_return_to, only: :edit
+
+  def set_return_to
+    session[:return_to] = edit_account_path
+  end
 
 end
 
