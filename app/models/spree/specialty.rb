@@ -1,3 +1,3 @@
 class Spree::Specialty < ActiveRecord::Base
-  has_many_and_belongs_to :doctors
+  has_and_belongs_to_many :doctors
 end

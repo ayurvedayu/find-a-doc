@@ -19,6 +19,9 @@
       <dt>Available for instant booking:</dt>
       <dd><%= t @user.doctor.is_for_instant_booking.class %></dd>
 
+      <dt>Specialties:</dt>
+      <dd><%= @user.doctor.specialties.all.map(&:name).join(', ') %></dd>
+
   <% end %>
     <dt><%= Spree.t(:email) %></dt>
     <dd><%= @user.email %> </dd>

@@ -53,6 +53,6 @@ class Spree::DoctorsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def spree_doctor_params
-      params.require(:spree_doctor).permit(:clinic_id, :user_id, :name, :description, :phone, :is_for_instance_booking)
+      params.require(:spree_doctor).permit(:clinic_id, :user_id, :name, :description, :phone, :is_for_instance_booking, :specialty_ids)
     end
 end

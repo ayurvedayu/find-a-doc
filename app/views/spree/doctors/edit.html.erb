@@ -1,6 +1,6 @@
-<h1>Editing spree_doctor</h1>
+<h1>Editing doctor</h1>
 
-<%= render 'form' %>
+<%= render partial: 'form', locals: { doctor: @spree_doctor } %>
 
 <%= link_to 'Show', @spree_doctor %> |
 <%= link_to 'Back', spree_doctors_path %>

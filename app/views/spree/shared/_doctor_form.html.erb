@@ -18,3 +18,11 @@
     <%= f.label :is_for_instant_booking %><br>
     <%= f.check_box :is_for_instant_booking %>
   </p>
+  <p>
+    <%= f.label :specialty_ids %><br />
+    <%= hidden_field_tag "user[doctor_attributes][specialty_ids][]", nil %>
+    <% Spree::Specialty.all.each do |s| %>
+      <%= check_box_tag "user[doctor_attributes][specialty_ids][]", s.id, doctor.specialty_ids.include?(s.id), id: dom_id(s) %>
+      <%= label_tag dom_id(s), s.name %><br />
+    <% end %>
+  </p>
