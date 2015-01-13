@@ -1,3 +1,8 @@
 <h2>Doctor Search</h2>
-<%= form_tag
+<%= form_tag doctor_search_results_path, method: :get do %>
+  <%= text_field_tag :ds, nil, placeholder: 'Specialty' %>
+  <%= text_field_tag :dl, nil, placeholder: 'Location' %>
+	<%= submit_tag 'Go' %>
+<% end %>
+
 
