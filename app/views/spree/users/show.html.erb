@@ -17,7 +17,7 @@
       <dd><%= @user.doctor.phone %></dd>
 
       <dt>Available for instant booking:</dt>
-      <dd><%= @user.doctor.is_for_instant_booking %></dd>
+      <dd><%= t @user.doctor.is_for_instant_booking.class %></dd>
 
   <% end %>
     <dt><%= Spree.t(:email) %></dt>

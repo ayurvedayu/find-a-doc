@@ -1,4 +1,4 @@
-class Spree::DoctorSearchController < ApplicationController
+class Spree::DoctorSearchController < Spree::HomeController
   def index
   end
 
