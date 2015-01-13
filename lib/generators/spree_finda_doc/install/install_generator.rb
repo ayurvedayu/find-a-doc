@@ -28,7 +28,8 @@ module SpreeFindaDoc
       end
 
       def seed_data
-        run 'bundle exec rake db:seed_geoobjects'
+        seed_data = ['', 'y', 'Y'].include?(ask 'Would you like to seed Indian cities to database? [Y/n]')
+        run 'bundle exec rake db:seed_geoobjects' if seed_data
       end
     end
   end
