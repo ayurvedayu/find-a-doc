@@ -10,5 +10,8 @@ class CreateSpreeSpecialties < ActiveRecord::Migration
       t.belongs_to :doctor, index: true
       t.belongs_to :specialty, index: true
     end
+
+    Spree::Specialty.create 'Ayurveda'
+    Spree::Specialty.create 'Dentist'
   end
 end
