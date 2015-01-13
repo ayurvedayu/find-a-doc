@@ -3,7 +3,7 @@ class Spree::ClinicsController < Spree::UsersController
 
   # GET /spree/clinics
   def index
-    @spree_clinics = Spree::Clinic.all
+    @spree_clinics = current_spree_user.clinics.all
   end
 
   # GET /spree/clinics/1
@@ -12,8 +12,8 @@ class Spree::ClinicsController < Spree::UsersController
 
   # GET /spree/clinics/new
   def new
-    @spree_clinic = Spree::Clinic.new
-    # @spree_clinic.suburb = Spree::Suburb.new
+    @spree_clinic = current_spree_user.clinics.new
+    @spree_clinic.suburb = Spree::Suburb.new
   end
 
   # GET /spree/clinics/1/edit
@@ -22,10 +22,10 @@ class Spree::ClinicsController < Spree::UsersController
 
   # POST /spree/clinics
   def create
-    @spree_clinic = Spree::Clinic.new(spree_clinic_params)
+    @spree_clinic = current_spree_user.clinics.new(spree_clinic_params)
 
     if @spree_clinic.save
-      redirect_to @spree_clinic, notice: 'Clinic was successfully created.'
+      redirect_to :back, notice: 'Clinic was successfully created.'
     else
       render :new
     end
@@ -49,11 +49,11 @@ class Spree::ClinicsController < Spree::UsersController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_spree_clinic
-      @spree_clinic = Spree::Clinic.find(params[:id])
+      @spree_clinic = current_spree_user.clinics.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def spree_clinic_params
-      params.require(:spree_clinic).permit(:suburb_attributes, :user_id, :latitude, :longitude, :description, :clinic_type_id, :street, :building)
+      params.require(:spree_clinic).permit(:suburb_attributes, :latitude, :longitude, :description, :clinic_type_id, :street, :building)
     end
 end

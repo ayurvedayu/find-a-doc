@@ -7,5 +7,7 @@ en:
     role_on_signup: "You are"
   activerecord:
     attributes:
+      spree/suburb:
+        name: 'Suburb/Village'
       spree/clinic/suburb:
         name: 'Suburb/Village' # TODO not working
