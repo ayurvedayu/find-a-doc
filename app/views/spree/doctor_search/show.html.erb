@@ -1,2 +1,4 @@
-<h1>DoctorSearch#show</h1>
-<p>Find me in app/views/doctor_search/show.html.erb</p>
+<h2>Doctor Search</h2>
+<%= @doctors.all.each do |doctor| %>
+	<p><%= "#{doctor.name}, #{doctor.clinic}" %></p>
+<% end %>

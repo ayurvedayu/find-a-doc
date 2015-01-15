@@ -1,8 +1,8 @@
 <h2>Doctor Search</h2>
 <%= form_tag doctor_search_results_path, method: :get do %>
-  <%= text_field_tag :ds, nil, placeholder: 'Specialty' %>
+  <%= select_tag :ds, options_from_collection_for_select(Spree::Specialty.all, :id, :name), prompt: 'Choose specialty…' %>
   <%= text_field_tag :dl, nil, placeholder: 'Location' %>
-	<%= submit_tag 'Go' %>
+	<%= submit_tag 'Go', name: nil %>
 <% end %>
 
 

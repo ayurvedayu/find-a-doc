@@ -8,7 +8,7 @@ class Spree::Clinic < ActiveRecord::Base
   has_many :doctors
 
   geocoded_by :full_address
-  # after_validation :geocode
+  after_validation :geocode
 
   validates_presence_of :suburb, :name
 

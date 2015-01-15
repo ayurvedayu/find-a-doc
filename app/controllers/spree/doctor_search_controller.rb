@@ -5,8 +5,8 @@ class Spree::DoctorSearchController < Spree::HomeController
   def show
     specialties = params.delete(:ds)
     location = params.delete(:dl)
-    nearby_clinics = Spree::Clinic.near(location)
+    nearby_clinics_ids = Spree::Clinic.near(location).map(&:id)
     # nearby_clinics = Spree::Clinic.all
-    Spree::Doctor.joins(:specialties, :clinic).where('spree_specialties.name in (?) and spree_doctor.clinic_id in (?)', specialties, nearby_clinics)
+    @doctors = Spree::Doctor.joins(:specialties, :clinic).where('spree_specialties.id in (?) and spree_doctors.clinic_id in (?)', specialties, nearby_clinics_ids)
   end
 end
