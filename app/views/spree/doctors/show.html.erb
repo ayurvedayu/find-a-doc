@@ -1,31 +1,18 @@
 <p id="notice"><%= notice %></p>
+<h3>Dr. <%= @spree_doctor.name %></h3>
+<h4><%= @spree_doctor.specialties.all.map(&:name).join(', ') %></h4>
 
 <p>
-  <strong>Clinic:</strong>
-  <%= @spree_doctor.clinics %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @spree_doctor.user %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @spree_doctor.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
   <%= @spree_doctor.description %>
 </p>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @spree_doctor.phone %>
-</p>
-
-<p>
-  <strong>Is for instant booking:</strong>
-  <%= @spree_doctor.is_for_instant_booking %>
-</p>
+<h4>Info</h4>
+<div><strong>Practices at</strong>
+<% @spree_doctor.doctor_employments.all.each do |empl| %>
+  <h5><%= empl.clinic.suburb.name %>, <small><%= empl.clinic.suburb.city.name %></small></h5>
+  <%= link_to empl.clinic.name, empl.clinic %><br />
+  <%= empl.clinic.full_address %><br />
+  <%= empl.consultation_currency + ' ' + empl.consultation_price.round.to_s %>
+  <hr>
+<% end %>
+</div>

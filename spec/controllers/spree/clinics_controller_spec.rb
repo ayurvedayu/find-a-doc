@@ -35,11 +35,17 @@ RSpec.describe Spree::ClinicsController, :type => :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # Spree::ClinicsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+  let(:user) { create(:user) }
+
+  before do
+    # assign :user, user
+    allow(controller).to  receive(:current_spree_user).and_return user
+  end
 
   describe "GET index" do
     it "assigns all spree_clinics as @spree_clinics" do
       clinic = Spree::Clinic.create! valid_attributes
-      get :index, {}, valid_session
+      spree_get :index, {}, valid_session
       expect(assigns(:spree_clinics)).to eq([clinic])
     end
   end
@@ -47,14 +53,14 @@ RSpec.describe Spree::ClinicsController, :type => :controller do
   describe "GET show" do
     it "assigns the requested spree_clinic as @spree_clinic" do
       clinic = Spree::Clinic.create! valid_attributes
-      get :show, {:id => clinic.to_param}, valid_session
+      spree_get :show, {:id => clinic.to_param}, valid_session
       expect(assigns(:spree_clinic)).to eq(clinic)
     end
   end
 
   describe "GET new" do
     it "assigns a new spree_clinic as @spree_clinic" do
-      get :new, {}, valid_session
+      spree_get :new, {}, valid_session
       expect(assigns(:spree_clinic)).to be_a_new(Spree::Clinic)
     end
   end
@@ -62,7 +68,7 @@ RSpec.describe Spree::ClinicsController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested spree_clinic as @spree_clinic" do
       clinic = Spree::Clinic.create! valid_attributes
-      get :edit, {:id => clinic.to_param}, valid_session
+      spree_get :edit, {:id => clinic.to_param}, valid_session
       expect(assigns(:spree_clinic)).to eq(clinic)
     end
   end
@@ -71,30 +77,30 @@ RSpec.describe Spree::ClinicsController, :type => :controller do
     describe "with valid params" do
       it "creates a new Spree::Clinic" do
         expect {
-          post :create, {:spree_clinic => valid_attributes}, valid_session
+          spree_post :create, {:spree_clinic => valid_attributes}, valid_session
         }.to change(Spree::Clinic, :count).by(1)
       end
 
       it "assigns a newly created spree_clinic as @spree_clinic" do
-        post :create, {:spree_clinic => valid_attributes}, valid_session
+        spree_post :create, {:spree_clinic => valid_attributes}, valid_session
         expect(assigns(:spree_clinic)).to be_a(Spree::Clinic)
         expect(assigns(:spree_clinic)).to be_persisted
       end
 
       it "redirects to the created spree_clinic" do
-        post :create, {:spree_clinic => valid_attributes}, valid_session
+        spree_post :create, {:spree_clinic => valid_attributes}, valid_session
         expect(response).to redirect_to(Spree::Clinic.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved spree_clinic as @spree_clinic" do
-        post :create, {:spree_clinic => invalid_attributes}, valid_session
+        spree_post :create, {:spree_clinic => invalid_attributes}, valid_session
         expect(assigns(:spree_clinic)).to be_a_new(Spree::Clinic)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:spree_clinic => invalid_attributes}, valid_session
+        spree_post :create, {:spree_clinic => invalid_attributes}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -108,20 +114,20 @@ RSpec.describe Spree::ClinicsController, :type => :controller do
 
       it "updates the requested spree_clinic" do
         clinic = Spree::Clinic.create! valid_attributes
-        put :update, {:id => clinic.to_param, :spree_clinic => new_attributes}, valid_session
+        spree_put :update, {:id => clinic.to_param, :spree_clinic => new_attributes}, valid_session
         clinic.reload
         skip("Add assertions for updated state")
       end
 
       it "assigns the requested spree_clinic as @spree_clinic" do
         clinic = Spree::Clinic.create! valid_attributes
-        put :update, {:id => clinic.to_param, :spree_clinic => valid_attributes}, valid_session
+        spree_put :update, {:id => clinic.to_param, :spree_clinic => valid_attributes}, valid_session
         expect(assigns(:spree_clinic)).to eq(clinic)
       end
 
       it "redirects to the spree_clinic" do
         clinic = Spree::Clinic.create! valid_attributes
-        put :update, {:id => clinic.to_param, :spree_clinic => valid_attributes}, valid_session
+        spree_put :update, {:id => clinic.to_param, :spree_clinic => valid_attributes}, valid_session
         expect(response).to redirect_to(clinic)
       end
     end
@@ -129,13 +135,13 @@ RSpec.describe Spree::ClinicsController, :type => :controller do
     describe "with invalid params" do
       it "assigns the spree_clinic as @spree_clinic" do
         clinic = Spree::Clinic.create! valid_attributes
-        put :update, {:id => clinic.to_param, :spree_clinic => invalid_attributes}, valid_session
+        spree_put :update, {:id => clinic.to_param, :spree_clinic => invalid_attributes}, valid_session
         expect(assigns(:spree_clinic)).to eq(clinic)
       end
 
       it "re-renders the 'edit' template" do
         clinic = Spree::Clinic.create! valid_attributes
-        put :update, {:id => clinic.to_param, :spree_clinic => invalid_attributes}, valid_session
+        spree_put :update, {:id => clinic.to_param, :spree_clinic => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
     end

@@ -3,8 +3,8 @@ class CreateSpreeClinics < ActiveRecord::Migration
     create_table :spree_clinics do |t|
       t.belongs_to :suburb, index: true
       t.belongs_to :user, index: true
-      t.string :latitude
-      t.string :longitude
+      t.float :latitude
+      t.float :longitude
       t.text :description
       t.belongs_to :clinic_type, index: true
       t.string :street

@@ -1,4 +1,4 @@
-class Spree::DoctorsController < ApplicationController
+class Spree::DoctorsController < Spree::HomeController
   before_action :set_spree_doctor, only: [:show, :edit, :update, :destroy]
 
   # GET /spree/doctors

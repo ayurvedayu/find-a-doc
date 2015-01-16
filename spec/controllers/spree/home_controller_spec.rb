@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::HomeController, :type => :controller do
   # it "has the link to doctor search" do

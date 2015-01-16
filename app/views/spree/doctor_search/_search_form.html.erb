@@ -1,0 +1,16 @@
+<h5>by specialty</h5>
+<%= form_tag doctor_search_results_path, method: :get do %>
+  <%= select_tag :ds, options_from_collection_for_select(Spree::Specialty.all, :id, :name, params[:ds]), prompt: 'Choose specialty…' %>
+  <%= text_field_tag :dl, params[:dl], placeholder: 'Location' %>
+	<%= submit_tag 'Go', name: nil %>
+<% end %>
+<h5>by doctor</h5>
+<%= form_tag doctor_search_results_path, method: :get do %>
+  <%= text_field_tag :dn, params[:dn], placeholder: 'Doctor name' %>
+  <%= submit_tag 'Go', name: nil %>
+<% end %>
+<h5>by clinic</h5>
+<%= form_tag doctor_search_results_path, method: :get do %>
+  <%= text_field_tag :cn, params[:cn], placeholder: 'Clinic name' %>
+  <%= submit_tag 'Go', name: nil %>
+<% end %>

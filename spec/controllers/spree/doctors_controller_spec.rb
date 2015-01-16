@@ -35,6 +35,7 @@ RSpec.describe Spree::DoctorsController, :type => :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # Spree::DoctorsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+  
 
   describe "GET index" do
     it "assigns all spree_doctors as @spree_doctors" do

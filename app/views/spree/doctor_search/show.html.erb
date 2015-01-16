@@ -1,4 +1,7 @@
 <h2>Doctor Search</h2>
+<%= render 'search_form' %>
 <% @doctor_employments.all.each do |empl| %>
-	<p><%= "#{empl.doctor.name}, #{empl.clinic.name}" %></p>
+	<p><%= link_to empl.doctor.name, empl.doctor %><br />
+		 <%= link_to empl.clinic.name, empl.clinic %>
+	</p>
 <% end %>

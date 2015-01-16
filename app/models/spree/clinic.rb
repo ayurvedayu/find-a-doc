@@ -11,7 +11,8 @@ class Spree::Clinic < ActiveRecord::Base
   geocoded_by :full_address
   after_validation :geocode
 
-  validates_presence_of :suburb, :name
+  validates_presence_of :suburb, :name, :clinic_type
+  validates_uniqueness_of :name
 
   def full_address
     "#{building} #{street}, #{suburb.name}, #{suburb.city.name}, IN"

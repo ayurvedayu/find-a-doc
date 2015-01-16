@@ -18,9 +18,9 @@
         <td><%= spree_clinic.full_address %></td>
         <td><%= spree_clinic.description %></td>
         <td><%= spree_clinic.clinic_type.name %></td>
-        <td><%= link_to 'Show', spree_clinic %></td>
+        <td><%= link_to 'Show', spree.clinic_path(spree_clinic) %></td>
         <td><%= link_to 'Edit', spree.edit_clinic_path(spree_clinic) %></td>
-        <td><%= link_to 'Destroy', spree_clinic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', spree.clinic_path(spree_clinic), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
