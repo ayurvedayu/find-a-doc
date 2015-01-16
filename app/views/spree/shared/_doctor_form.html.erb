@@ -1,7 +1,12 @@
   <p>
-    <%= f.label :clinic_id %><br>
-    <%= f.collection_select :clinic_id, Spree::Clinic.all, :id, :name, prompt: 'Select a clinic please..' %><br />
-  or <%= link_to 'create one', spree.new_account_clinic_path %></p>
+    <%= f.label :clinics %><br />
+    <%= f.fields_for :doctor_employments, doctor.doctor_employments.build do |daf| %>
+      <%= daf.collection_select :clinic_id, Spree::Clinic.all, :id, :name, prompt: 'Select a clinic please..' %><br />
+      <%= daf.text_field :consultation_price, placeholder: 'Consultation price' %>
+      <%= daf.select :consultation_currency, options_for_select(Spree::Currency.all) %><br />
+    <% end %> 
+    or <%= link_to 'create one', spree.new_account_clinic_path %>
+  </p>
   <p>
     <%= f.label :name %><br>
     <%= f.text_field :name %>

@@ -5,7 +5,8 @@ class Spree::Clinic < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :clinic_type
-  has_many :doctors
+  has_many :doctor_employments
+  has_many :doctors, through: :doctor_employments
 
   geocoded_by :full_address
   after_validation :geocode

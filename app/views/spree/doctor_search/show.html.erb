@@ -1,4 +1,4 @@
 <h2>Doctor Search</h2>
-<%= @doctors.all.each do |doctor| %>
-	<p><%= "#{doctor.name}, #{doctor.clinic}" %></p>
+<% @doctor_employments.all.each do |empl| %>
+	<p><%= "#{empl.doctor.name}, #{empl.clinic.name}" %></p>
 <% end %>

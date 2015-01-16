@@ -7,8 +7,11 @@
       <dt>Name</dt>
       <dd><%= @user.doctor.name %></dd>
 
-      <dt>Clinic:</dt>
-      <dd><%= @user.doctor.clinic %></dd>
+      <dt>Clinics:</dt>
+        <% @user.doctor.doctor_employments.all.each do |employment| %>
+          <dd> <%= employment.clinic.name %> </dd>
+          <dd> <%= employment.consultation_price %> <%= employment.consultation_currency %> </dd>
+        <% end %>
 
       <dt>About:</dt>
       <dd><%= @user.doctor.description %></dd>
