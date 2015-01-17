@@ -1,7 +1,7 @@
 <h2>Doctor Search</h2>
 <%= render 'search_form' %>
+<hr>
 <% @doctor_employments.all.each do |empl| %>
-	<p><%= link_to empl.doctor.name, empl.doctor %><br />
-		 <%= link_to empl.clinic.name, empl.clinic %>
-	</p>
+  <%= render partial: 'doctor_card', locals: { empl: empl, for_search_page: true } %>
+  <hr>
 <% end %>

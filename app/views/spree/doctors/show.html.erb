@@ -6,7 +6,7 @@
   <%= @spree_doctor.description %>
 </p>
 
-<h4>Info</h4>
+<h3>Info</h3>
 <div><strong>Practices at</strong>
 <% @spree_doctor.doctor_employments.all.each do |empl| %>
   <h5><%= empl.clinic.suburb.name %>, <small><%= empl.clinic.suburb.city.name %></small></h5>
@@ -15,4 +15,11 @@
   <%= empl.consultation_currency + ' ' + empl.consultation_price.round.to_s %>
   <hr>
 <% end %>
+</div>
+<div>
+  <% if @spree_doctor.is_for_instant_booking? %>
+    book appointment
+  <% else %>
+    <%= link_to @spree_doctor.phone, "tel:#{@spree_doctor.phone}" %>
+  <% end %>
 </div>

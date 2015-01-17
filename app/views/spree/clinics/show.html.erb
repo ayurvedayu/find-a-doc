@@ -1,44 +1,18 @@
 <p id="notice"><%= notice %></p>
+<h3><%= @spree_clinic.name %></h3>
+<strong><%= @spree_clinic.clinic_type.name %></strong>
 
 <p>
-  <strong>Suburb:</strong>
-  <%= @spree_clinic.suburb %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @spree_clinic.user %>
-</p>
-
-<p>
-  <strong>Latitude:</strong>
-  <%= @spree_clinic.latitude %>
-</p>
-
-<p>
-  <strong>Longitude:</strong>
-  <%= @spree_clinic.longitude %>
-</p>
-
-<p>
-  <strong>Description:</strong>
   <%= @spree_clinic.description %>
 </p>
 
-<p>
-  <strong>Clinic type:</strong>
-  <%= @spree_clinic.clinic_type %>
-</p>
-
-<p>
-  <strong>Street:</strong>
-  <%= @spree_clinic.street %>
-</p>
-
-<p>
-  <strong>Building:</strong>
-  <%= @spree_clinic.building %>
-</p>
-
-<%= link_to 'Edit', spree.edit_clinic_path(@spree_clinic) %> |
-<%= link_to 'Back', spree.account_clinics_path %>
+<h3>Overview</h3>
+<p>TODO timings services  photos</p>
+<h3>Doctors</h3>
+<hr>
+<div>
+  <% @spree_clinic.doctor_employments.all.each do |empl| %>
+    <%= render partial: 'doctor_card', locals: { empl: empl } %>
+    <hr>
+  <% end %>
+</div>
