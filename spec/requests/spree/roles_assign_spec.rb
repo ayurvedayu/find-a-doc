@@ -22,7 +22,7 @@ RSpec.describe 'New signup process' do
                                   make_role: 'doctor'}
     
     expect(response).to redirect_to(spree.edit_account_path) 
-    # expect(response)
+    # expect(response) shub
   end
 end
 

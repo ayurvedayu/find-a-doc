@@ -1,3 +1,5 @@
+<% for_search_page = false unless defined? for_search_page %>
+
 <h3><%= link_to 'Dr. ' + empl.doctor.name, empl.doctor %></h3>
 <h4><%= empl.doctor.specialties.all.map(&:name).join(', ') %></h4>
 <% if for_search_page %>

@@ -8,7 +8,6 @@ RSpec.describe "spree/clinics/show", :type => :view do
   it "renders attributes in <p>" do
     render
     expect(rendered).to match(/About/)
-    expect(rendered).to match(/Street/)
-    expect(rendered).to match(/Building/)
+    expect(rendered).to match(@spree_clinic.full_address)
   end
 end

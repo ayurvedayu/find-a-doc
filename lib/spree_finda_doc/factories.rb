@@ -23,6 +23,11 @@ FactoryGirl.define do
     building ""
   end
 
+  factory :doctor_employment, class: Spree::DoctorEmployment do
+    doctor
+    clinic
+  end
+
   factory :doctor, class: Spree::Doctor do
     user
     name 'Name'
