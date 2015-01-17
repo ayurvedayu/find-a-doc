@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Belongs to:</strong>
+  <%= @spree_appointment.belongs_to %>
+</p>
+
+<p>
+  <strong>Belongs to:</strong>
+  <%= @spree_appointment.belongs_to %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @spree_appointment.status %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @spree_appointment.name %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @spree_appointment.phone %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @spree_appointment.address %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @spree_appointment.email %>
+</p>
+
+<p>
+  <strong>Cause:</strong>
+  <%= @spree_appointment.cause %>
+</p>
+
+<p>
+  <strong>Payment:</strong>
+  <%= @spree_appointment.payment %>
+</p>
+
+<%= link_to 'Edit', edit_spree_appointment_path(@spree_appointment) %> |
+<%= link_to 'Back', spree_appointments_path %>

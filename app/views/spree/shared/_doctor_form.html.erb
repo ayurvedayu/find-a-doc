@@ -1,6 +1,6 @@
   <p>
     <%= f.label :clinics %><br />
-    <%= f.fields_for :doctor_employments, doctor.doctor_employments.build do |daf| %>
+    <%= f.fields_for :doctor_employments do |daf| %>
       <%= daf.collection_select :clinic_id, Spree::Clinic.all, :id, :name, prompt: 'Select a clinic please..' %><br />
       <%= daf.text_field :consultation_price, placeholder: 'Consultation price' %>
       <%= daf.select :consultation_currency, options_for_select(Spree::Currency.all) %><br />

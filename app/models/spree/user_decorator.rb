@@ -6,7 +6,12 @@ Spree::User.class_eval do
   has_one :doctor
   accepts_nested_attributes_for :doctor
 
+  has_many :appointments
+  has_many :doctor_employments, through: :appointments
+
+
   has_many :clinics
+
 
   def doctor?
     has_spree_role? 'doctor'

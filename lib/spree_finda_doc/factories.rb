@@ -24,8 +24,10 @@ FactoryGirl.define do
   end
 
   factory :doctor_employment, class: Spree::DoctorEmployment do
-    doctor
+    association :doctor, factory: :instant_doctor
     clinic
+    consultation_price '100'
+    consultation_currency 'INR'
   end
 
   factory :doctor, class: Spree::Doctor do
@@ -34,9 +36,24 @@ FactoryGirl.define do
     description 'About'
     phone '+7 985 965 63 17'
     is_for_instant_booking false
+    specialties {[ FactoryGirl.create(:specialty) ]}
+  end
+
+  factory :instant_doctor, class: Spree::Doctor do
+    user
+    name 'Name'
+    description 'About'
+    phone '+7 985 965 63 17'
+    is_for_instant_booking true
+    specialties { [ FactoryGirl.create(:specialty) ] }
   end
 
   factory :clinic_type, class: Spree::ClinicType do
     name 'Ayurveda'
   end
+
+  factory :specialty, class: Spree::Specialty do
+    name 'Ayurveda'
+  end
+
 end

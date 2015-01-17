@@ -15,6 +15,7 @@ group :test do
   gem 'rspec'
   gem 'capybara'
   gem 'rspec-activemodel-mocks'
+  # gem 'capybara-screenshot'
 end
 
 gemspec
