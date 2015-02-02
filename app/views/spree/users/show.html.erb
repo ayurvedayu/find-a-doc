@@ -1,36 +1,62 @@
-<h1><%= accurate_title %> <small>(<%= link_to Spree.t(:edit), spree.edit_account_path %>)</small></h1>
+<div class="row">
+  <div class="six columns">
+    <h1><%= accurate_title %> <small>(<%= link_to Spree.t(:edit), spree.edit_account_path %>)</small></h1>
 
-<div data-hook="account_summary" class="account-summary">
-  <dl id="user-info">
+    <div data-hook="account_summary" class="account-summary">
+      <dl id="user-info">
+      <% if @user.doctor? %>
+
+          <dt>Name</dt>
+          <dd><%= @user.doctor.name %></dd>
+
+          <dt>Clinics:</dt>
+            <% @user.doctor.doctor_employments.all.each do |employment| %>
+              <dd> <%= employment.clinic.name %> 
+                <% if employment.clinic.user == spree_current_user %>
+                (<%= link_to 'Edit', edit_clinic_path(employment.clinic) %>)
+                <% end %>
+              </dd>
+              <dd> <%= employment.consultation_price %> <%= employment.consultation_currency %> </dd>
+            <% end %>
+
+          <dt>About:</dt>
+          <dd><%= @user.doctor.description %></dd>
+
+          <dt>Degree:</dt>
+          <dd><%= @user.doctor.degree %></dd>
+
+          <dt>Phone:</dt>
+          <dd><%= @user.doctor.phone %></dd>
+
+          <dt>Available for instant booking:</dt>
+          <dd><%= t @user.doctor.is_for_instant_booking.class %></dd>
+
+          <dt>Specialties:</dt>
+          <dd><%= @user.doctor.specialties.all.map(&:name).join(', ') %></dd>
+
+      <% end %>
+        <dt><%= Spree.t(:email) %></dt>
+        <dd><%= @user.email %> </dd>
+      </dl>
+    </div>
+  </div>
+
+<div class="nine columns">
+  <h3>My Appointments</h3>
+
   <% if @user.doctor? %>
-
-      <dt>Name</dt>
-      <dd><%= @user.doctor.name %></dd>
-
-      <dt>Clinics:</dt>
-        <% @user.doctor.doctor_employments.all.each do |employment| %>
-          <dd> <%= employment.clinic.name %> </dd>
-          <dd> <%= employment.consultation_price %> <%= employment.consultation_currency %> </dd>
-        <% end %>
-
-      <dt>About:</dt>
-      <dd><%= @user.doctor.description %></dd>
-
-      <dt>Phone:</dt>
-      <dd><%= @user.doctor.phone %></dd>
-
-      <dt>Available for instant booking:</dt>
-      <dd><%= t @user.doctor.is_for_instant_booking.class %></dd>
-
-      <dt>Specialties:</dt>
-      <dd><%= @user.doctor.specialties.all.map(&:name).join(', ') %></dd>
-
+    <% @user.doctor.doctor_employments.each do |empl| %>
+      <h5>at <%= empl.clinic.name %>:</h5>
+      <%= render partial: 'appointments_table', locals: { appointments: empl.appointments, doctor: true} %>
+    <% end %>
+    <% # elsif ! @user.doctor? && ! @user.clinic? %>
+    <h5>Own appointments</h5>
   <% end %>
-    <dt><%= Spree.t(:email) %></dt>
-    <dd><%= @user.email %> </dd>
-  </dl>
-</div>
+  <%= render partial: 'appointments_table', locals: { appointments: @user.appointments, doctor: false} %>
 
+</div></div>
+
+<div class="row">
 <div data-hook="account_my_orders" class="account-my-orders">
 
   <h3><%= Spree.t(:my_orders) %></h3>
@@ -64,4 +90,5 @@
   <% end %>
   <br />
 
+</div>
 </div>

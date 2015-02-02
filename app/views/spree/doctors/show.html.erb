@@ -5,7 +5,11 @@
 <p>
   <%= @spree_doctor.description %>
 </p>
-
+<% if @spree_doctor.recommendations.present? %>
+  <p>
+  <strong><%= t(:recommendations, count: @spree_doctor.recommendations.count) %></strong>
+  </p>
+<% end %>
 <h3>Info</h3>
 <div><strong>Practices at</strong>
 <% @spree_doctor.doctor_employments.all.each do |empl| %>
@@ -13,13 +17,17 @@
   <%= link_to empl.clinic.name, empl.clinic %><br />
   <%= empl.clinic.full_address %><br />
   <%= empl.consultation_currency + ' ' + empl.consultation_price.round.to_s %>
+  <%= render partial: 'booking_link', locals: { empl: empl } %>
   <hr>
 <% end %>
 </div>
-<div>
-  <% if @spree_doctor.is_for_instant_booking? %>
-    book appointment
-  <% else %>
-    <%= link_to @spree_doctor.phone, "tel:#{@spree_doctor.phone}" %>
-  <% end %>
-</div>
+<h3>Reviews</h3>
+<% @spree_doctor.reviews.all.each do |review| %>
+  <p>
+    <strong><%= review.appointment.name %></strong><br />
+    <%= review.text %> <br />
+    <%= l review.created_at %>
+  </p>
+<% end.empty? and begin %>
+  <p>Doctor hasn't any reviews yet</p>
+<% end %>

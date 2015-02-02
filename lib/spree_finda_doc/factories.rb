@@ -29,9 +29,26 @@ FactoryGirl.define do
     consultation_price '100'
     consultation_currency 'INR'
   end
+  factory :confirmed_user, class: Spree.user_class do
+    email { generate(:random_email) }
+    login { email }
+    password 'secret'
+    password_confirmation { password }
+    authentication_token { generate(:user_authentication_token) } if Spree.user_class.attribute_method? :authentication_token
+    confirmed_at Time.now
+
+    factory :confirmed_admin_user do
+      spree_roles { [Spree::Role.find_by(name: 'admin') || create(:role, name: 'admin')] }
+    end
+
+    factory :confirmed_user_with_addreses do
+      ship_address
+      bill_address
+    end
+  end
 
   factory :doctor, class: Spree::Doctor do
-    user
+    association :user, factory: :confirmed_user
     name 'Name'
     description 'About'
     phone '+7 985 965 63 17'
@@ -40,7 +57,7 @@ FactoryGirl.define do
   end
 
   factory :instant_doctor, class: Spree::Doctor do
-    user
+    association :user, factory: :confirmed_user 
     name 'Name'
     description 'About'
     phone '+7 985 965 63 17'

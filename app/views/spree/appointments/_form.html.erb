@@ -13,6 +13,12 @@
 
 
   <div class="field">
+    <%= f.label :scheduled_at %><br>
+    
+    <%= f.date_select :scheduled_at, { discard_year: true } %>
+    <%= select_tag "#{f.object_name}[scheduled_at(4)]", options_for_select(Spree::TimeSlot.all, current_time_slot ) %>
+  </div> 
+  <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
@@ -22,7 +28,7 @@
   </div>
   <div class="field">
     <%= f.label :address %><br>
-    <%= f.text_field :address %>
+    <%= f.text_area :address %>
   </div>
   <div class="field">
     <%= f.label :email %><br>
@@ -34,9 +40,10 @@
   </div>
   <div class="field">
     <%= f.label :payment %><br>
-    <%= f.number_field :payment %>
+    <%= f.select :payment, options_for_select([["Cash",'cash'],["Online Card",'online']]) %>
   </div>
+  <%= f.hidden_field :doctor_employment_id, value: params[:doctor_employment_id] %>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Book' %>
   </div>
 <% end %>

@@ -15,14 +15,17 @@ RSpec.describe 'New signup process' do
     expect(user).to have_spree_role 'doctor'
   end
 
-  it 'redirects to the profile if not simple user' do
+  it 'shows registration confirmation notice' do
     post "/signup", spree_user: { email: 'test@test.com',
                                   password: 'secret', 
                                   password_confirmation: 'secret', 
                                   make_role: 'doctor'}
     
-    expect(response).to redirect_to(spree.edit_account_path) 
+    # expect(response).to redirect_to(spree.edit_account_path) 
     # expect(response) shub
+    follow_redirect!
+
+    expect(response.body).to match 'Please complete registration using instruction'
   end
 end
 

@@ -1,4 +1,7 @@
 class Spree::Clinic < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
+
   belongs_to :suburb
   validates_associated :suburb 
   accepts_nested_attributes_for :suburb
@@ -15,10 +18,18 @@ class Spree::Clinic < ActiveRecord::Base
   validates_uniqueness_of :name
 
   def full_address
-    "#{building} #{street}, #{suburb.name}, #{suburb.city.name}, IN"
+    "#{building} #{street}, #{suburb.name}, #{suburb.city.name}"
   end
 
   def to_s
     name
   end
+
+  def slug_candidates
+    [
+      :name,
+      [:name, :street]
+    ]
+  end
+
 end

@@ -7,9 +7,19 @@ en:
   hello: "Hello world"
   spree:
     role_on_signup: "You are"
+  recommendations:
+    one: '1 recommendation'
+    other: '%{count} recommendations'
   activerecord:
     attributes:
       spree/suburb:
         name: 'Suburb/Village'
       spree/clinic/suburb:
         name: 'Suburb/Village' # TODO not working
+      spree/appointment:
+        name: 'Your name'
+        scheduled_at: 'Time slot'
+  devise:
+    user_registrations:
+      spree_user:
+        signed_up_but_unconfirmed: 'Thank you! Please complete registration using instruction on your email.'

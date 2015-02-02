@@ -9,6 +9,6 @@ RSpec.describe "spree/user_registrations/new", :type => :view do
 
   it "renders user role select" do
     render
-    assert_select "select#spree_user_make_role[name=?]", "spree_user[make_role]"
+    expect(rendered).to match 'Register as a Doctor'
   end
 end

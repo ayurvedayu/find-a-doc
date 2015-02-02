@@ -10,29 +10,30 @@ class Spree::DoctorSearchController < Spree::HomeController
     within = '50' # km
     doctor_name = params[:dn]
     clinic_name = params[:cn]
+    search_for = params[:search_for]
     
-    # nearby_clinics_ids = Spree::Clinic.near(location, within).map(&:id)
-    # nearby_clinics = Spree::Clinic.near(location, within)
-
-    # @doctors = Spree::Doctor.joins(:specialties, :doctor_employments).where('spree_specialties.id in (?) and spree_doctor_employments.clinic_id in (?)', specialties, nearby_clinics_ids)
-# @doctor_employments = Spree::DoctorEmployment.joins(doctor: :specialties).where('spree_specialties.id in (?) and spree_doctor_employments.clinic_id in (?)', specialties, nearby_clinics_ids)
-    @doctor_employments = Spree::DoctorEmployment.joins(:clinic, doctor: :specialties)
+    @doctor_employments = Spree::DoctorEmployment.joins(:clinic, :doctor, 'LEFT JOIN "spree_doctors_specialties"  ON "spree_doctors_specialties"."doctor_id" = "spree_doctors"."id"  LEFT JOIN "spree_specialties" ON "spree_specialties"."id" = "spree_doctors_specialties"."specialty_id"')
     
-    case 
-    when specialties && location
+    case search_for
+    when 'specialty'
       @doctor_employments = @doctor_employments
                                     .near(location, within)
-                                    .where(:spree_specialties => 
-                                                      { :id => specialties } )
-    when doctor_name
+                                    .where(:spree_specialties => { :id => specialties } )
+    when 'doctor'
       @doctor_employments = @doctor_employments
-                                      .where('spree_doctors.name like ?', 
+                                      .where('lower(spree_doctors.name) LIKE lower(?)', 
                                                 "%#{doctor_name}%")
-    when clinic_name
-      @doctor_employments = @doctor_employments
-                                      .where('spree_clinics.name like ?', 
-                                                "%#{clinic_name}%")                                                  
+    when 'clinic'
+      @doctor_employments = @doctor_employments.where('lower(spree_clinics.name) LIKE lower(?)',                                                "%#{clinic_name}%")                                                  
     end
+
+    @doctor_employments = @doctor_employments
+                          .joins("LEFT JOIN spree_appointments ON spree_appointments.doctor_employment_id = spree_doctor_employments.id and spree_appointments.created_at between '#{30.days.ago.to_formatted_s(:db)}' and '#{DateTime.now.to_formatted_s(:db)}'")
+                          .order("count(spree_appointments.id) DESC")
+                          .group('spree_doctor_employments.id')
+                          .select("spree_doctor_employments.*, count(spree_appointments.id)")
+                          # .group('spree_doctor_employments.*')
+
 
 
   end

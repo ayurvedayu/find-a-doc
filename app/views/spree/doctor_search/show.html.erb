@@ -2,6 +2,7 @@
 <%= render 'search_form' %>
 <hr>
 <% @doctor_employments.all.each do |empl| %>
+  [debug] Appointments count: <%= empl.appointments.count %><br>
   <%= render partial: 'doctor_card', locals: { empl: empl, for_search_page: true } %>
   <hr>
 <% end %>

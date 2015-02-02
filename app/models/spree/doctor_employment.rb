@@ -1,4 +1,6 @@
 class Spree::DoctorEmployment < ActiveRecord::Base
+  default_scope { where("spree_doctor_employments.status <> ? or spree_doctor_employments.status is null", statuses[:deleted]) }
+
   belongs_to :doctor
   belongs_to :clinic
 
@@ -11,6 +13,9 @@ class Spree::DoctorEmployment < ActiveRecord::Base
 
 
   geocoded_by :_clinic_address, :latitude => 'spree_clinics.latitude', :longitude => 'spree_clinics.longitude'
+
+  enum status: [:active, :deleted]
+
   # geocoded_by :_clinic_address
 
   # before_validation :check_if_blank

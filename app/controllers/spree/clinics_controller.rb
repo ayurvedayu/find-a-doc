@@ -1,5 +1,6 @@
-class Spree::ClinicsController < Spree::UsersController
-  before_action :set_spree_clinic, only: [:show, :edit, :update, :destroy]
+class Spree::ClinicsController < Spree::HomeController
+  before_action :authenticate_spree_user!, except: [:show]
+  before_action :set_spree_clinic, only: [:edit, :update, :destroy]
 
   # GET /spree/clinics
   def index
@@ -8,6 +9,7 @@ class Spree::ClinicsController < Spree::UsersController
 
   # GET /spree/clinics/1
   def show
+    @spree_clinic = Spree::Clinic.friendly.find(params[:id])
   end
 
   # GET /spree/clinics/new
@@ -48,7 +50,7 @@ class Spree::ClinicsController < Spree::UsersController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_spree_clinic
-      @spree_clinic = current_spree_user.clinics.find(params[:id])
+      @spree_clinic = current_spree_user.clinics.friendly.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

@@ -48,11 +48,11 @@ class Spree::DoctorsController < Spree::HomeController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_spree_doctor
-      @spree_doctor = Spree::Doctor.find(params[:id])
+      @spree_doctor = Spree::Doctor.friendly.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def spree_doctor_params
-      params.require(:spree_doctor).permit(:clinic_id, :user_id, :name, :description, :phone, :is_for_instance_booking, :specialty_ids)
+      params.require(:spree_doctor).permit(:clinic_id, :user_id, :name, :description, :phone, :is_for_instance_booking, :specialty_ids, :degree)
     end
 end

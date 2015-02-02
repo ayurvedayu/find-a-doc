@@ -1,10 +1,8 @@
-<h1>Listing spree_appointments</h1>
+<h1>Your appointments</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Belongs to</th>
-      <th>Belongs to</th>
       <th>Status</th>
       <th>Name</th>
       <th>Phone</th>
@@ -19,8 +17,6 @@
   <tbody>
     <% @spree_appointments.each do |spree_appointment| %>
       <tr>
-        <td><%= spree_appointment.belongs_to %></td>
-        <td><%= spree_appointment.belongs_to %></td>
         <td><%= spree_appointment.status %></td>
         <td><%= spree_appointment.name %></td>
         <td><%= spree_appointment.phone %></td>
@@ -28,9 +24,9 @@
         <td><%= spree_appointment.email %></td>
         <td><%= spree_appointment.cause %></td>
         <td><%= spree_appointment.payment %></td>
-        <td><%= link_to 'Show', spree_appointment %></td>
-        <td><%= link_to 'Edit', edit_spree_appointment_path(spree_appointment) %></td>
-        <td><%= link_to 'Destroy', spree_appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', [:account,spree_appointment] %></td>
+        <td><%= link_to 'Edit', edit_account_appointment_path(spree_appointment) %></td>
+        <td><%= link_to 'Destroy', [:account,spree_appointment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -38,4 +34,3 @@
 
 <br>
 
-<%= link_to 'New Appointment', new_spree_appointment_path %>

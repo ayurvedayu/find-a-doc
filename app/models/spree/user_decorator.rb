@@ -1,4 +1,7 @@
 Spree::User.class_eval do
+
+  devise :confirmable
+
   attr_accessor :make_role
 
   before_create :update_role
@@ -11,6 +14,8 @@ Spree::User.class_eval do
 
 
   has_many :clinics
+
+  has_many :reviews
 
 
   def doctor?
@@ -32,6 +37,10 @@ Spree::User.class_eval do
   def make_doctor
     self.spree_roles << Spree::Role.doctor
     self.doctor = Spree::Doctor.create
+  end
+
+  # does nothing - don't delete please
+  def make_user
   end
 
   def revoke_doctor

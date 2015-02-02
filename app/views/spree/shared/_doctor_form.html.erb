@@ -1,9 +1,14 @@
   <p>
     <%= f.label :clinics %><br />
-    <%= f.fields_for :doctor_employments do |daf| %>
-      <%= daf.collection_select :clinic_id, Spree::Clinic.all, :id, :name, prompt: 'Select a clinic please..' %><br />
+    <% @user.doctor.doctor_employments.all.each do |employment| %>
+      <p> <%= employment.clinic.name %> 
+    , <%= employment.consultation_price %> <%= employment.consultation_currency %> 
+       (<%= link_to 'Remove', [:account, employment], method: :delete, data: { confirm: 'Are you sure?' } %>)</p>
+    <% end %>
+    <%= f.fields_for :doctor_employments, doctor.doctor_employments.build do |daf| %>
+      <p><%= daf.collection_select :clinic_id, Spree::Clinic.all, :id, :name, prompt: 'Select a clinic please..' %><br />
       <%= daf.text_field :consultation_price, placeholder: 'Consultation price' %>
-      <%= daf.select :consultation_currency, options_for_select(Spree::Currency.all) %><br />
+      <%= daf.select :consultation_currency, options_for_select(Spree::Currency.all) %></p>
     <% end %> 
     or <%= link_to 'create one', spree.new_account_clinic_path %>
   </p>
@@ -14,6 +19,10 @@
   <p>  
     <%= f.label :description %><br>
     <%= f.text_area :description %>
+  </p>
+  <p>  
+    <%= f.label :degree %><br>
+    <%= f.text_field :degree %>
   </p>
   <p>
     <%= f.label :phone %><br>

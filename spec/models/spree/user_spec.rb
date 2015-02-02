@@ -20,9 +20,10 @@ describe Spree::User do
       user = Spree::User.new email: 'test@test.com', password: 'secret'
       user.make_doctor
 
-      user.save
+      user.save!
 
       expect(user).to be_doctor
+      expect(user.doctor).to be_present
 
       user.make_clinic
 

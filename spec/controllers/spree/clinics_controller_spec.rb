@@ -35,10 +35,11 @@ RSpec.describe Spree::ClinicsController, :type => :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # Spree::ClinicsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
-  let(:user) { create(:user) }
+  let(:user) { create(:confirmed_user) }
 
-  before do
+  before(:each) do
     # assign :user, user
+    # sign_in user
     allow(controller).to  receive(:current_spree_user).and_return user
   end
 
@@ -60,6 +61,8 @@ RSpec.describe Spree::ClinicsController, :type => :controller do
 
   describe "GET new" do
     it "assigns a new spree_clinic as @spree_clinic" do
+      sign_in user
+      # byebug
       spree_get :new, {}, valid_session
       expect(assigns(:spree_clinic)).to be_a_new(Spree::Clinic)
     end

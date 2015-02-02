@@ -1,5 +1,3 @@
-<!-- insert_top "[data-hook='signup_inside_form']" -->
-<div class="form-group">
-	<%= label_tag Spree.t(:role_on_signup) %> <br />
-    <%= f.select :make_role, options_for_select(Spree::Role::CIVIL_ROLES.collect {|r| [r.capitalize, r]}), :class => 'form-control', :placeholder => Spree.t(:role_on_signup) %>
-</div> 
+<!-- insert_top "[data-hook='signup']" -->
+<%= link_to 'Register as a Doctor', spree.doctor_signup_path %><br>
+<%= link_to 'Register as a Clinic', spree.clinic_signup_path %>

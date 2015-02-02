@@ -6,7 +6,7 @@ Spree::UsersController.class_eval do
 
 
   # def delete_empty_employment 
-    
+
 
   # end
 
@@ -27,7 +27,8 @@ Spree::PermittedAttributes.user_attributes << [:make_role,
                                     :description, 
                                     :phone, 
                                     :is_for_instant_booking, 
-                                    :id, 
+                                    :id,
+                                    :degree, 
                                     :specialty_ids => [] , 
                                     :doctor_employments_attributes =>  [:id,
                                                                         :clinic_id,
