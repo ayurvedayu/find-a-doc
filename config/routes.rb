@@ -1,4 +1,6 @@
 Spree::Core::Engine.routes.draw do
+  
+
   devise_scope :spree_user do
     get '/doctor-signup' => 'user_registrations#doctor_signup', :as => :doctor_signup
     get '/clinic-signup' => 'user_registrations#clinic_signup', :as => :clinic_signup
@@ -7,7 +9,10 @@ Spree::Core::Engine.routes.draw do
   resource :account, :controller => 'users' do
       resources :clinics, shallow: true
       resources :appointments, except: [:new, :destroy]
-    authenticate :spree_user do 
+    authenticate :spree_user do
+      resources :verifications, only: [:update, :create, :destroy] do
+        post 'complete', on: :collection
+      end
       resources :doctor_employments, only: [:destroy]
     end
   end

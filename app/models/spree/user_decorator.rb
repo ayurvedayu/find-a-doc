@@ -17,6 +17,7 @@ Spree::User.class_eval do
 
   has_many :reviews
 
+  has_many :verifications
 
   def doctor?
     has_spree_role? 'doctor'

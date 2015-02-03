@@ -1,4 +1,7 @@
 class Spree::Doctor < ActiveRecord::Base
+  validates_presence_of :phone, :name
+  validate :phone_validation
+
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
@@ -15,6 +18,7 @@ class Spree::Doctor < ActiveRecord::Base
   # validate :has_specialties?
 
   before_validation :delete_empty_employments
+
 
   def delete_empty_employments
     doctor_employments.each do |empl|
@@ -35,4 +39,10 @@ class Spree::Doctor < ActiveRecord::Base
       [:name, :clinic_id, :user_id]
     ]
   end
+
+  def phone_validation
+    if phone =~ /^\+?91/
+      errors.add(:phone, 'must be without country code (+91)')
+    end
+  end    
 end

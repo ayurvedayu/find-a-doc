@@ -1,4 +1,8 @@
 <div class="row">
+  <% if @user.doctor? and !@user.phone_is_verified? %>
+    <%= render 'phone_verification' %>
+  <% end %>
+    
   <div class="six columns">
     <h1><%= accurate_title %> <small>(<%= link_to Spree.t(:edit), spree.edit_account_path %>)</small></h1>
 
@@ -57,6 +61,7 @@
 </div></div>
 
 <div class="row">
+<div class="twelve columns">
 <div data-hook="account_my_orders" class="account-my-orders">
 
   <h3><%= Spree.t(:my_orders) %></h3>
@@ -90,5 +95,6 @@
   <% end %>
   <br />
 
+</div>
 </div>
 </div>

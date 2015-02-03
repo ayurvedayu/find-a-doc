@@ -73,6 +73,7 @@ PATH
       bootstrap-sass (~> 3.3.3)
       deface (~> 1.0.0rc3)
       geocoder (~> 1.2)
+      phony_rails
       spree_core (~> 2.3.4)
 
 GEM
@@ -164,6 +165,9 @@ GEM
     coffee-script-source (1.8.0)
     colorize (0.7.5)
     columnize (0.8.9)
+    countries (0.10.0)
+      currencies (~> 0.4.2)
+    currencies (0.4.2)
     database_cleaner (1.4.0)
     debugger-linecache (1.2.0)
     deface (1.0.1)
@@ -237,6 +241,11 @@ GEM
     paranoia (2.0.4)
       activerecord (~> 4.0)
     pg (0.17.1)
+    phony (2.10.3)
+    phony_rails (0.9.0)
+      activesupport (>= 3.0)
+      countries (>= 0.8.2)
+      phony (~> 2.10.1)
     polyamorous (1.1.0)
       activerecord (>= 3.0)
     polyglot (0.3.5)
@@ -358,6 +367,7 @@ DEPENDENCIES
   friendly_id (~> 5.0)
   geocoder (~> 1.2)
   pg
+  phony_rails
   rspec
   rspec-activemodel-mocks
   rspec-autotest

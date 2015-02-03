@@ -10,6 +10,7 @@ Spree::UsersController.class_eval do
 
   # end
 
+
   def build_employment
     current_spree_user.doctor.doctor_employments.build
   end
