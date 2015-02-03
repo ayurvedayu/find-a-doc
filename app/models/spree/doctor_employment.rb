@@ -1,5 +1,7 @@
 class Spree::DoctorEmployment < ActiveRecord::Base
   default_scope { where("spree_doctor_employments.status <> ? or spree_doctor_employments.status is null", statuses[:deleted]) }
+  has_many :timings, as: :timeslotable
+  accepts_nested_attributes_for :timings
 
   belongs_to :doctor
   belongs_to :clinic

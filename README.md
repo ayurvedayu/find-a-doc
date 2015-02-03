@@ -19,6 +19,8 @@ bundle
 bundle exec rails g spree_finda_doc:install
 ```
 
+Also add the jquery.ui javascript.
+
 Testing
 -------
 

@@ -73,7 +73,7 @@ PATH
       bootstrap-sass (~> 3.3.3)
       deface (~> 1.0.0rc3)
       geocoder (~> 1.2)
-      phony_rails
+      jquery-ui-rails
       spree_core (~> 2.3.4)
 
 GEM
@@ -165,9 +165,6 @@ GEM
     coffee-script-source (1.8.0)
     colorize (0.7.5)
     columnize (0.8.9)
-    countries (0.10.0)
-      currencies (~> 0.4.2)
-    currencies (0.4.2)
     database_cleaner (1.4.0)
     debugger-linecache (1.2.0)
     deface (1.0.1)
@@ -185,6 +182,8 @@ GEM
       devise (>= 2.1.0)
     diff-lcs (1.2.5)
     docile (1.1.5)
+    erb2haml (0.1.5)
+      html2haml
     erubis (2.7.0)
     execjs (2.2.2)
     factory_girl (4.5.0)
@@ -196,8 +195,15 @@ GEM
     friendly_id (5.0.4)
       activerecord (>= 4.0.0)
     geocoder (1.2.6)
+    haml (4.0.6)
+      tilt
     highline (1.6.21)
     hike (1.2.3)
+    html2haml (2.0.0)
+      erubis (~> 2.7.0)
+      haml (~> 4.0.0)
+      nokogiri (~> 1.6.0)
+      ruby_parser (~> 3.5)
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -241,11 +247,6 @@ GEM
     paranoia (2.0.4)
       activerecord (~> 4.0)
     pg (0.17.1)
-    phony (2.10.3)
-    phony_rails (0.9.0)
-      activesupport (>= 3.0)
-      countries (>= 0.8.2)
-      phony (~> 2.10.1)
     polyamorous (1.1.0)
       activerecord (>= 3.0)
     polyglot (0.3.5)
@@ -302,6 +303,8 @@ GEM
       rspec-mocks (~> 3.1.0)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
+    ruby_parser (3.6.4)
+      sexp_processor (~> 4.1)
     rubyzip (1.1.6)
     sass (3.2.19)
     sass-rails (4.0.5)
@@ -316,6 +319,7 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
+    sexp_processor (4.4.5)
     simplecov (0.9.1)
       docile (~> 1.1.0)
       multi_json (~> 1.0)
@@ -362,12 +366,12 @@ DEPENDENCIES
   capybara
   coffee-rails
   database_cleaner
+  erb2haml
   factory_girl (~> 4.5)
   ffaker
   friendly_id (~> 5.0)
   geocoder (~> 1.2)
   pg
-  phony_rails
   rspec
   rspec-activemodel-mocks
   rspec-autotest

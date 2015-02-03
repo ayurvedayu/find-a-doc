@@ -28,6 +28,9 @@ FactoryGirl.define do
     clinic
     consultation_price '100'
     consultation_currency 'INR'
+    factory :unverified_doctor_employment do
+      association :doctor, factory: :unverified_instant_doctor
+    end
   end
   factory :confirmed_user, class: Spree.user_class do
     email { generate(:random_email) }
@@ -36,7 +39,14 @@ FactoryGirl.define do
     password_confirmation { password }
     authentication_token { generate(:user_authentication_token) } if Spree.user_class.attribute_method? :authentication_token
     confirmed_at Time.now
+    phone_is_verified true
 
+    factory :confirmed_doctor_user do
+      spree_roles { [ Spree::Role.doctor ]}
+      factory :unverified_doctor_user do
+        phone_is_verified false
+      end
+    end
     factory :confirmed_admin_user do
       spree_roles { [Spree::Role.find_by(name: 'admin') || create(:role, name: 'admin')] }
     end
@@ -48,7 +58,7 @@ FactoryGirl.define do
   end
 
   factory :doctor, class: Spree::Doctor do
-    association :user, factory: :confirmed_user
+    association :user, factory: :confirmed_doctor_user
     name 'Name'
     description 'About'
     phone '+7 985 965 63 17'
@@ -57,12 +67,15 @@ FactoryGirl.define do
   end
 
   factory :instant_doctor, class: Spree::Doctor do
-    association :user, factory: :confirmed_user 
+    association :user, factory: :confirmed_doctor_user 
     name 'Name'
     description 'About'
     phone '+7 985 965 63 17'
     is_for_instant_booking true
     specialties { [ FactoryGirl.create(:specialty) ] }
+    factory :unverified_instant_doctor do
+      association :user, factory: :unverified_doctor_user
+    end
   end
 
   factory :clinic_type, class: Spree::ClinicType do

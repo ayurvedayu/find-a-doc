@@ -8,7 +8,7 @@ describe Spree::User do
       user.make_role = 'doctor'
       
 
-      user.save
+      user.save!
       
 
       expect(user).to have_spree_role Spree::Role.doctor.name

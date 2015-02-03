@@ -6,8 +6,10 @@ gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-3-stable'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'geocoder', '~> 1.2'
 gem 'friendly_id', '~> 5.0'
-gem 'phony_rails'
+# gem 'jquery-ui-rails'
+
 group :development, :test do
+  gem 'erb2haml'
   gem 'rspec-rails'
   gem 'byebug'
   gem 'rspec-autotest'

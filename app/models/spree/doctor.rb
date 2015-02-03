@@ -1,5 +1,6 @@
 class Spree::Doctor < ActiveRecord::Base
-  validates_presence_of :phone, :name
+  # this is not possible right now
+  # validates_presence_of :phone, :name, on: :update
   validate :phone_validation
 
   extend FriendlyId

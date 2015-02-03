@@ -1,3 +1,4 @@
+
 require 'capybara/rspec'
 # Run Coverage report
 require 'simplecov'
@@ -93,6 +94,7 @@ RSpec.configure do |config|
 
   config.fail_fast = ENV['FAIL_FAST'] || false
   config.order = "random"
+
 end
 
 def sign_in_as!(user)
@@ -101,3 +103,6 @@ def sign_in_as!(user)
   fill_in 'Password', :with => 'secret'
   click_button 'Login'
 end
+
+SpreeFindaDoc.bhash_login = 'test'
+SpreeFindaDoc.bhash_pass = 'test'

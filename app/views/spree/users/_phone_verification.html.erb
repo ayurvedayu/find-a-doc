@@ -16,10 +16,12 @@
         <%= text_field_tag "verification[token]" %>
         <%= submit_tag 'Verify' %>
       <% end %>
+      <p>
       <%= form_for [:account, Spree::Verification.new] do |f| %>
         <%= hidden_field_tag 'verification[phone]', @user.doctor.phone %>
         <%= f.submit 'Send activation code again' %>
       <% end %>
+      </p>
     </div>
   <% end %> 
 </div>

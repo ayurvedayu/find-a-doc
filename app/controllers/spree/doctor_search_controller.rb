@@ -12,7 +12,7 @@ class Spree::DoctorSearchController < Spree::HomeController
     clinic_name = params[:cn]
     search_for = params[:search_for]
     
-    @doctor_employments = Spree::DoctorEmployment.joins(:clinic, :doctor, 'LEFT JOIN "spree_doctors_specialties"  ON "spree_doctors_specialties"."doctor_id" = "spree_doctors"."id"  LEFT JOIN "spree_specialties" ON "spree_specialties"."id" = "spree_doctors_specialties"."specialty_id"')
+    @doctor_employments = Spree::DoctorEmployment.joins(:clinic, 'LEFT JOIN "spree_doctors_specialties"  ON "spree_doctors_specialties"."doctor_id" = "spree_doctors"."id"  LEFT JOIN "spree_specialties" ON "spree_specialties"."id" = "spree_doctors_specialties"."specialty_id"', doctor: :user).where("spree_users.phone_is_verified = ?", true)
     
     case search_for
     when 'specialty'

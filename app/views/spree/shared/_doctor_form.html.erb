@@ -9,6 +9,19 @@
       <p><%= daf.collection_select :clinic_id, Spree::Clinic.all, :id, :name, prompt: 'Select a clinic please..' %><br />
       <%= daf.text_field :consultation_price, placeholder: 'Consultation price' %>
       <%= daf.select :consultation_currency, options_for_select(Spree::Currency.all) %></p>
+      <p>
+        <% 7.times {|i| doctor.doctor_employments.last.timings.new(day: i)} %>
+        <%= daf.fields_for :timings do |tf| %>
+          <div class="row">
+          <div class="timing">
+            <span class="slider-value-from"></span>
+            <span class="slider-value-to"></span>
+            <%= tf.text_field :start_time %>
+            <%= tf.text_field :end_time %>
+            <div class="slider-time-range"></div>
+          </div>
+        <% end %>
+      </p>
     <% end %> 
     or <%= link_to 'create one', spree.new_account_clinic_path %>
   </p>
