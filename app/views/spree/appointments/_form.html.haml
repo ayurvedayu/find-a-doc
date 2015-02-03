@@ -1,0 +1,41 @@
+= form_for([:account, @spree_appointment]) do |f|
+  - if @spree_appointment.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@spree_appointment.errors.count, "error")
+        prohibited this spree_appointment from being saved:
+      %ul
+        - @spree_appointment.errors.full_messages.each do |message|
+          %li= message
+  .field
+    = f.label :scheduled_at
+    %br/
+    = f.date_select :scheduled_at, { discard_year: true }
+    = select_tag "#{f.object_name}[scheduled_at(4)]", options_for_select(Spree::TimeSlot.all, current_time_slot )
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .field
+    = f.label :phone
+    %br/
+    = f.text_field :phone
+  .field
+    = f.label :address
+    %br/
+    = f.text_area :address
+  .field
+    = f.label :email
+    %br/
+    = f.text_field :email
+  .field
+    = f.label :cause
+    %br/
+    = f.text_area :cause
+  .field
+    = f.label :payment
+    %br/
+    = f.select :payment, options_for_select([["Cash",'cash'],["Online Card",'online']])
+  = f.hidden_field :doctor_employment_id, value: params[:doctor_employment_id]
+  .actions
+    = f.submit 'Book'

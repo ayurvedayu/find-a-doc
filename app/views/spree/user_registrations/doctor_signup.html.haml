@@ -1,0 +1,16 @@
+- @body_id = 'signup'
+= render :partial => 'spree/shared/error_messages', :locals => { :target => @user }
+#new-customer
+  %h6= Spree.t(:new_customer)
+  %div{"data-hook" => "signup"}
+    = link_to 'Register as a Patient', spree.signup_path
+    %br/
+    = link_to 'Register as a Clinic', spree.clinic_signup_path
+    = form_for resource, :as => :spree_user, :url => spree.registration_path(@user) do |f|
+      %div{"data-hook" => "signup_inside_form"}
+        = f.hidden_field :make_role, value: 'doctor'
+        = render :partial => 'spree/shared/user_form', :locals => { :f => f }
+        %p= f.submit Spree.t(:create), :class => 'button primary'
+    = Spree.t(:or)
+     #{link_to Spree.t(:login_as_existing), spree.login_path}
+%div{"data-hook" => "login_extras"}

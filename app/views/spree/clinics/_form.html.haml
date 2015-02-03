@@ -1,0 +1,39 @@
+- if @spree_clinic.errors.any?
+  #error_explanation
+    %h2
+      = pluralize(@spree_clinic.errors.count, "error")
+      prohibited this clinic from being saved:
+    %ul
+      - @spree_clinic.errors.full_messages.each do |message|
+        %li= message
+%p
+  = f.label :name
+  %br/
+  = f.text_field :name
+= f.fields_for :suburb, (@spree_clinic.suburb || @spree_clinic.build_suburb) do |sf|
+  %p
+    = sf.label :city_id
+    %br/
+    = sf.collection_select :city_id, Spree::City.all, :id, :name, prompt: 'Choose a city please...'
+  %p
+    = sf.label :name
+    %br/
+    = sf.text_field :name
+%p
+  = f.label :street
+  %br/
+  = f.text_field :street
+%p
+  = f.label :building
+  %br/
+  = f.text_field :building
+%p
+  = f.label :description
+  %br/
+  = f.text_area :description
+%p
+  = f.label :clinic_type_id
+  %br/
+  = f.collection_select :clinic_type_id, Spree::ClinicType.all, :id, :name
+.actions
+  = f.submit

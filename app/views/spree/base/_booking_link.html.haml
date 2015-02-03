@@ -1,0 +1,5 @@
+%div
+  - if empl.doctor.is_for_instant_booking?
+    = link_to 'Book an appointment', spree.new_account_appointment_path(empl)
+  - else
+    = link_to empl.doctor.phone, "tel:#{empl.doctor.phone}"

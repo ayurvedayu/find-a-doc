@@ -1,0 +1,25 @@
+%div{:role => "tabpanel"}
+  %ul.nav.nav-tabs{:role => "tablist"}
+    %li{:class => "#{active_nav_tab 'specialty'}", :role => "presentation"}= link_to 'by specialty', '#specialty', data: { toggle: 'tab' }
+    %li{:class => "#{active_nav_tab 'doctor'}", :role => "presentation"}= link_to 'by doctor', '#doctor', data: { toggle: 'tab' }
+    %li{:class => "#{active_nav_tab 'clinic'}", :role => "presentation"}= link_to 'by clinic', '#clinic', data: { toggle: 'tab' }
+  .tab-content
+    #specialty{:class => "tab-pane #{active_nav_tab 'specialty'}"}
+      %p
+        = form_tag doctor_search_results_path, id: 'by_spec', method: :get do
+          = select_tag :ds, options_from_collection_for_select(Spree::Specialty.all, :id, :name, params[:ds]), prompt: 'Choose specialty…'
+          = text_field_tag :dl, params[:dl], placeholder: 'Location'
+          = hidden_field_tag :search_for, 'specialty'
+          = submit_tag 'Go', name: nil
+    #doctor{:class => "tab-pane #{active_nav_tab 'doctor'}"}
+      %p
+        = form_tag doctor_search_results_path, id: 'by_name', method: :get do
+          = text_field_tag :dn, params[:dn], placeholder: 'Doctor name'
+          = hidden_field_tag :search_for, 'doctor'
+          = submit_tag 'Go', name: nil
+    #clinic{:class => "tab-pane #{active_nav_tab 'clinic'}"}
+      %p
+        = form_tag doctor_search_results_path, id: 'by_clinic', method: :get do
+          = text_field_tag :cn, params[:cn], placeholder: 'Clinic name'
+          = hidden_field_tag :search_for, 'clinic'
+          = submit_tag 'Go', name: nil

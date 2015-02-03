@@ -1,0 +1,34 @@
+%p#notice= notice
+%h3
+  Dr. #{@spree_doctor.name}
+%h4= @spree_doctor.specialties.all.map(&:name).join(', ')
+%p
+  = @spree_doctor.description
+- if @spree_doctor.recommendations.present?
+  %p
+    %strong= t(:recommendations, count: @spree_doctor.recommendations.count)
+%h3 Info
+%div
+  %strong Practices at
+  - @spree_doctor.doctor_employments.all.each do |empl|
+    %h5
+      = empl.clinic.suburb.name
+      ,
+      %small= empl.clinic.suburb.city.name
+    = link_to empl.clinic.name, empl.clinic
+    %br/
+    = empl.clinic.full_address
+    %br/
+    = empl.consultation_currency + ' ' + empl.consultation_price.round.to_s
+    = render partial: 'booking_link', locals: { empl: empl }
+    %hr/
+%h3 Reviews
+- @spree_doctor.reviews.all.each do |review|
+  %p
+    %strong= review.appointment.name
+    %br/
+    = review.text
+    %br/
+    = l review.created_at
+- end.empty? and begin
+  %p Doctor hasn't any reviews yet

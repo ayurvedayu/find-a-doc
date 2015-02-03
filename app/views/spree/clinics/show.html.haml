@@ -1,0 +1,15 @@
+%p#notice= notice
+%h3= @spree_clinic.name
+%strong= @spree_clinic.clinic_type.name
+%br/
+%strong= @spree_clinic.full_address
+%p
+  = @spree_clinic.description
+%h3 Overview
+%p TODO timings services  photos
+%h3 Doctors
+%hr/
+%div
+  - @spree_clinic.doctor_employments.all.each do |empl|
+    = render partial: 'doctor_card', locals: { empl: empl }
+    %hr/

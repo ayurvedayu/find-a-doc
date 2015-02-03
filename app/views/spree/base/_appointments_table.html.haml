@@ -1,0 +1,24 @@
+- if appointments.present?
+  %table
+    %thead
+      %tr
+        %th= doctor ? 'Patient' : 'Doctor'
+        %th Phone
+        %th Status
+        %th Time
+        %th{:colspan => "2"}
+    %tbody
+      - appointments.each do |app; doctor_or_client|
+        - doctor_or_client = doctor ? app : app.doctor_employment.doctor
+        %tr
+          %td= doctor_or_client.name
+          %td= doctor_or_client.phone
+          %td= app.status.capitalize
+          %td= app.scheduled_at
+          - unless app.completed?
+            - if app.initiated?
+              %td= link_to 'Cancel', cancel_appointment_path(app)
+            - if ! doctor
+              %td= link_to 'Mark as completed', complete_appointment_path(app)
+- else
+  %p You have no appointments yet

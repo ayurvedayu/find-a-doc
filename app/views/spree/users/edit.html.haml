@@ -1,0 +1,11 @@
+= render :partial => 'spree/shared/error_messages', :locals => { :target => @user }
+#edit-account
+  %h1= Spree.t(:editing_user)
+  %div{"data-hook" => "account_edit"}
+    = form_for Spree::User.new, :as => @user, :url => spree.user_path(@user), :method => :put do |f|
+      - if @user.doctor?
+        = f.fields_for :doctor do |df|
+          = render :partial => 'spree/shared/doctor_form', :locals => { :f => df, :doctor => @user.doctor }
+      = render :partial => 'spree/shared/user_form', :locals => { :f => f }
+      %p
+        = f.submit Spree.t(:update), :class => 'button primary'

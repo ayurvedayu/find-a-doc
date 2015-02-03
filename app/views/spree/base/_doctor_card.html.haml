@@ -1,0 +1,7 @@
+- for_search_page = false unless defined? for_search_page
+%h3= link_to 'Dr. ' + empl.doctor.name, empl.doctor
+%h4= empl.doctor.specialties.all.map(&:name).join(', ')
+- if for_search_page
+  %strong= link_to empl.clinic.name, empl.clinic
+%p= empl.consultation_currency + ' ' + empl.consultation_price.round.to_s
+= render partial: 'booking_link', locals: { empl: empl }

@@ -1,0 +1,53 @@
+%p
+  = f.label :clinics
+  %br/
+  - @user.doctor.doctor_employments.all.each do |employment|
+    %p
+      = employment.clinic.name
+      , #{employment.consultation_price} #{employment.consultation_currency}
+      (#{link_to 'Remove', [:account, employment], method: :delete, data: { confirm: 'Are you sure?' }})
+  = f.fields_for :doctor_employments, doctor.doctor_employments.build do |daf|
+    %p
+      = daf.collection_select :clinic_id, Spree::Clinic.all, :id, :name, prompt: 'Select a clinic please..'
+      %br/
+      = daf.text_field :consultation_price, placeholder: 'Consultation price'
+      = daf.select :consultation_currency, options_for_select(Spree::Currency.all)
+    %p
+      - 7.times {|i| doctor.doctor_employments.last.timings.new(day: i)}
+      = daf.fields_for :timings do |tf|
+        .row
+          .timing
+            %span.slider-value-from
+            %span.slider-value-to
+            = tf.text_field :start_time
+            = tf.text_field :end_time
+            .slider-time-range
+          or #{link_to 'create one', spree.new_account_clinic_path}
+          %p
+            = f.label :name
+            %br/
+            = f.text_field :name
+          %p
+            = f.label :description
+            %br/
+            = f.text_area :description
+          %p
+            = f.label :degree
+            %br/
+            = f.text_field :degree
+          %p
+            = f.label :phone
+            %br/
+            = f.text_area :phone
+          %p
+            = f.label :is_for_instant_booking
+            %br/
+            = f.check_box :is_for_instant_booking
+          %p
+            = f.label :specialties
+            %br/
+            = hidden_field_tag "user[doctor_attributes][specialty_ids][]", nil
+            - Spree::Specialty.all.each do |s|
+              = check_box_tag "user[doctor_attributes][specialty_ids][]", s.id, doctor.specialty_ids.include?(s.id), id: dom_id(s)
+              = label_tag dom_id(s), s.name
+              %br/

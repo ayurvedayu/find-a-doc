@@ -1,0 +1,26 @@
+%h1 Your appointments
+%table
+  %thead
+    %tr
+      %th Status
+      %th Name
+      %th Phone
+      %th Address
+      %th Email
+      %th Cause
+      %th Payment
+      %th{:colspan => "3"}
+  %tbody
+    - @spree_appointments.each do |spree_appointment|
+      %tr
+        %td= spree_appointment.status
+        %td= spree_appointment.name
+        %td= spree_appointment.phone
+        %td= spree_appointment.address
+        %td= spree_appointment.email
+        %td= spree_appointment.cause
+        %td= spree_appointment.payment
+        %td= link_to 'Show', [:account,spree_appointment]
+        %td= link_to 'Edit', edit_account_appointment_path(spree_appointment)
+        %td= link_to 'Destroy', [:account,spree_appointment], method: :delete, data: { confirm: 'Are you sure?' }
+%br/
