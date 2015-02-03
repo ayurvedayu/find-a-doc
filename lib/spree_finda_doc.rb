@@ -6,10 +6,10 @@ module SpreeFindaDoc
   @@configured = false
 
   mattr_accessor :bhash_login
-  @@bhash_login = Rails.application.secrets.bhash_login
+  @@bhash_login = nil
 
-  mattr_accessor :bhash_login
-  @@bhash_pass = Rails.application.secrets.bhash_pass
+  mattr_accessor :bhash_pass
+  @@bhash_pass = nil
 
   def self.setup
     @@configured = true

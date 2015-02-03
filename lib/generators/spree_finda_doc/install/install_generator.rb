@@ -1,7 +1,7 @@
 module SpreeFindaDoc
   module Generators
     class InstallGenerator < Rails::Generators::Base
-
+      source_root File.expand_path('../../templates', __FILE__)
       class_option :auto_run_migrations, :type => :boolean, :default => false
 
       def copy_config
