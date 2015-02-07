@@ -6,6 +6,11 @@
 
 $(function() {
 
+    $("#clinic_map_tab_link").on('shown.bs.tab',function(e){   
+        google.maps.event.trigger(window.map, "resize");
+        window.map.setCenter(window.clinic_position)
+    });
+
     $(".slider-input").prop("readonly", "true")
 
     $(".slider-time-range").slider({

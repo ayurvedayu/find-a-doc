@@ -25,7 +25,7 @@ class Spree::Clinic < ActiveRecord::Base
   after_save :parse_services
 
   def full_address
-    "#{building} #{street}, #{suburb.name}, #{suburb.city.name}"
+    "#{building} #{street} #{suburb.name.titleize}, #{suburb.city.name}"
   end
 
   def to_s

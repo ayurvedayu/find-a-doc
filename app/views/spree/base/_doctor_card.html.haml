@@ -1,13 +1,20 @@
 - for_search_page = false unless defined? for_search_page
 .row
-  .col-sm-6
+  .col-xs-12
     %h3= link_to empl.doctor.name_with_dr, empl.doctor
+.row
+  .col-sm-6
     %strong= empl.doctor.degree
     %p= empl.doctor.specialties.all.map(&:name).join(', ')
     - if for_search_page
       %strong= link_to empl.clinic.name, empl.clinic
   .col-sm-6
     %ul.list-unstyled
+      - if empl.doctor.recommendations.present?
+        %li
+          %h4
+            %span.glyphicon.glyphicon-thumbs-up
+            %strong= t(:recommendations, count: empl.doctor.recommendations.count)
       %li
         %span.glyphicon.glyphicon-map-marker
         = "#{empl.clinic.suburb.name}, #{empl.clinic.suburb.city.name}"
