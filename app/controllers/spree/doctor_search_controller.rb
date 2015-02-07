@@ -30,7 +30,7 @@ class Spree::DoctorSearchController < Spree::HomeController
     @doctor_employments = @doctor_employments
                           .joins("LEFT JOIN spree_appointments ON spree_appointments.doctor_employment_id = spree_doctor_employments.id and spree_appointments.created_at between '#{30.days.ago.to_formatted_s(:db)}' and '#{DateTime.now.to_formatted_s(:db)}'")
                           .order("count(spree_appointments.id) DESC")
-                          .group('spree_doctor_employments.id')
+                          .group('spree_doctor_employments.id, spree_clinics.latitude, spree_clinics.longitude')
                           .select("spree_doctor_employments.*, count(spree_appointments.id)")
                           # .group('spree_doctor_employments.*')
 

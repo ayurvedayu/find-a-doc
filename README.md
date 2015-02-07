@@ -6,9 +6,10 @@ Introduction goes here.
 Installation
 ------------
 
-Add spree_finda_doc to your Gemfile:
+Add spree_finda_doc and haml to your Gemfile:
 
 ```ruby
+gem 'haml'
 gem 'spree_finda_doc'
 ```
 
@@ -20,6 +21,8 @@ bundle exec rails g spree_finda_doc:install
 ```
 
 Also add the jquery.ui javascript.
+
+
 
 Testing
 -------

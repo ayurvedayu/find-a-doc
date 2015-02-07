@@ -11,7 +11,8 @@ module SpreeFindaDoc
   mattr_accessor :bhash_pass
   @@bhash_pass = nil
 
-  
+  mattr_accessor :gmaps_api
+  @@gmaps_api = nil
 
   def self.setup
     @@configured = true

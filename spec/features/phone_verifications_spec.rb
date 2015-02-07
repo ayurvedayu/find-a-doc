@@ -17,7 +17,6 @@ feature "PhoneVerifications", :type => :feature do
     click_button 'Verify'
 
 
-
     expect(page).to have_text 'Your phone is succesfully verified'
 
     visit spree.doctor_search_path

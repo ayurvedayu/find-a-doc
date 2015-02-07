@@ -28,6 +28,7 @@ FactoryGirl.define do
     clinic
     consultation_price '100'
     consultation_currency 'INR'
+    timings { Spree::Timing.new_for_all_weekdays(start_time: '10:00', end_time: '18:00', is_working_day: 'working') }
     factory :unverified_doctor_employment do
       association :doctor, factory: :unverified_instant_doctor
     end
@@ -41,6 +42,9 @@ FactoryGirl.define do
     confirmed_at Time.now
     phone_is_verified true
 
+    factory :unverified_confirmed_user do
+      phone_is_verified false
+    end
     factory :confirmed_doctor_user do
       spree_roles { [ Spree::Role.doctor ]}
       factory :unverified_doctor_user do

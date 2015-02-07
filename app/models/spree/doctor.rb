@@ -46,4 +46,8 @@ class Spree::Doctor < ActiveRecord::Base
       errors.add(:phone, 'must be without country code (+91)')
     end
   end    
+
+  def name_with_dr
+    "Dr. #{name}"
+  end
 end

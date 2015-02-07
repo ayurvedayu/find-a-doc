@@ -1,0 +1,10 @@
+- if slots.empty?
+  .panel.panel-warning
+    .panel-heading Doctor is not available
+    .panel-body Please choose another day.
+- else
+  .slots-columns( data-toggle="buttons" )
+    - slots.each do |slot|
+      = label_tag :scheduled_at, class: 'btn btn-default slot-btn', disabled: slot.occupied? do
+        = radio_button_tag "appointment[scheduled_at]", slot.datetime, disabled: slot.occupied?
+        = slot.time

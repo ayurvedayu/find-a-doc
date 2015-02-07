@@ -1,7 +1,20 @@
 - for_search_page = false unless defined? for_search_page
-%h3= link_to 'Dr. ' + empl.doctor.name, empl.doctor
-%h4= empl.doctor.specialties.all.map(&:name).join(', ')
-- if for_search_page
-  %strong= link_to empl.clinic.name, empl.clinic
-%p= empl.consultation_currency + ' ' + empl.consultation_price.round.to_s
-= render partial: 'booking_link', locals: { empl: empl }
+.row
+  .col-sm-6
+    %h3= link_to empl.doctor.name_with_dr, empl.doctor
+    %strong= empl.doctor.degree
+    %p= empl.doctor.specialties.all.map(&:name).join(', ')
+    - if for_search_page
+      %strong= link_to empl.clinic.name, empl.clinic
+  .col-sm-6
+    %ul.list-unstyled
+      %li
+        %span.glyphicon.glyphicon-map-marker
+        = "#{empl.clinic.suburb.name}, #{empl.clinic.suburb.city.name}"
+      %li
+        %span.glyphicon.glyphicon-credit-card
+        = "#{empl.consultation_currency} #{empl.consultation_price.round.to_s}"
+      %li
+        %span.glyphicon.glyphicon-time
+        = human_timings empl.timings
+      %li= render 'booking_link', empl: empl 

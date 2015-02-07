@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Spree::Specialty.find_or_create_by name: 'Ayurveda'
+Spree::Specialty.find_or_create_by name: 'Dentist'
+
+

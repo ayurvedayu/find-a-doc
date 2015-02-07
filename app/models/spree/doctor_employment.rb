@@ -1,7 +1,10 @@
 class Spree::DoctorEmployment < ActiveRecord::Base
   default_scope { where("spree_doctor_employments.status <> ? or spree_doctor_employments.status is null", statuses[:deleted]) }
+
   has_many :timings, as: :timeslotable
   accepts_nested_attributes_for :timings
+
+  validates_presence_of :timings
 
   belongs_to :doctor
   belongs_to :clinic
@@ -27,6 +30,10 @@ class Spree::DoctorEmployment < ActiveRecord::Base
   #     false
   #   end
   # end
+
+  def slots_at date
+    Spree::TimeSlot.all_for_doctor(self, date: date)
+  end
 
   private
     

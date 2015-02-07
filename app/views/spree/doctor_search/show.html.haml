@@ -2,7 +2,6 @@
 = render 'search_form'
 %hr/
 - @doctor_employments.all.each do |empl|
-  [debug] Appointments count: #{empl.appointments.count}
-  %br/
+  .pull-right [debug] Appointments in last 30 days count: #{empl.appointments.where(created_at: 30.days.ago..DateTime.now).count}
   = render partial: 'doctor_card', locals: { empl: empl, for_search_page: true }
   %hr/

@@ -60,7 +60,8 @@ RSpec.describe Spree::AppointmentsController, :type => :controller do
 
   describe "spree_get new" do
     it "assigns a new spree_appointment as @spree_appointment" do
-      spree_get :new, {}, valid_session
+      empl = create(:doctor_employment)
+      spree_get :new, {:doctor_employment_id => empl.id}, valid_session
       expect(assigns(:spree_appointment)).to be_a_new(Spree::Appointment)
     end
   end

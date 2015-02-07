@@ -15,6 +15,7 @@ class Spree::ClinicsController < Spree::HomeController
   # GET /spree/clinics/new
   def new
     @spree_clinic = current_spree_user.clinics.new
+    @spree_clinic.timings = Spree::Timing.new_for_all_weekdays
   end
 
   # GET /spree/clinics/1/edit
@@ -55,6 +56,6 @@ class Spree::ClinicsController < Spree::HomeController
 
     # Only allow a trusted parameter "white list" through.
     def spree_clinic_params
-      params.require(:clinic).permit(:name, :latitude, :longitude, :description, :clinic_type_id, :street, :building, suburb_attributes: [:name, :city_id, :id])
+      params.require(:clinic).permit(:name, :latitude, :longitude, :description, :clinic_type_id, :street, :building, :services_list, suburb_attributes: [:name, :city_id, :id], timings_attributes: Spree::Timing::PERMITTED_ATTRS)
     end
 end

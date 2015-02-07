@@ -2,40 +2,36 @@
   - if @spree_appointment.errors.any?
     #error_explanation
       %h2
-        = pluralize(@spree_appointment.errors.count, "error")
-        prohibited this spree_appointment from being saved:
+        Appointment failed to create:
       %ul
         - @spree_appointment.errors.full_messages.each do |message|
           %li= message
-  .field
-    = f.label :scheduled_at
-    %br/
-    = f.date_select :scheduled_at, { discard_year: true }
-    = select_tag "#{f.object_name}[scheduled_at(4)]", options_for_select(Spree::TimeSlot.all, current_time_slot )
-  .field
+  .form-group
+    %label Pick a time slot
+    .clearfix
+      = select_date appointment_default_day, { discard_year: true, discard_time: true, start_day: Date.today.day }, { class: 'form-control date-select-inline', data: { slot_date_select: true, slot_dr_id:  @doctor_employment.id } }
+    .slots-group
+      = render partial: 'time_slots', locals: { slots: @doctor_employment.slots_at(appointment_default_day)}
+  .form-group
     = f.label :name
-    %br/
-    = f.text_field :name
-  .field
-    = f.label :phone
-    %br/
-    = f.text_field :phone
-  .field
+    = f.text_field :name, class: 'form-control', placeholder: 'Full name'
+  .form-group
+    = f.label :phone, 'Mobile'
+    = f.text_field :phone, class: 'form-control', placeholder: 'Mobile phone'
+    %span.help-block You will receive SMS with verification code on that number. Type without '+91'
+  .form-group
     = f.label :address
-    %br/
-    = f.text_area :address
-  .field
-    = f.label :email
-    %br/
-    = f.text_field :email
-  .field
+    = f.text_area :address, class: 'form-control', placeholder: 'Address'
+  - unless spree_user_signed_in?
+    .row
+      .col-md-6
+        = f.label :email
+        = f.text_field :email, class: 'form-control', placeholder: 'Email'
+  .form-group
     = f.label :cause
-    %br/
-    = f.text_area :cause
-  .field
+    = f.text_area :cause, class: 'form-control', placeholder: 'Cause'
+  -#.form-group
     = f.label :payment
-    %br/
-    = f.select :payment, options_for_select([["Cash",'cash'],["Online Card",'online']])
-  = f.hidden_field :doctor_employment_id, value: params[:doctor_employment_id]
-  .actions
-    = f.submit 'Book'
+    = f.select :payment, options_for_select([["Cash",'cash'],["Online Card",'online']]), class: 'form-control'
+  = f.hidden_field :doctor_employment_id, value: @doctor_employment.id
+  = f.submit 'Book', class: 'btn btn-primary'

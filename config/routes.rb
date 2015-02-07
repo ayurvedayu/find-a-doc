@@ -1,5 +1,6 @@
 Spree::Core::Engine.routes.draw do
   
+  resources :timings, only: :index
 
   devise_scope :spree_user do
     get '/doctor-signup' => 'user_registrations#doctor_signup', :as => :doctor_signup
@@ -22,7 +23,7 @@ Spree::Core::Engine.routes.draw do
   get 'account/appointments/:id/cancel', to: 'appointments#cancel', as: 'cancel_appointment'
   # post 'account/appointments/:id/cancel', to: 'appointments#cancel'
   get 'account/appointments/:id/complete', to: 'appointments#complete', as: 'complete_appointment'
-  # post 'account/appointments/:id/complete', to: 'appointments#complete'
+  get 'account/appointments/:id/verify', to: 'appointments#verify', as: 'verify_appointment'
 
   resources :doctors, only: :show
 

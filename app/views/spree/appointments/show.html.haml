@@ -1,22 +1,14 @@
-%p#notice= notice
-%p
-  %strong Status:
-  = @spree_appointment.status
-%p
-  %strong Name:
-  = @spree_appointment.name
-%p
-  %strong Phone:
-  = @spree_appointment.phone
-%p
-  %strong Address:
-  = @spree_appointment.address
-%p
-  %strong Email:
-  = @spree_appointment.email
-%p
-  %strong Cause:
-  = @spree_appointment.cause
-%p
-  %strong Payment:
-  = @spree_appointment.payment
+.row
+  .col-md-6
+    .panel.panel-default
+      .panel-heading Appointment
+      .panel-body
+        %h2= @spree_appointment.scheduled_at_time
+        %h3= l @spree_appointment.scheduled_at.to_date, format: :long
+      %ul.list-group
+        %li.list-group-item
+          %h3= @spree_appointment.doctor_employment.doctor.name_with_dr
+          %h4= @spree_appointment.doctor_employment.doctor.phone
+        %li.list-group-item
+          %h3= @spree_appointment.doctor_employment.clinic.name
+          %h5= @spree_appointment.doctor_employment.clinic.full_address

@@ -1,0 +1,14 @@
+%h1 Verify your phone please
+[debug] verification code is:
+= @verification.token
+.row
+  .col-md-6
+    = form_for [:account, @spree_appointment] do |f|
+      .form-group
+        = label_tag  do
+          Verification code from SMS
+          = text_field_tag 'verification[token]', nil, class: 'form-control', placeholder: '4-digit number'
+      = hidden_field_tag 'verification[id]', @verification.id
+      = f.hidden_field :status, value: 'initiated'
+      .form-group
+        = f.submit 'Verify'

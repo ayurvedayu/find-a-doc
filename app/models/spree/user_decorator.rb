@@ -11,7 +11,7 @@ Spree::User.class_eval do
   has_many :doctor_employments, through: :appointments
   has_many :clinics
   has_many :reviews
-  has_many :verifications
+  has_many :verifications, as: :verifiable
 
 
 

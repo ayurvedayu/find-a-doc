@@ -7,4 +7,8 @@ module Spree::AppointmentsHelper
     time = Time.now
     Time.at((time.to_f/step).round * step)
   end
+
+  def appointment_default_day
+    Date.today + 1
+  end
 end

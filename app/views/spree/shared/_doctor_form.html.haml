@@ -1,53 +1,64 @@
-%p
-  = f.label :clinics
-  %br/
-  - @user.doctor.doctor_employments.all.each do |employment|
-    %p
-      = employment.clinic.name
-      , #{employment.consultation_price} #{employment.consultation_currency}
-      (#{link_to 'Remove', [:account, employment], method: :delete, data: { confirm: 'Are you sure?' }})
-  = f.fields_for :doctor_employments, doctor.doctor_employments.build do |daf|
-    %p
-      = daf.collection_select :clinic_id, Spree::Clinic.all, :id, :name, prompt: 'Select a clinic please..'
-      %br/
-      = daf.text_field :consultation_price, placeholder: 'Consultation price'
-      = daf.select :consultation_currency, options_for_select(Spree::Currency.all)
-    %p
-      - 7.times {|i| doctor.doctor_employments.last.timings.new(day: i)}
-      = daf.fields_for :timings do |tf|
+.row
+  .col-md-6
+    .form-group
+      = f.label :name
+      .input-group
+        .input-group-addon Dr.
+        = f.text_field :name, class: 'form-control'
+    .form-group
+      = f.label :description
+      = f.text_area :description, class: 'form-control'
+    .row
+      .col-xs-4
+        .form-group
+          = f.label :degree
+          = f.text_field :degree, class: 'form-control', placeholder: 'i.e. BDS'
+      .col-xs-8
+        .form-group
+          = f.label :phone
+          = f.text_field :phone, class: 'form-control'
+    .checkbox
+      = f.label :is_for_instant_booking do
+        = f.check_box :is_for_instant_booking, "aria-described-by" => 'ib-help'
+        Available for instant booking
+        %span.help-block#ib-help If this is checked patient will be able to book an appointment online.
+    = f.label :clinics
+    - if @user.doctor.doctor_employments.exists?
+      %table.form-group.table
+        %tr
+          %th Name
+          %th Consultation price
+          %th Working hours
+          %th
+          %th
+        - @user.doctor.doctor_employments.all.each do |employment|
+          %tr
+            %td= link_to employment.clinic.name, employment.clinic
+            %td= "#{employment.consultation_price} #{employment.consultation_currency}"
+            %td= human_timings employment.timings
+            %td= link_to 'Remove', [:account, employment], method: :delete, data: { confirm: 'Are you sure?' }
+    - else
+      .help-block You must specify clinics that you work in, to let patients find you.
+    .form-group
+      = label_tag 'Create new employment:'
+      = f.fields_for :doctor_employments, @new_employment do |daf|
         .row
-          .timing
-            %span.slider-value-from
-            %span.slider-value-to
-            = tf.text_field :start_time
-            = tf.text_field :end_time
-            .slider-time-range
-          or #{link_to 'create one', spree.new_account_clinic_path}
-          %p
-            = f.label :name
-            %br/
-            = f.text_field :name
-          %p
-            = f.label :description
-            %br/
-            = f.text_area :description
-          %p
-            = f.label :degree
-            %br/
-            = f.text_field :degree
-          %p
-            = f.label :phone
-            %br/
-            = f.text_area :phone
-          %p
-            = f.label :is_for_instant_booking
-            %br/
-            = f.check_box :is_for_instant_booking
-          %p
-            = f.label :specialties
-            %br/
-            = hidden_field_tag "user[doctor_attributes][specialty_ids][]", nil
-            - Spree::Specialty.all.each do |s|
-              = check_box_tag "user[doctor_attributes][specialty_ids][]", s.id, doctor.specialty_ids.include?(s.id), id: dom_id(s)
-              = label_tag dom_id(s), s.name
-              %br/
+          .col-xs-8
+            = daf.collection_select :clinic_id, Spree::Clinic.where('spree_clinics.id not in (?)',doctor.clinic_ids.empty? ? '-1' : doctor.clinic_ids), :id, :name, { prompt: 'Select a clinic please..' }, { class: 'form-control', id: 'doctor_clinic_id' }
+          .col-xs-4
+            = link_to 'or create one', spree.new_account_clinic_path, class: 'btn btn-primary'
+        .row 
+          .col-xs-4
+            = daf.text_field :consultation_price, placeholder: 'Consultation price', class: 'form-control', id: 'doctor_cons_price'
+          .col-xs-4
+            = daf.select :consultation_currency, options_for_select(Spree::Currency.all), {}, { class: 'form-control' }
+        Specify your working time please:
+        = daf.fields_for :timings do |tf|
+          = render 'spree/shared/timing_panel', tf: tf
+      = f.label :specialties
+      = hidden_field_tag "user[doctor_attributes][specialty_ids][]", nil
+      - Spree::Specialty.all.each do |s|
+        .checkbox
+          = label_tag dom_id(s) do
+            = check_box_tag "user[doctor_attributes][specialty_ids][]", s.id, doctor.specialty_ids.include?(s.id), id: dom_id(s)
+            = s.name
