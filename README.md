@@ -22,6 +22,15 @@ bundle exec rails g spree_finda_doc:install
 
 Also add the jquery.ui javascript.
 
+Also specify mailer in devise.rb
+
+```ruby
+Devise.setup do |config|
+  # ==> Mailer Configuration
+  # Configure the e-mail address which will be shown in DeviseMailer.
+  config.mailer_sender = 'please-change-me@config-initializers-devise.com'
+end
+```
 
 
 Testing
