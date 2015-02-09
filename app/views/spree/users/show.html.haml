@@ -1,50 +1,66 @@
 .row
-  - if @user.doctor? and !@user.phone_is_verified?
-    = render 'phone_verification'
-  .six.columns
+  .col-xs-12
+    - if @user.doctor? and !@user.phone_is_verified? and @user.doctor.phone
+      = render 'phone_verification'
+    - elsif @user.doctor? and !@user.doctor.phone
+      .alert.alert-warning Fill in your #{link_to 'profile', spree.edit_account_path, class: 'alert-link'} to let users find you.
+  .col-xs-12
+    - if @user.doctor? or @user.clinic?
+      = link_to spree.edit_account_path, class: 'btn btn-default' do
+        %span.glyphicon.glyphicon-cog
+        Edit profile
+      = link_to 'View public profile', @user.doctor, class: 'btn btn-info'
+    .pull-right
+      = @user.email
+-#.row
+  .col-xs-12
     %h1
       = accurate_title
       %small
         (#{link_to Spree.t(:edit), spree.edit_account_path})
+.row
+  -#.col-md-4
     .account-summary{"data-hook" => "account_summary"}
       %dl#user-info
         - if @user.doctor?
-          %dt Name
-          %dd= @user.doctor.name
-          %dt Clinics:
-          - @user.doctor.doctor_employments.all.each do |employment|
-            %dd
-              = employment.clinic.name
-              - if employment.clinic.user == spree_current_user
-                (#{link_to 'Edit', edit_clinic_path(employment.clinic)})
-            %dd
-              = employment.consultation_price
-              = employment.consultation_currency
-          %dt About:
-          %dd= @user.doctor.description
-          %dt Degree:
-          %dd= @user.doctor.degree
-          %dt Phone:
-          %dd= @user.doctor.phone
-          %dt Available for instant booking:
-          %dd= t @user.doctor.is_for_instant_booking.class
-          %dt Specialties:
-          %dd= @user.doctor.specialties.all.map(&:name).join(', ')
+          %br
+          -#
+            %dt Name
+            %dd= @user.doctor.name
+            %dt Clinics
+            - @user.doctor.doctor_employments.all.each do |employment|
+              %dd
+                = employment.clinic.name
+                - if employment.clinic.user == spree_current_user
+                  (#{link_to 'Edit', edit_clinic_path(employment.clinic)})
+              %dd
+                = employment.consultation_price
+                = employment.consultation_currency
+            %dt About
+            %dd= @user.doctor.description
+            %dt Degree
+            %dd= @user.doctor.degree
+            %dt Phone
+            %dd= @user.doctor.phone
+            %dt Available for instant booking
+            %dd= t @user.doctor.is_for_instant_booking.class
+            %dt Specialties
+            %dd= @user.doctor.specialties.all.map(&:name).join(', ')
         %dt= Spree.t(:email)
         %dd
           = @user.email
-  .nine.columns
+  .col-md-8
     %h3 My Appointments
     - if @user.doctor?
       - @user.doctor.doctor_employments.each do |empl|
         %h5
           at #{empl.clinic.name}:
-        = render partial: 'appointments_table', locals: { appointments: empl.appointments, doctor: true}
+        = render 'appointments_table', appointments: empl.appointments, doctor: true
       - # elsif ! @user.doctor? && ! @user.clinic?
       %h5 Own appointments
     = render partial: 'appointments_table', locals: { appointments: @user.appointments, doctor: false}
 .row
-  .twelve.columns
+  .col-xs-12
     .account-my-orders{"data-hook" => "account_my_orders"}
       %h3= Spree.t(:my_orders)
       - if @orders.present?

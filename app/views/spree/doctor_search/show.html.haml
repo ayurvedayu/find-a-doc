@@ -1,7 +1,12 @@
-%h2 Doctor Search
-= render 'search_form'
-%hr/
-- @doctor_employments.all.each do |empl|
-  .pull-right [debug] Appointments in last 30 days count: #{empl.appointments.where(created_at: 30.days.ago..DateTime.now).count}
-  = render partial: 'doctor_card', locals: { empl: empl, for_search_page: true }
-  %hr/
+.row
+  .col-xs-12
+    %h2 Doctor Search
+    = render 'search_form'
+.row
+  .col-md-3
+    = render 'search_details_form'
+  .col-md-9
+    - @doctor_employments.all.each do |empl|
+      .pull-right [debug] Appointments in last 30 days count: #{empl.appointments.where(created_at: 30.days.ago..DateTime.now).count}
+      = render partial: 'doctor_card', locals: { empl: empl, for_search_page: true }
+      %hr/

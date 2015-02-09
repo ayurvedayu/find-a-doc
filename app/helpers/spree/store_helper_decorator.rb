@@ -1,4 +1,19 @@
 Spree::StoreHelper.module_eval do
+  def appointment_actions apt, is_doctor
+    ary = []
+    if apt.completed?
+      return []
+    elsif apt.initiated? and is_doctor
+      ary << link_to('Cancel', cancel_appointment_path(apt))
+    elsif !is_doctor
+      ary << link_to('Mark as completed', complete_appointment_path(apt))
+    elsif apt.pending_doctor?
+      ary << link_to('Confirm', confirm_appointment_path(apt), method: :post)
+    end 
+
+    return ary
+  end
+
   def day_name day_number
     Date::DAYNAMES[day_number]
   end

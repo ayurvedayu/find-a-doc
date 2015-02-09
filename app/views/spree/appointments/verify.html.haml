@@ -9,6 +9,7 @@
           Verification code from SMS
           = text_field_tag 'verification[token]', nil, class: 'form-control', placeholder: '4-digit number'
       = hidden_field_tag 'verification[id]', @verification.id
-      = f.hidden_field :status, value: 'initiated'
+      = f.hidden_field :name, value: @spree_appointment.name
+      -#= f.hidden_field :status, value: @spree_appointment.doctor_employment.doctor.auto_confirmable? 'initiated':
       .form-group
         = f.submit 'Verify'

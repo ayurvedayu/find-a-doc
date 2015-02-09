@@ -1,0 +1,3 @@
+%h3 New appointment
+Appointment scheduled at #{@appointment.scheduled_at} to #{link_to @appointment.doctor_employment.doctor.name, spree.doctor_url(@appointment.doctor_employment.doctor)} (#{@appointment.doctor_employment.doctor.phone}) at #{@appointment.doctor_employment.clinic.full_address}.
+Ayurvedayu

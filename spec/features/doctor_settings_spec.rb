@@ -17,7 +17,7 @@ feature "DoctorSettings", :type => :feature do
     select 'Bangalore', from: 'City'
     fill_in 'Suburb/Village', with: (vals[:sub] = 'anekal')
     fill_in 'Street', with: (vals[:str] = 'S N L Road')
-    fill_in 'Description', with: (vals[:str] = Faker::Lorem.paragraph)
+    fill_in 'Description', with: (vals[:desc] = Faker::Lorem.paragraph)
     fill_in 'Services', with: 'braces, smile makeovers'
     select 'Ayurveda', from: 'Clinic type'
 
@@ -36,9 +36,13 @@ feature "DoctorSettings", :type => :feature do
 
     click_button 'Update'
 
-    vals.each do |v|
-      expect(page).to have_text v[1]
-    end
+    click_link 'View public profile'
+
+    expect(page).to have_text vals[:desc].truncate(80)
+    expect(page).to have_text vals[:bds]
+    expect(page).to have_text vals[:name]
+
+
   end
 
   scenario 'doctor creates clinic successfully' do
@@ -64,9 +68,11 @@ feature "DoctorSettings", :type => :feature do
 
     # page.execute_script("$('#day_panel_1 .slider-time-range').slider('values',1000,1250)")
 
+      # fill_in 'timing_start_time_1', with: '10:00'
+      # fill_in 'timing_end_time_1', with: '18:00'
+    find("#timing_start_time_1").set("10:00")
+    find("#timing_end_time_1").set("18:00")
     within '#day_panel_1' do
-      fill_in 'timing_start_time_1', with: '10:00'
-      fill_in 'timing_end_time_1', with: '18:00'
       choose 'Working'
     end
 

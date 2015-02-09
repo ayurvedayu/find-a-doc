@@ -25,6 +25,6 @@ end
 # adjust permitted params
 timings_attrs = Spree::Timing::PERMITTED_ATTRS
 dr_em_attrs = [:id, :clinic_id, :consultation_price, :consultation_currency, timings_attributes: timings_attrs]
-doctor_attrs = [:clinic_id, :name, :description, :phone, :is_for_instant_booking, :id, :degree, specialty_ids: [], doctor_employments_attributes: dr_em_attrs]
+doctor_attrs = [:clinic_id, :name, :description, :phone, :is_for_instant_booking, :id, :degree, :auto_confirmable, specialty_ids: [], doctor_employments_attributes: dr_em_attrs]
 user_attributes = [:make_role, doctor_attributes: doctor_attrs ]
 Spree::PermittedAttributes.user_attributes << user_attributes

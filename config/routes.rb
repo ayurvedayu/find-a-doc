@@ -24,6 +24,7 @@ Spree::Core::Engine.routes.draw do
   # post 'account/appointments/:id/cancel', to: 'appointments#cancel'
   get 'account/appointments/:id/complete', to: 'appointments#complete', as: 'complete_appointment'
   get 'account/appointments/:id/verify', to: 'appointments#verify', as: 'verify_appointment'
+  post 'account/appointments/:id/comfirm', to: 'appointments#confirm', as: 'confirm_appointment'
 
   resources :doctors, only: :show
 

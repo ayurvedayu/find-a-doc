@@ -32,6 +32,8 @@ Devise.setup do |config|
 end
 ```
 
+and you need to specify email credentials in production.rb
+
 
 Testing
 -------

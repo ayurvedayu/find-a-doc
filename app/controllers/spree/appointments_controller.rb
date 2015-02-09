@@ -1,5 +1,6 @@
 class Spree::AppointmentsController < Spree::HomeController
-  before_action :set_spree_appointment, only: [:edit, :destroy, :complete, :cancel]
+  before_action :set_spree_appointment, only: [:edit, :destroy, :complete]
+  before_action :set_doctors_spree_appointment, only: [ :cancel, :confirm]
 
   # GET /spree/appointments
   def index
@@ -33,7 +34,11 @@ class Spree::AppointmentsController < Spree::HomeController
 
       redirect_to action: :verify, id: @spree_appointment.id and return if verify_phone
 
-      @spree_appointment.update status: 'initiated'
+      if @spree_appointment.doctor_employment.doctor.auto_confirmable?
+        @spree_appointment.initiated!
+      else
+        @spree_appointment.pending_doctor!
+      end
 
       redirect_to account_path, notice: 'Appointment was successfully created.'
     else
@@ -49,6 +54,13 @@ class Spree::AppointmentsController < Spree::HomeController
     
     check_token! if params[:verification]
 
+    # this needs to be better. a lot.
+    if @spree_appointment.doctor_employment.doctor.auto_confirmable?
+      @spree_appointment.initiated!
+    else
+      @spree_appointment.pending_doctor!
+    end
+
     if @spree_appointment.update(spree_appointment_params)
       # create recommendation for doctor if asked to
       if params[:user_recommends]
@@ -56,7 +68,7 @@ class Spree::AppointmentsController < Spree::HomeController
       end
       if @spree_appointment.initiated?
         flash.now[:notice] = 'Appointment successfully initiated.'
-        render 'show' 
+        render 'show' and return # very bad too
       end
 
       redirect_to account_path, notice: 'Appointment was successfully updated.'
@@ -78,6 +90,12 @@ class Spree::AppointmentsController < Spree::HomeController
     @verification = @spree_appointment.verifications.where( status: 'active', phone: @spree_appointment.phone).order(created_at: :desc).first_or_create
   end
 
+  def confirm
+    @spree_appointment.initiated!
+    redirect_to account_path, notice: 'Appointment successfully confirmed.'
+  end
+
+
   # DELETE /spree/appointments/1
   # def destroy
   #   @spree_appointment.destroy
@@ -88,6 +106,9 @@ class Spree::AppointmentsController < Spree::HomeController
     # Use callbacks to share common setup or constraints between actions.
     def set_spree_appointment
       @spree_appointment = current_spree_user.appointments.find(params[:id])
+    end
+    def set_doctors_spree_appointment
+      @spree_appointment = current_spree_user.doctor.appointments.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

@@ -19,7 +19,8 @@ the installer will append this file to the app vendored assets here: 'vendor/ass
 	position: relative;
 	bottom: 5px;
 	// margin: 0 3px;
-	margin-right: 10px
+	margin-right: 10px;
+	min-width: 140px;
 }
 
 .tab-pane{

@@ -15,10 +15,7 @@
           %td= doctor_or_client.phone
           %td= app.status.capitalize
           %td= app.scheduled_at
-          - unless app.completed?
-            - if app.initiated?
-              %td= link_to 'Cancel', cancel_appointment_path(app)
-            - if ! doctor
-              %td= link_to 'Mark as completed', complete_appointment_path(app)
+          - appointment_actions(app, doctor).each do |action|
+            %td= raw action
 - else
   %p You have no appointments yet

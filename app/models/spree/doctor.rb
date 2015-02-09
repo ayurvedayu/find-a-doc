@@ -50,4 +50,7 @@ class Spree::Doctor < ActiveRecord::Base
   def name_with_dr
     "Dr. #{name}"
   end
+  def should_generate_new_friendly_id?
+    name_changed?
+  end
 end

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature "Appointments", :type => :feature do
+feature "Appointments", :type => [:feature, :mailer] do
 
   let(:empl) { create(:doctor_employment) }
+  # before { ActionMailer::Base.deliveries = [] }
   def prepare_appointment
-
     visit spree.doctor_search_results_path(dn: empl.doctor.name)
 
     click_link 'Book an appointment'
@@ -17,6 +17,34 @@ feature "Appointments", :type => :feature do
   end
 
   context 'guest user' do 
+    context 'non-auto confirmable doctor' do
+      it 'receives the ask to confirm and confirms' do
+        empl.doctor.update auto_confirmable: false
+
+        prepare_appointment
+        fill_in('Email', :with => Faker::Internet.email)
+
+        click_button('Book')
+
+        fill_in 'Verification code from SMS', with: Spree::Appointment.last.verifications.last.token
+
+        click_button 'Verify'
+
+        expect(Spree::Appointment.last).to be_pending_doctor
+
+        expect(ActionMailer::Base.deliveries.count).to eq(2)
+
+        sign_in_as! empl.doctor.user
+
+        # print page.html
+        # byebug
+        click_link 'Confirm'
+
+        expect(Spree::Appointment.last).to be_initiated
+
+        expect(ActionMailer::Base.deliveries.count).to eq(4)
+      end
+    end
     it 'receives phone verification whilst booking' do
       prepare_appointment
       fill_in('Email', :with => Faker::Internet.email)
@@ -58,7 +86,7 @@ feature "Appointments", :type => :feature do
 
         expect(Spree::Appointment.last).to be_initiated
 
-        expect(page).to have_text(Spree::Appointment.last.scheduled_at_time
+        expect(page).to have_text(Spree::Appointment.last.scheduled_at_time)
           
         visit spree.account_path
         # byebug
@@ -76,6 +104,16 @@ feature "Appointments", :type => :feature do
 
         expect(Spree::Appointment.last.doctor_employment.doctor.recommendations).to be_present
 
+
+      end
+      it "receives the email" do
+        user = create(:confirmed_user)
+
+        sign_in_as!(user)
+
+        prepare_appointment
+
+        expect{click_button('Book')}.to change{ActionMailer::Base.deliveries.count}.by(2)
       end
     end
     context 'unverified phone' do 

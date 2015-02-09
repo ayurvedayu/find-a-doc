@@ -36,7 +36,7 @@
     .form-group
       = f.label :services_list
       = f.text_area :services_list, class: 'form-control', placeholder: 'e.g. massage, brackets'
-      %span.help-text Enter values separated by comma
+      %span.help-block Enter values separated by comma
     .form-group
       = f.label :clinic_type_id
       = f.collection_select :clinic_type_id, Spree::ClinicType.all, :id, :name, {}, {  class: 'form-control' }

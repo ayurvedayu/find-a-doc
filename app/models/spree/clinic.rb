@@ -52,4 +52,8 @@ class Spree::Clinic < ActiveRecord::Base
       @services_list.split(",").each {|sl| services.find_or_create_by name: sl.strip.titleize}
     end
   end
+
+  def should_generate_new_friendly_id?
+    name_changed?
+  end
 end

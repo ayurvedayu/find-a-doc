@@ -12,8 +12,7 @@
         = tf.radio_button :is_working_day, 'working'
         Working
     .timing.timing-inline.pull-right
-      -# readonly is set in spree_finda_doc.js file (for testing w\o js purpose)
-      = tf.text_field :start_time, class: 'slider-input slider-input-from', readonly: false, id: "timing_start_time_#{tf.object.day}"
-      &nbsp;&mdash;&nbsp;
-      = tf.text_field :end_time, class: 'slider-input slider-input-to', readonly: false, id: "timing_end_time_#{tf.object.day}"
+      = tf.hidden_field :start_time, class: 'slider-input slider-time-input slider-time-input-from', readonly: false, id: "timing_start_time_#{tf.object.day}"
+      = tf.hidden_field :end_time, class: 'slider-input slider-time-input slider-time-input-to', readonly: false, id: "timing_end_time_#{tf.object.day}"
+      .slider-time-value
       .slider-time-range
