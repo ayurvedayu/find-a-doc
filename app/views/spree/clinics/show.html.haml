@@ -33,7 +33,7 @@
       #about.tab-pane
         %p= @spree_clinic.description
 -#=javascript_include_tag "http://maps.googleapis.com/maps/api/js?key=#{SpreeFindaDoc.gmaps_api}&sensor=false"
-=javascipt_include_tag "https://maps.googleapis.com/maps/api/js?key=#{SpreeFindaDoc.gmaps_api}&sensor=false"
+= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{SpreeFindaDoc.gmaps_api}&sensor=false"
 :coffee
   $ ->
     window.clinic_position = new google.maps.LatLng(#{@spree_clinic.latitude},#{@spree_clinic.longitude})
