@@ -30,22 +30,26 @@
         .row
           .col-xs-12
             #map_canvas
+              - if !@spree_clinic.geocoded?
+                %h5
+                  %small Sorry, location is not available for that clinic.
       #about.tab-pane
         %p= @spree_clinic.description
 -#=javascript_include_tag "http://maps.googleapis.com/maps/api/js?key=#{SpreeFindaDoc.gmaps_api}&sensor=false"
-= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{SpreeFindaDoc.gmaps_api}&sensor=false"
-:coffee
-  $ ->
-    window.clinic_position = new google.maps.LatLng(#{@spree_clinic.latitude},#{@spree_clinic.longitude})
-    mapOptions = 
-      zoom: 14
-      center: clinic_position
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+- if @spree_clinic.geocoded?
+  = javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{SpreeFindaDoc.gmaps_api}&sensor=false"
+  :coffee
+    $ ->
+      window.clinic_position = new google.maps.LatLng(#{@spree_clinic.latitude},#{@spree_clinic.longitude})
+      mapOptions = 
+        zoom: 14
+        center: clinic_position
+        mapTypeId: google.maps.MapTypeId.ROADMAP
 
-    window.map = new google.maps.Map($('#map_canvas').get(0), mapOptions)
-    window.map.setCenter(window.clinic_position)
-    marker = new google.maps.Marker
-      position: clinic_position
-      map: window.map
-      animation: google.maps.Animation.DROP
-      title: "#{@spree_clinic.name}"
+      window.map = new google.maps.Map($('#map_canvas').get(0), mapOptions)
+      window.map.setCenter(window.clinic_position)
+      marker = new google.maps.Marker
+        position: clinic_position
+        map: window.map
+        animation: google.maps.Animation.DROP
+        title: "#{@spree_clinic.name}"
