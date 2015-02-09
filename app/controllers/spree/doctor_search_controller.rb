@@ -20,7 +20,7 @@ class Spree::DoctorSearchController < Spree::HomeController
     case search_for
     when 'specialty'
       @doctor_employments = @doctor_employments.where(:spree_specialties => { :id => specialties } )
-      @doctor_employments = @doctor_employments.near(location, within) if location
+      @doctor_employments = @doctor_employments.near(location, within) if location.present?
 
     when 'doctor'
       @doctor_employments = @doctor_employments

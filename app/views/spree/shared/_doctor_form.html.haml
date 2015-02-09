@@ -38,9 +38,13 @@
           %th
         - @user.doctor.doctor_employments.all.each do |employment|
           %tr
-            %td= link_to employment.clinic.name, employment.clinic
+            %td
+              = link_to employment.clinic.name, employment.clinic 
+              - if employment.clinic.user == spree_current_user
+                &nbsp;(#{link_to 'edit', edit_clinic_path(employment.clinic)})
             %td= "#{employment.consultation_price} #{employment.consultation_currency}"
             %td= human_timings employment.timings
+            %td= link_to 'Edit', [:account, employment]
             %td= link_to 'Remove', [:account, employment], method: :delete, data: { confirm: 'Are you sure?' }
     - else
       .help-block You must specify clinics that you work in, to let patients find you.
