@@ -1,6 +1,6 @@
 class Spree::AppointmentsController < Spree::HomeController
   before_action :set_spree_appointment, only: [:edit, :destroy, :complete]
-  before_action :set_doctors_spree_appointment, only: [ :cancel, :confirm]
+  before_action :set_doctors_spree_appointment, only: :confirm
 
   # GET /spree/appointments
   def index
@@ -83,6 +83,19 @@ class Spree::AppointmentsController < Spree::HomeController
   end
 
   def cancel
+    if current_spree_user.doctor? || current_spree_user.clinic?
+      @apt = current_spree_user.doctor.appointments.find(params[:id])
+      @he = 'doctor'
+      # @email = @apt.email
+      # @phone = @apt.phone
+    else
+      @apt = current_spree_user.appointments.find(params[:id])
+      @he = 'user'
+      # @email = @apt.doctor.user.email
+      # @phone = @apt.doctor.phone
+    end
+
+
   end
 
   def verify
@@ -113,7 +126,7 @@ class Spree::AppointmentsController < Spree::HomeController
 
     # Only allow a trusted parameter "white list" through.
     def spree_appointment_params
-      params.require(:appointment).permit(:doctor_employment_id, :status, :name, :phone, :address, :email, :cause, :payment, :scheduled_at, :comment, :review_attributes => [:text,:user_id,:doctor_id])
+      params.require(:appointment).permit(:doctor_employment_id, :canceled_by, :status, :name, :phone, :address, :email, :cause, :payment, :scheduled_at, :comment, :review_attributes => [:text,:user_id,:doctor_id])
     end
 
     def verify_phone

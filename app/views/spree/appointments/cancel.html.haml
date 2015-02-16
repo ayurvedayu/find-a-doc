@@ -1,6 +1,7 @@
 %h1 Please specify the reason of cancellation
-= form_for [:account, @spree_appointment] do |f|
+= form_for [:account, @apt] do |f|
   = f.hidden_field :status, value: 'canceled'
+  = f.hidden_field :canceled_by, value: @he
   %p
     = f.label :comment
     %br/

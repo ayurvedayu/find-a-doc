@@ -18,4 +18,9 @@ class AppointmentMailer < ActionMailer::Base
     @appointment = appointment
     mail(to: appointment.doctor_employment.doctor.user.email, subject: 'Ayurvedayu: new appointment scheduled')
   end
+
+  def cancel_email email, apt
+    @apt = apt
+    mail(to: email, subject: 'Ayurvedayu: appointment has been canceled')
+  end
 end

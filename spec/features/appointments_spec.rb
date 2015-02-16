@@ -16,6 +16,7 @@ feature "Appointments", :type => [:feature, :mailer] do
     fill_in('Cause', :with => Faker::Lorem.paragraph)
   end
 
+
   context 'guest user' do 
     context 'non-auto confirmable doctor' do
       it 'receives the ask to confirm and confirms' do
@@ -105,6 +106,20 @@ feature "Appointments", :type => [:feature, :mailer] do
         expect(Spree::Appointment.last.doctor_employment.doctor.recommendations).to be_present
 
 
+      end
+      it "can cancel appointment" do
+        user = create(:confirmed_user)
+        sign_in_as!(user)
+        prepare_appointment
+        click_button 'Book'
+        visit spree.account_path
+
+        click_link('Cancel')
+
+        expect{click_button('Proceed')}.to change{ActionMailer::Base.deliveries.count}.by(1)
+
+        expect(ActionMailer::Base.deliveries.last.to.first).to eq(empl.doctor.user.email)
+        expect(Spree::Appointment.last).to be_canceled
       end
       it "receives the email" do
         user = create(:confirmed_user)

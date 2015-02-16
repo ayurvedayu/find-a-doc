@@ -7,7 +7,7 @@ class Spree::DoctorSearchController < Spree::HomeController
   def show
     specialties = params[:ds]
     location = params[:dl]
-    within = '50' # km
+    within = 50.0 # km
     doctor_name = params[:dn]
     clinic_name = params[:cn]
     search_for = params[:search_for]
@@ -19,7 +19,8 @@ class Spree::DoctorSearchController < Spree::HomeController
     
     case search_for
     when 'specialty'
-      @doctor_employments = @doctor_employments.where(:spree_specialties => { :id => specialties } )
+      # byebug
+      @doctor_employments = @doctor_employments.where(:spree_specialties => { :id => specialties } ) unless specialties.blank?
       @doctor_employments = @doctor_employments.near(location, within) if location.present?
 
     when 'doctor'
@@ -47,7 +48,7 @@ class Spree::DoctorSearchController < Spree::HomeController
       @filter[f], @filter[f][:min], @filter[f][:max] = {}, nil, nil unless @filter[f]
     end
     
-
+    # byebug
 
 
 

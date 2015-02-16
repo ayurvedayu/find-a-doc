@@ -1,4 +1,5 @@
 class Spree::Appointment < ActiveRecord::Base
+  attr_accessor :canceled_by
   belongs_to :user
   belongs_to :doctor_employment
   has_one :review
@@ -17,6 +18,7 @@ class Spree::Appointment < ActiveRecord::Base
 
   after_save :send_initiated_emails
   after_save :send_pending_emails
+  after_save :send_canceled_emails
 
 
   def scheduled_at_time
@@ -31,32 +33,35 @@ class Spree::Appointment < ActiveRecord::Base
     end
   end
 
-  def doctor_sms
-    "#{name.titleize} (#{phone}) scheduled appointment at #{scheduled_at}. Ayurvedayu."
-  end
 
-  def user_sms
-    "Appointment scheduled at #{scheduled_at} to #{doctor_employment.doctor.name} (#{doctor_employment.doctor.phone}) at #{doctor_employment.clinic.full_address}. Ayurvedayu."
+  def send_canceled_emails
+    if status_changed? and canceled?
+      case canceled_by
+      when 'doctor'
+        AppointmentMailer.cancel_email(email, self).deliver
+        BHash::Message.send(phone, Spree::SMSTemplate.user_cancel_sms(self))
+      when 'user'
+        AppointmentMailer.cancel_email(doctor_employment.doctor.user.email, self).deliver
+        BHash::Message.send(doctor_employment.doctor.phone, Spree::SMSTemplate.doctor_cancel_sms(self))
+      end
+    end
   end
-
 
   def send_initiated_emails
     if status_changed? and initiated?
-      BHash::Message.send(doctor_employment.doctor.phone, doctor_sms)
-      BHash::Message.send(phone, user_sms)
+      BHash::Message.send(doctor_employment.doctor.phone, Spree::SMSTemplate.doctor_sms(self))
+      BHash::Message.send(phone, Spree::SMSTemplate.user_sms(self))
 
       AppointmentMailer.initiated_email_doctor(self).deliver
       AppointmentMailer.initiated_email_user(self).deliver
     end
   end
 
-  def doctor_pending_sms
-    "#{name.titleize} (#{phone}) asked for appointment at #{scheduled_at}. Confirm it in your profile at Ayurvedayu."
-  end
+  
 
   def send_pending_emails
     if status_changed? and pending_doctor?
-      BHash::Message.send(doctor_employment.doctor.phone, doctor_pending_sms)
+      BHash::Message.send(doctor_employment.doctor.phone, Spree::SMSTemplate.doctor_pending_sms(self))
 
       AppointmentMailer.pending_doctor_email(self).deliver
     end
