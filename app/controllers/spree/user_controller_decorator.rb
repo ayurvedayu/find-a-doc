@@ -11,9 +11,11 @@ Spree::UsersController.class_eval do
   # end
 
   def build_employment
-    @new_employment = current_spree_user.doctor.doctor_employments.build
-    
-    @new_employment.timings = Spree::Timing.new_for_all_weekdays
+    if current_spree_user.doctor?
+      @new_employment = current_spree_user.doctor.doctor_employments.build
+      
+      @new_employment.timings = Spree::Timing.new_for_all_weekdays
+    end
   end
 
   def set_return_to

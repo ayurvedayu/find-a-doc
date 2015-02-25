@@ -11,6 +11,11 @@
     .form-group
       = f.label :name
       = f.text_field :name, class: 'form-control'
+    .checkbox
+      = f.label :is_for_instant_booking do
+        = f.check_box :is_for_instant_booking, "aria-described-by" => 'ib-help'
+        Available for instant booking
+        %span.help-block#ib-help If this is checked patient will be able to book an appointment online.
     = f.fields_for :suburb, (@spree_clinic.suburb || @spree_clinic.build_suburb) do |sf|
       .form-group
         = sf.label :city_id
@@ -24,6 +29,9 @@
     .form-group
       = f.label :building
       = f.text_field :building, class: 'form-control'
+    .form-group
+      = f.label :phone
+      = f.text_field :phone, class: 'form-control'
     %label or enter coordinates for exact position
     .row
       .col-xs-6

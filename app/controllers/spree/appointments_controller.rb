@@ -15,7 +15,7 @@ class Spree::AppointmentsController < Spree::HomeController
   # GET /spree/appointments/new
   def new
     @spree_appointment = Spree::Appointment.new
-    @doctor_employment = Spree::DoctorEmployment.find(params[:doctor_employment_id])
+    @appointee = params[:for] == 'doctor' ? Spree::DoctorEmployment.find(params[:doctor_employment_id]) : Spree::Clinic.find(params[:clinic_id])
   end
 
   # GET /spree/appointments/1/edit
@@ -25,22 +25,12 @@ class Spree::AppointmentsController < Spree::HomeController
   # POST /spree/appointments
   def create
     @spree_appointment = Spree::Appointment.new(spree_appointment_params.merge(status: 'unverified'))
-    @doctor_employment = @spree_appointment.doctor_employment
-    
     @spree_appointment.user = current_spree_user if current_spree_user
+    
 
-    # byebug
     if @spree_appointment.save
-
-      redirect_to action: :verify, id: @spree_appointment.id and return if verify_phone
-
-      if @spree_appointment.doctor_employment.doctor.auto_confirmable?
-        @spree_appointment.initiated!
-      else
-        @spree_appointment.pending_doctor!
-      end
-
-      redirect_to account_path, notice: 'Appointment was successfully created.'
+      redirect_to edit_verification_path(@spree_appointment.active_verification) and return if need_to_verify_phone
+      redirect_to @spree_appointment, notice: 'Appointment was successfully created.'
     else
       render :new
     end
@@ -52,24 +42,14 @@ class Spree::AppointmentsController < Spree::HomeController
       # Spree::Review.create()
     @spree_appointment = Spree::Appointment.find(params[:id])
     
-    check_token! if params[:verification]
-
-    # this needs to be better. a lot.
-    if @spree_appointment.doctor_employment.doctor.auto_confirmable?
-      @spree_appointment.initiated!
-    else
-      @spree_appointment.pending_doctor!
-    end
+    # @spree_appointment.check_token! params[:verification] if params[:verification]
 
     if @spree_appointment.update(spree_appointment_params)
       # create recommendation for doctor if asked to
-      if params[:user_recommends]
-        Spree::Recommendation.create!(user: current_spree_user, doctor: @spree_appointment.doctor_employment.doctor)
-      end
-      if @spree_appointment.initiated?
-        flash.now[:notice] = 'Appointment successfully initiated.'
-        render 'show' and return # very bad too
-      end
+      # if @spree_appointment.initiated?
+        # flash.now[:notice] = 'Appointment successfully initiated.'
+        # render 'show' and return # very bad too
+      # end
 
       redirect_to account_path, notice: 'Appointment was successfully updated.'
     else
@@ -126,18 +106,12 @@ class Spree::AppointmentsController < Spree::HomeController
 
     # Only allow a trusted parameter "white list" through.
     def spree_appointment_params
-      params.require(:appointment).permit(:doctor_employment_id, :canceled_by, :status, :name, :phone, :address, :email, :cause, :payment, :scheduled_at, :comment, :review_attributes => [:text,:user_id,:doctor_id])
+      params.require(:appointment).permit(:doctor_employment_id, :appointmentable_id, :appointmentable_type, :recommended,  :canceled_by, :status, :name, :phone, :address, :email, :cause, :payment, :scheduled_at, :comment, :review_attributes => [:text,:user_id,:doctor_id])
     end
 
-    def verify_phone
+    def need_to_verify_phone
       (current_spree_user.nil? and @spree_appointment.unverified?) or ( current_spree_user and ! current_spree_user.phone_is_verified?)
     end
 
-    def check_token!
-      if params[:verification][:token] and params[:verification][:id]
-        vrf = Spree::Verification.find(params[:verification][:id])
-
-        redirect_to action: :verify, id: @spree_appoinment.id, alert: 'Wrong token' and return  unless params[:verification][:token].eql? vrf.token
-      end
-    end
+    
 end

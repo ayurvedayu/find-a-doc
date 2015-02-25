@@ -5,7 +5,7 @@ feature "Appointments", :type => [:feature, :mailer] do
   let(:empl) { create(:doctor_employment) }
   # before { ActionMailer::Base.deliveries = [] }
   def prepare_appointment
-    visit spree.doctor_search_results_path(dn: empl.doctor.name)
+    visit spree.doctor_search_results_path(dn: empl.doctor.name, search_for: 'doctor')
 
     click_link 'Book an appointment'
 
@@ -95,7 +95,7 @@ feature "Appointments", :type => [:feature, :mailer] do
         click_link 'Mark as completed'
 
 
-        check('user_recommends')
+        check('Recommend that doctor')
         fill_in('appointment_review_attributes_text', :with => 'Review text')
 
 

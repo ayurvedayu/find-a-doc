@@ -9,9 +9,9 @@
   .form-group
     %label Pick a time slot
     .clearfix
-      = select_date appointment_default_day, { discard_year: true, discard_time: true, start_day: Date.today.day }, { class: 'form-control date-select-inline', data: { slot_date_select: true, slot_dr_id:  @doctor_employment.id } }
+      = select_date appointment_default_day, { discard_year: true, discard_time: true, start_day: Date.today.day }, { class: 'form-control date-select-inline', data: { slot_date_select: true, slot_dr_id:  @appointee.id } }
     .slots-group
-      = render partial: 'time_slots', locals: { slots: @doctor_employment.slots_at(appointment_default_day)}
+      = render partial: 'time_slots', locals: { slots: @appointee.slots_at(appointment_default_day)}
   .form-group
     = f.label :name
     = f.text_field :name, class: 'form-control', placeholder: 'Full name'
@@ -33,5 +33,6 @@
   -#.form-group
     = f.label :payment
     = f.select :payment, options_for_select([["Cash",'cash'],["Online Card",'online']]), class: 'form-control'
-  = f.hidden_field :doctor_employment_id, value: @doctor_employment.id
+  = f.hidden_field :appointmentable_id, value: @appointee.id
+  = f.hidden_field :appointmentable_type, value: @appointee.class.name
   = f.submit 'Book', class: 'btn btn-primary'

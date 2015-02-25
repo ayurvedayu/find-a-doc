@@ -9,7 +9,11 @@
       = link_to spree.edit_account_path, class: 'btn btn-default' do
         %span.glyphicon.glyphicon-cog
         Edit profile
-      = link_to 'View public profile', @user.doctor, class: 'btn btn-info'
+      = link_to account_clinics_path, class: 'btn btn-default' do
+        %span.glyphicon.glyphicon-th-list
+        Manage clinics
+      - if @user.doctor?
+        = link_to 'View public profile', @user.doctor, class: 'btn btn-info'
     .pull-right
       = @user.email
 -#.row
@@ -50,15 +54,18 @@
         %dd
           = @user.email
   .col-md-8
-    %h3 My Appointments
-    - if @user.doctor?
-      - @user.doctor.doctor_employments.each do |empl|
-        %h5
-          at #{empl.clinic.name}:
-        = render 'appointments_table', appointments: empl.appointments, doctor: true
-      - # elsif ! @user.doctor? && ! @user.clinic?
-      %h5 Own appointments
-    = render partial: 'appointments_table', locals: { appointments: @user.appointments, doctor: false}
+    - if @user.clinic?
+      = render 'spree/clinics/table', clinics: @user.clinics
+    - else
+      %h3 My Appointments
+      - if @user.doctor?
+        - @user.doctor.doctor_employments.each do |empl|
+          %h5
+            at #{empl.clinic.name}:
+          = render 'appointments_table', appointments: empl.appointments, doctor: true
+        - # elsif ! @user.doctor? && ! @user.clinic?
+        %h5 Own appointments
+      = render partial: 'appointments_table', locals: { appointments: @user.appointments, doctor: false}
 .row
   .col-xs-12
     .account-my-orders{"data-hook" => "account_my_orders"}

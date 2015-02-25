@@ -35,7 +35,7 @@ class Spree::TimeSlot
     appointments = dr_empl.appointments.where(scheduled_at: date.beginning_of_day..date.end_of_day)
     day = dr_empl.timings.find_by( day: date.wday )
 
-    oc_slots = appointments.map(&:scheduled_at_time)
+    oc_slots = appointments.initiated.map(&:scheduled_at_time)
     day.slots.to_a.map do |slot|
       occupied = oc_slots.include? slot
       Spree::TimeSlot.new slot: slot, date: date, occupied: occupied

@@ -1,0 +1,26 @@
+%h3 Your Clinics
+.my-btn-group
+  =link_to spree.new_account_clinic_path, class: 'btn btn-success' do
+    %span.glyphicon.glyphicon-plus
+    New Clinic
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Address
+      %th Description
+      %th Clinic type
+      %th{:colspan => "3"}
+  %tbody
+    - if clinics.count.zero?
+      %tr
+        %td.text-center( colspan="4" ) No clinics
+    - clinics.each do |spree_clinic|
+      %tr
+        %td= spree_clinic.name
+        %td= spree_clinic.full_address
+        %td= spree_clinic.description
+        %td= spree_clinic.clinic_type.name
+        %td= link_to 'Show', spree.clinic_path(spree_clinic)
+        %td= link_to 'Edit', spree.edit_clinic_path(spree_clinic)
+        %td= link_to 'Destroy', spree.clinic_path(spree_clinic), method: :delete, data: { confirm: 'Are you sure?' }

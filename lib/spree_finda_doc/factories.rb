@@ -77,6 +77,7 @@ FactoryGirl.define do
     phone '+7 985 965 63 17'
     is_for_instant_booking true
     specialties { [ FactoryGirl.create(:specialty) ] }
+    # auto_confirmable true
     factory :unverified_instant_doctor do
       association :user, factory: :unverified_doctor_user
     end

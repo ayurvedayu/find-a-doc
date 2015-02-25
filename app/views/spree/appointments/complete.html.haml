@@ -1,9 +1,10 @@
 %h1 Please review the appointment
 = form_for [:account, @spree_appointment] do |f|
   = f.hidden_field :status, value: 'completed'
-  %p
-    = check_box_tag :user_recommends
-    = label_tag 'Recommend this doctor'
+  .checkbox
+    = f.label 'Recommend this doctor' do
+      = f.check_box :recommended
+      Recommend that doctor
   %p
     = label_tag 'Review'
     %br/

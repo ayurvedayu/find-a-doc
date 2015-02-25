@@ -14,6 +14,9 @@ class Spree::Clinic < ActiveRecord::Base
   has_many :doctor_employments
   has_many :doctors, through: :doctor_employments
 
+  # has_many :appointments, through: :doctor_employments
+  has_many :appointments, as: :appointmentable
+
   has_and_belongs_to_many :services
 
   geocoded_by :full_address
@@ -55,5 +58,9 @@ class Spree::Clinic < ActiveRecord::Base
 
   def should_generate_new_friendly_id?
     name_changed?
+  end
+
+  def recommendations_total
+    doctor_employments.inject(0) { |sum, n| sum + n.doctor.recommendations.count }
   end
 end

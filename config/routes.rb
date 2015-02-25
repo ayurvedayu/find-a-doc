@@ -1,11 +1,15 @@
 Spree::Core::Engine.routes.draw do
   
+  resources :verifications, only: [:edit, :update]
+
   resources :timings, only: :index
 
   devise_scope :spree_user do
     get '/doctor-signup' => 'user_registrations#doctor_signup', :as => :doctor_signup
     get '/clinic-signup' => 'user_registrations#clinic_signup', :as => :clinic_signup
   end
+
+  resources :appointments, only: [:show]
 
   resource :account, :controller => 'users' do
       resources :clinics, shallow: true
@@ -17,7 +21,8 @@ Spree::Core::Engine.routes.draw do
       resources :doctor_employments, only: [:destroy]
     end
   end
-  get 'account/appointments/new/:doctor_employment_id', to: 'appointments#new', as: :new_account_appointment
+  get 'account/appointments/new/:doctor_employment_id', to: 'appointments#new', as: :new_account_doctor_appointment, defaults: { for: 'doctor'}
+  get 'account/clinic_appointments/new/:clinic_id', to: 'appointments#new', as: :new_account_clinic_appointment, defaults: { for: 'clinic'}
   # get 'account/appointments/:id', to: 'appointments#update', as: 'cancel_appointment', defaults: { 'appointment[status]' => 'canceled'}
   # get 'account/appointments/:id', to: 'appointments#update', as: 'complete_appointment', defaults: { 'appointment[status]' => 'completed'}
   get 'account/appointments/:id/cancel', to: 'appointments#cancel', as: 'cancel_appointment'

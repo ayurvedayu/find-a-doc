@@ -1,7 +1,15 @@
 %div
-  - if empl.doctor.is_for_instant_booking?
-    = link_to spree.new_account_appointment_path(empl), class: 'btn btn-success' do
-      %span.glyphicon.glyphicon-flash
-      Book an appointment
+  - if empl.respond_to? :doctor
+    - if empl.doctor.is_for_instant_booking?
+      = link_to spree.new_account_doctor_appointment_path(empl), class: 'btn btn-success' do
+        %span.glyphicon.glyphicon-flash
+        Book an appointment
+    - else
+      = link_to empl.doctor.phone, "tel:#{empl.doctor.phone}"
   - else
-    = link_to empl.doctor.phone, "tel:#{empl.doctor.phone}"
+    - if empl.is_for_instant_booking?
+      = link_to spree.new_account_clinic_appointment_path(empl), class: 'btn btn-success' do
+        %span.glyphicon.glyphicon-flash
+        Book an appointment
+    - else
+      = link_to empl.phone, "tel:#{empl.phone}"

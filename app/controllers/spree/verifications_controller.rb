@@ -16,6 +16,13 @@ class Spree::VerificationsController < ApplicationController
   end
 
   def update
+    @verification = Spree::Verification.find(params[:id])
+
+    if @verification.update(entered_token: params[:verification][:entered_token])
+      redirect_to @verification.verifiable, notice: 'Thanks, phone is verified!'
+    else
+      render :edit
+    end
   end
 
   def complete
@@ -28,6 +35,10 @@ class Spree::VerificationsController < ApplicationController
     else
       redirect_to spree.account_path, alert: 'Wrong activation code.'
     end
+  end
+
+  def edit
+    @verification = Spree::Verification.find(params[:id])
   end
 
 

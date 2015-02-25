@@ -9,7 +9,7 @@ class Spree::DoctorEmployment < ActiveRecord::Base
   belongs_to :doctor
   belongs_to :clinic
 
-  has_many :appointments
+  has_many :appointments, as: :appointmentable
   has_many :users, through: :appointments
 
   validates_numericality_of :consultation_price

@@ -1,7 +1,8 @@
+require 'sms/bhash_sender'
 class Spree::Appointment < ActiveRecord::Base
-  attr_accessor :canceled_by
+  attr_accessor :canceled_by, :recommended
   belongs_to :user
-  belongs_to :doctor_employment
+  belongs_to :appointmentable, polymorphic: true
   has_one :review
   accepts_nested_attributes_for :review
 
@@ -9,7 +10,7 @@ class Spree::Appointment < ActiveRecord::Base
 
   validates_presence_of :scheduled_at, :name, :phone, :address, :status
   validates_presence_of :email, if: "user_id.nil?"
-  validates_uniqueness_of :scheduled_at, scope: :doctor_employment_id
+  validates_uniqueness_of :scheduled_at, scope: [:appointmentable_id, :appointmentable_type]
   validate :scheduled_at_cannot_be_in_past
   enum status: [ :initiated, :completed, :canceled, :unverified, :pending_doctor]
   enum payment: [ :cash, :online ]
@@ -19,7 +20,45 @@ class Spree::Appointment < ActiveRecord::Base
   after_save :send_initiated_emails
   after_save :send_pending_emails
   after_save :send_canceled_emails
+  before_save :auto_confirmable_check, if: "to_doctor? && verified? && mint_new?"
+  after_save :create_recommendation, if: "recommended"
 
+  # def check_token! verification
+  #   if verification[:token] and verification[:id]
+  #     vrf = Spree::Verification.find(verification[:id])
+
+  #     errors[:base] <<   unless params[:verification][:token].eql? vrf.token
+  #   end
+  # end
+
+  def create_recommendation
+    if self.doctor_employment
+      Spree::Recommendation.create!(user: user, doctor: self.doctor_employment.doctor)
+    end
+  end
+  def auto_confirmable_check
+    if doctor_employment.doctor.auto_confirmable?
+      self.status = 'initiated'
+    else
+      self.status = 'pending_doctor'
+    end
+  end
+
+  def mint_new?
+    unverified? || status.nil?
+  end
+
+  def verified?
+    verifications.completed.any? || user.try(:phone_is_verified?)
+  end
+
+  def to_doctor?
+    appointmentable_type == 'Spree::DoctorEmployment'
+  end
+
+  def doctor_employment
+    appointmentable
+  end
 
   def scheduled_at_time
     scheduled_at.strftime("%R")
@@ -76,4 +115,12 @@ class Spree::Appointment < ActiveRecord::Base
       ''
     end
   end
+
+  def active_verification
+    verifications.where( status: 'active', phone: self.phone).order(created_at: :desc).first_or_create
+  end
+
+  # def after_verification_callback
+    # auto_confirmable_check
+  # end
 end

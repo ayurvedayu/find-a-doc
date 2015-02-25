@@ -12,5 +12,7 @@ RSpec.describe 'Sign up process' do
     user = Spree::User.last
 
     expect(user).to have_spree_role 'doctor'
+
+    expect(user.doctor).to be_persisted
   end
 end

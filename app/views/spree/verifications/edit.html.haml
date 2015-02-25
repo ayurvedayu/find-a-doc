@@ -7,8 +7,7 @@
       .form-group
         = label_tag  do
           Verification code from SMS
-          = f.text_field :token, nil, class: 'form-control', placeholder: '4-digit number'
+          = f.text_field :entered_token, class: 'form-control', placeholder: '4-digit number'
       = hidden_field_tag 'verification[id]', @verification.id
-      = f.hidden_field :name, value: @spree_appointment.name
       .form-group
         = f.submit 'Verify'

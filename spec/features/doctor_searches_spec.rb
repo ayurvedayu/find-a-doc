@@ -13,7 +13,7 @@ feature "DoctorSearches", :type => :feature do
     visit spree.doctor_search_path
     select('Ayurveda', from: 'ds')
 
-    fill_in('Location', with: empl.clinic.suburb.name)
+    fill_in('dl', with: empl.clinic.suburb.name)
 
     within('#by_spec') { click_button 'Go' }
 
@@ -29,7 +29,7 @@ feature "DoctorSearches", :type => :feature do
     fill_in('cn', with: empl.clinic.name)
     within('#by_clinic') { click_button 'Go' }
 
-    expect(page).to have_text "Dr. #{doctor.name}"
+    expect(page).to have_text empl.clinic.name
   end
 
   it 'finds a doctor even if he has not specialties' do
