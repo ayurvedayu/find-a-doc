@@ -10,6 +10,6 @@ class Spree::DoctorSearchController < Spree::HomeController
   end
 
   def ds_params
-    params.permit(:ds, :dl, :dn, :cn, :filter, :search_for)
+    params.permit(:ds, :dl, :dn, :cn, :filter, :search_for, :utf8)
   end
 end
