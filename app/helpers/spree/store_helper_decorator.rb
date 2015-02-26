@@ -4,7 +4,7 @@ Spree::StoreHelper.module_eval do
 
     return [] if apt.completed?
 
-    ary << link_to('Cancel', cancel_appointment_path(apt)) unless apt.completed? && apt.canceled?
+    ary << link_to('Cancel', cancel_appointment_path(apt)) unless apt.completed? || apt.canceled?
 
     if apt.initiated?
       ary << link_to('Mark as completed', complete_appointment_path(apt)) if !is_doctor
