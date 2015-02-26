@@ -6,15 +6,15 @@ class Spree::SMSTemplate
   end
 
   def self.doctor_sms apt
-    "#{apt.name.titleize} (#{apt.phone}) scheduled appointment at #{apt.scheduled_at}. Ayurvedayu."
+    "#{apt.name.titleize} (#{apt.phone}) scheduled appointment at #{apt.scheduled_at} in #{apt.full_address}. Ayurvedayu."
   end
 
   def self.user_sms apt
-    "Appointment scheduled at #{apt.scheduled_at} to #{apt.doctor_employment.doctor.name} (#{apt.doctor_employment.doctor.phone}) at #{apt.doctor_employment.clinic.full_address}. Ayurvedayu."
+    "Appointment scheduled at #{apt.scheduled_at} to #{apt.appointmentable} (#{apt.appointmentable.phone}) at #{apt.full_address}. Ayurvedayu."
   end
 
   def self.user_cancel_sms apt
-    "#{apt.doctor_employment.doctor.name_with_dr} canceled your appointment at #{apt.scheduled_at}, #{apt.doctor_employment.clinic.full_address}. Ayurvedayu."
+    "Your appointment to #{apt.appointmentable} at #{apt.scheduled_at}, #{apt.full_address} is canceled. Ayurvedayu."
   end
 
   def self.doctor_cancel_sms apt

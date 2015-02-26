@@ -56,16 +56,20 @@
   .col-md-8
     - if @user.clinic?
       = render 'spree/clinics/table', clinics: @user.clinics
-    - else
-      %h3 My Appointments
-      - if @user.doctor?
-        - @user.doctor.doctor_employments.each do |empl|
-          %h5
-            at #{empl.clinic.name}:
-          = render 'appointments_table', appointments: empl.appointments, doctor: true
-        - # elsif ! @user.doctor? && ! @user.clinic?
-        %h5 Own appointments
-      = render partial: 'appointments_table', locals: { appointments: @user.appointments, doctor: false}
+    %h3 My Appointments
+    - if @user.doctor?
+      - @user.doctor.doctor_employments.each do |empl|
+        %h5
+          at #{empl.clinic.name}:
+        = render 'appointments_table', appointments: empl.appointments, doctor: true
+      %h5 Own appointments
+    - elsif @user.clinic?
+      - @user.clinics.each do |clinic|
+        %h5
+          at #{clinic.name}:
+        = render 'appointments_table', appointments: clinic.appointments, doctor: true
+      %h5 Own appointments
+    = render partial: 'appointments_table', locals: { appointments: @user.appointments, doctor: false}
 .row
   .col-xs-12
     .account-my-orders{"data-hook" => "account_my_orders"}

@@ -4,7 +4,7 @@ module BHash
   class API
     def initialize to, msg
       raise 'specify sms gateway login and pass in configuration file please' if SpreeFindaDoc.bhash_login.nil?
-      @link = "http://bhashsms.com/api/sendmsg.php?user=#{SpreeFindaDoc.bhash_login}&pass=#{SpreeFindaDoc.bhash_pass}&sender=TESTTO&phone=#{CGI::escape(to)}&text=#{CGI::escape(msg)}&priority=ndnd&stype=normal"
+      @link = "http://bhashsms.com/api/sendmsg.php?user=#{SpreeFindaDoc.bhash_login}&pass=#{SpreeFindaDoc.bhash_pass}&sender=TESTTO&phone=#{CGI::escape(to.to_s)}&text=#{CGI::escape(msg.to_s)}&priority=ndnd&stype=normal"
     end
 
     def to_s

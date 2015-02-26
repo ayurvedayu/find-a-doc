@@ -15,7 +15,7 @@ class Spree::AppointmentsController < Spree::HomeController
   # GET /spree/appointments/new
   def new
     @spree_appointment = Spree::Appointment.new
-    @appointee = params[:for] == 'doctor' ? Spree::DoctorEmployment.find(params[:doctor_employment_id]) : Spree::Clinic.find(params[:clinic_id])
+    @appointee = params[:for] == 'clinic' ? Spree::Clinic.friendly.find(params[:clinic_id]) : Spree::DoctorEmployment.find(params[:doctor_employment_id]) 
   end
 
   # GET /spree/appointments/1/edit

@@ -1,4 +1,5 @@
 Spree::Core::Engine.routes.draw do
+
   
   resources :verifications, only: [:edit, :update]
 

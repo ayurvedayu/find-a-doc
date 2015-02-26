@@ -19,6 +19,7 @@ FactoryGirl.define do
     association :user, factory: :user
     description "About"
     clinic_type
+    phone { Faker::PhoneNumber.phone_number }
     street "S N L road"
     building ""
   end

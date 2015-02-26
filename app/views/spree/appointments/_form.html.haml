@@ -23,7 +23,7 @@
     = f.label :address
     = f.text_area :address, class: 'form-control', placeholder: 'Address'
   - unless spree_user_signed_in?
-    .row
+    .row.form-group
       .col-md-6
         = f.label :email
         = f.text_field :email, class: 'form-control', placeholder: 'Email'

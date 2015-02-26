@@ -28,12 +28,28 @@ class Spree::TimeSlot
   end
 
   def self.all_for_doctor( dr_empl, opts )
-    date = opts[:date]
+    # date = opts[:date]
     dr_empl = Spree::DoctorEmployment.find(dr_empl) unless dr_empl.respond_to?(:appointments)
 
 
-    appointments = dr_empl.appointments.where(scheduled_at: date.beginning_of_day..date.end_of_day)
-    day = dr_empl.timings.find_by( day: date.wday )
+    # appointments = dr_empl.appointments.where(scheduled_at: date.beginning_of_day..date.end_of_day)
+    # day = dr_empl.timings.find_by( day: date.wday )
+
+    # oc_slots = appointments.initiated.map(&:scheduled_at_time)
+    # day.slots.to_a.map do |slot|
+    #   occupied = oc_slots.include? slot
+    #   Spree::TimeSlot.new slot: slot, date: date, occupied: occupied
+    # end
+
+    self.all_for dr_empl, opts
+  end
+
+  def self.all_for obj, opts
+    date = opts[:date]
+    
+
+    appointments = obj.appointments.where(scheduled_at: date.beginning_of_day..date.end_of_day)
+    day = obj.timings.find_by( day: date.wday )
 
     oc_slots = appointments.initiated.map(&:scheduled_at_time)
     day.slots.to_a.map do |slot|

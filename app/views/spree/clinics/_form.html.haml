@@ -9,19 +9,27 @@
           - @spree_clinic.errors.full_messages.each do |message|
             %li= message
     .form-group
-      = f.label :name
+      = f.label :name, '* Name'
       = f.text_field :name, class: 'form-control'
     .checkbox
       = f.label :is_for_instant_booking do
         = f.check_box :is_for_instant_booking, "aria-described-by" => 'ib-help'
         Available for instant booking
         %span.help-block#ib-help If this is checked patient will be able to book an appointment online.
+    .checkbox
+      = f.label :auto_confirmable do
+        = f.check_box :auto_confirmable
+        Automatic confirmation of appointments
+        %span.help-block If unchecked, you will have to confirm every instant booking that users will make.
+    .form-group
+      = f.label :phone, '* Phone'
+      = f.text_field :phone, class: 'form-control'
     = f.fields_for :suburb, (@spree_clinic.suburb || @spree_clinic.build_suburb) do |sf|
       .form-group
-        = sf.label :city_id
+        = sf.label :city_id, '* City'
         = sf.collection_select :city_id, Spree::City.all, :id, :name, { prompt: 'Choose a city please...' }, { class: 'form-control' }
       .form-group
-        = sf.label :name
+        = sf.label :name, '* Locality'
         = sf.text_field :name, class: 'form-control'
     .form-group
       = f.label :street
@@ -29,9 +37,6 @@
     .form-group
       = f.label :building
       = f.text_field :building, class: 'form-control'
-    .form-group
-      = f.label :phone
-      = f.text_field :phone, class: 'form-control'
     %label or enter coordinates for exact position
     .row
       .col-xs-6
@@ -48,6 +53,9 @@
     .form-group
       = f.label :clinic_type_id
       = f.collection_select :clinic_type_id, Spree::ClinicType.all, :id, :name, {}, {  class: 'form-control' }
+    .form-group
+      %label Images
+      = file_field_tag :images, multiple: true
     %label Working time
     = f.fields_for :timings do |tf|
       = render 'spree/shared/timing_panel', tf: tf

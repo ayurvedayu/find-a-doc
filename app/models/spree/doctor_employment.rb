@@ -35,6 +35,22 @@ class Spree::DoctorEmployment < ActiveRecord::Base
     Spree::TimeSlot.all_for_doctor(self, date: date)
   end
 
+  # def method_missing method, args
+    # byebug
+    # doctor.send(method)
+  # end
+
+  [:phone, :name, :auto_confirmable?].each do |m|
+    define_method m do
+      doctor.send(m)
+    end
+  end
+
+  def user
+    doctor.user
+  end
+
+
   private
     
     def _clinic_address

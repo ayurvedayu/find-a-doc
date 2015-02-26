@@ -7,7 +7,7 @@ class Spree::DoctorSearchResult
     @within = params[:within]
     @doctor_name = params[:dn]
     @clinic_name = params[:cn]
-    @search_for = params[:search_for]
+    @search_for = params[:search_for] || 'specialty'
     @filter = params[:filter] || {}
     
 
@@ -21,8 +21,6 @@ class Spree::DoctorSearchResult
   def search
     if ['clinic', 'doctor', 'specialty'].include? @search_for
       send(@search_for)
-    else
-      throw ActiveRecord::RecordNotFound, 'provide [search_for] param'
     end
   end 
 

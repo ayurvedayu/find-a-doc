@@ -1,4 +1,4 @@
-class Spree::VerificationsController < ApplicationController
+class Spree::VerificationsController < Spree::HomeController
   def create
     phone = params[:verification][:phone]
 

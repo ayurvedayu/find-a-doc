@@ -13,6 +13,8 @@ class Spree::Clinic < ActiveRecord::Base
   belongs_to :clinic_type
   has_many :doctor_employments
   has_many :doctors, through: :doctor_employments
+  
+  has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
 
   # has_many :appointments, through: :doctor_employments
   has_many :appointments, as: :appointmentable
@@ -22,7 +24,7 @@ class Spree::Clinic < ActiveRecord::Base
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj){ obj.latitude.nil? || obj.longitude.nil? }
 
-  validates_presence_of :suburb, :name, :clinic_type
+  validates_presence_of :suburb, :name, :clinic_type, :phone
   validates_uniqueness_of :name
 
   after_save :parse_services
@@ -62,5 +64,9 @@ class Spree::Clinic < ActiveRecord::Base
 
   def recommendations_total
     doctor_employments.inject(0) { |sum, n| sum + n.doctor.recommendations.count }
+  end
+
+  def slots_at date
+    Spree::TimeSlot.all_for(self, date: date)
   end
 end

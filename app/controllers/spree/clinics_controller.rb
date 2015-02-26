@@ -15,7 +15,7 @@ class Spree::ClinicsController < Spree::HomeController
   # GET /spree/clinics/new
   def new
     @spree_clinic = current_spree_user.clinics.new
-    @spree_clinic.timings = Spree::Timing.new_for_all_weekdays
+    @spree_clinic.timings = Spree::Timing.new_for_all_weekdays(start_time: '9:00', end_time: '18:00')
   end
 
   # GET /spree/clinics/1/edit
@@ -27,6 +27,7 @@ class Spree::ClinicsController < Spree::HomeController
     @spree_clinic = current_spree_user.clinics.new(spree_clinic_params)
 
     if @spree_clinic.save
+      # params[:images].each { |img| @spree.clinic.images.create attachment: img }
       redirect_to session[:return_to] || :back, notice: 'Clinic was successfully created.'
     else
       render :new
@@ -56,6 +57,6 @@ class Spree::ClinicsController < Spree::HomeController
 
     # Only allow a trusted parameter "white list" through.
     def spree_clinic_params
-      params.require(:clinic).permit(:name, :latitude, :longitude, :description, :clinic_type_id, :street, :building, :services_list, suburb_attributes: [:name, :city_id, :id], timings_attributes: Spree::Timing::PERMITTED_ATTRS)
+      params.require(:clinic).permit(:name, :latitude, :longitude, :description, :clinic_type_id, :street, :building, :phone, :auto_confirmable, :services_list, :is_for_instant_booking, suburb_attributes: [:name, :city_id, :id], timings_attributes: Spree::Timing::PERMITTED_ATTRS)
     end
 end

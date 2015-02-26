@@ -5,7 +5,7 @@ class AppointmentMailer < ActionMailer::Base
   def pending_doctor_email appointment
     @appointment = appointment
 
-    mail(to: @appointment.doctor_employment.doctor.user.email, subject: 'Ayurvedayu: confirm new appointment please')
+    mail(to: @appointment.appointmentable.user.email, subject: 'Ayurvedayu: confirm new appointment please')
   end
 
   def initiated_email_user appointment
@@ -16,7 +16,7 @@ class AppointmentMailer < ActionMailer::Base
 
   def initiated_email_doctor appointment
     @appointment = appointment
-    mail(to: appointment.doctor_employment.doctor.user.email, subject: 'Ayurvedayu: new appointment scheduled')
+    mail(to: appointment.appointmentable.user.email, subject: 'Ayurvedayu: new appointment scheduled')
   end
 
   def cancel_email email, apt

@@ -16,6 +16,7 @@ feature "DoctorSettings", :type => :feature do
     fill_in 'Name', with: (vals[:name] = Faker::Company.name)
     select 'Bangalore', from: 'City'
     fill_in 'Suburb/Village', with: (vals[:sub] = 'anekal')
+    fill_in 'Phone', with: Faker::PhoneNumber.phone_number
     fill_in 'Street', with: (vals[:str] = 'S N L Road')
     fill_in 'Description', with: (vals[:desc] = Faker::Lorem.paragraph)
     fill_in 'Services', with: 'braces, smile makeovers'

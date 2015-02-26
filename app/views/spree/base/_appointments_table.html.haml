@@ -9,7 +9,7 @@
         %th{:colspan => "2"}
     %tbody
       - appointments.each do |app; doctor_or_client|
-        - doctor_or_client = doctor ? app : app.doctor_employment.doctor
+        - doctor_or_client = doctor ? app : app.appointmentable
         %tr
           %td= doctor_or_client.name
           %td= doctor_or_client.phone

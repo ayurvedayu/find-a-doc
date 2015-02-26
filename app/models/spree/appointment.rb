@@ -20,7 +20,7 @@ class Spree::Appointment < ActiveRecord::Base
   after_save :send_initiated_emails
   after_save :send_pending_emails
   after_save :send_canceled_emails
-  before_save :auto_confirmable_check, if: "to_doctor? && verified? && mint_new?"
+  before_save :auto_confirmable_check, if: "verified? && mint_new?"
   after_save :create_recommendation, if: "recommended"
 
   # def check_token! verification
@@ -37,7 +37,7 @@ class Spree::Appointment < ActiveRecord::Base
     end
   end
   def auto_confirmable_check
-    if doctor_employment.doctor.auto_confirmable?
+    if appointmentable.auto_confirmable?
       self.status = 'initiated'
     else
       self.status = 'pending_doctor'
@@ -56,8 +56,14 @@ class Spree::Appointment < ActiveRecord::Base
     appointmentable_type == 'Spree::DoctorEmployment'
   end
 
+  # depending on context :)
   def doctor_employment
-    appointmentable
+    appointmentable if to_doctor?
+  end
+
+  # depending on context :) use with care
+  def clinic
+    appointmentable unless to_doctor?
   end
 
   def scheduled_at_time
@@ -80,15 +86,15 @@ class Spree::Appointment < ActiveRecord::Base
         AppointmentMailer.cancel_email(email, self).deliver
         BHash::Message.send(phone, Spree::SMSTemplate.user_cancel_sms(self))
       when 'user'
-        AppointmentMailer.cancel_email(doctor_employment.doctor.user.email, self).deliver
-        BHash::Message.send(doctor_employment.doctor.phone, Spree::SMSTemplate.doctor_cancel_sms(self))
+        AppointmentMailer.cancel_email(appointmentable.user.email, self).deliver
+        BHash::Message.send(appointmentable.phone, Spree::SMSTemplate.doctor_cancel_sms(self))
       end
     end
   end
 
   def send_initiated_emails
     if status_changed? and initiated?
-      BHash::Message.send(doctor_employment.doctor.phone, Spree::SMSTemplate.doctor_sms(self))
+      BHash::Message.send(appointmentable.phone, Spree::SMSTemplate.doctor_sms(self))
       BHash::Message.send(phone, Spree::SMSTemplate.user_sms(self))
 
       AppointmentMailer.initiated_email_doctor(self).deliver
@@ -100,7 +106,7 @@ class Spree::Appointment < ActiveRecord::Base
 
   def send_pending_emails
     if status_changed? and pending_doctor?
-      BHash::Message.send(doctor_employment.doctor.phone, Spree::SMSTemplate.doctor_pending_sms(self))
+      BHash::Message.send(appointmentable.phone, Spree::SMSTemplate.doctor_pending_sms(self))
 
       AppointmentMailer.pending_doctor_email(self).deliver
     end
@@ -119,6 +125,12 @@ class Spree::Appointment < ActiveRecord::Base
   def active_verification
     verifications.where( status: 'active', phone: self.phone).order(created_at: :desc).first_or_create
   end
+
+  def full_address
+    appointmentable.try(:full_address) || appointmentable.clinic.full_address
+  end
+
+  
 
   # def after_verification_callback
     # auto_confirmable_check

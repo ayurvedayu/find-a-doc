@@ -18,7 +18,9 @@ feature "ClinicsRegistrations", :type => :feature do
     vals = {}
     fill_in 'Name', with: (vals[:name] = Faker::Company.name)
     select 'Bangalore', from: 'City'
+    check 'Available for instant booking'
     fill_in 'Suburb/Village', with: (vals[:sub] = 'anekal')
+    fill_in 'Phone', with: Faker::PhoneNumber.phone_number
     fill_in 'Street', with: (vals[:str] = 'S N L Road')
     fill_in 'Description', with: (vals[:desc] = Faker::Lorem.paragraph)
     fill_in 'Services', with: 'braces, smile makeovers'
@@ -29,5 +31,41 @@ feature "ClinicsRegistrations", :type => :feature do
     within('#by_clinic') { click_button 'Go' }
 
     expect(page).to have_text vals[:name]
+
+    Spree::Clinic.last.timings.update_all is_working_day: '1'
+
+    click_link 'Book an appointment'
+    # byebug
+    choose '15:00'
+    fill_in('Your name', :with => Faker::Name.name)
+    fill_in('Mobile', :with => Faker::PhoneNumber.phone_number)
+    fill_in('Address', :with => Faker::Address.street_address)
+    fill_in('Cause', :with => Faker::Lorem.paragraph)
+
+    expect{click_button('Book')}.to change{Spree::Appointment.count}.by(1)
+
+    fill_in 'Verification code from SMS', with: Spree::Appointment.last.verifications.last.token
+
+    click_button 'Verify'
+
+
+    expect(page).to have_text(Spree::Appointment.last.scheduled_at_time)
+      
+    visit spree.account_path
+    # byebug
+    print page.html
+    click_link 'Mark as completed'
+
+
+    check('Recommend that doctor')
+    fill_in('appointment_review_attributes_text', :with => 'Review text')
+
+
+    click_button "Save"
+
+    expect(Spree::Appointment.last).to be_completed
+
+    # expect(Spree::Appointment.last.doctor_employment.doctor.recommendations).to be_present
+
   end
 end
