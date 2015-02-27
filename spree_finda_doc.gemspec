@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_finda_doc'
-  s.version     = '2.3.4.beta10'
+  s.version     = '2.3.4.beta11'
   s.summary     = 'Extension for internal use in Ayurvedayu'
   s.description = 'Doctor search extension for Ayurvedayu'
   s.required_ruby_version = '>= 1.9.3'

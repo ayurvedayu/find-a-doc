@@ -29,6 +29,7 @@ class Spree::DoctorSearchResult
     @result = @result.where('lower(spree_clinics.name) LIKE lower(?)', "%#{@clinic_name}%") if @clinic_name
     # @result = de_joins.where('lower(spree_clinics.name) LIKE lower(?)', "%#{@clinic_name}%")
     clinic_filters
+    clinic_order
     # common
     # byebug
   end
@@ -59,6 +60,13 @@ class Spree::DoctorSearchResult
     .order("count(spree_appointments.id) DESC")
     .group('spree_doctor_employments.id, spree_clinics.latitude, spree_clinics.longitude')
     .select("spree_doctor_employments.*, count(spree_appointments.id)")
+  end
+
+  def clinic_order
+    @result = @result.joins("LEFT JOIN spree_appointments ON spree_appointments.appointmentable_id = spree_clinics.id and spree_appointments.appointmentable_type = 'Spree::Clinic' and spree_appointments.created_at between '#{30.days.ago.to_formatted_s(:db)}' and '#{DateTime.now.to_formatted_s(:db)}'")
+    .order("count(spree_appointments.id) DESC")
+    .group('spree_clinics.id, spree_clinics.latitude, spree_clinics.longitude')
+    .select("spree_clinics.*, count(spree_appointments.id)")
   end
 
   def filters
