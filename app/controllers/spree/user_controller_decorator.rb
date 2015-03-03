@@ -1,7 +1,7 @@
 Spree::UsersController.class_eval do
   before_action :set_return_to, only: :edit
   before_action :build_employment, only: :edit
-
+  helper Spree::UsersHelper
   # before_action :delete_empty_employment, only: :create
 
 
@@ -24,9 +24,12 @@ Spree::UsersController.class_eval do
 
 end
 
-# adjust permitted params
-timings_attrs = Spree::Timing::PERMITTED_ATTRS
-dr_em_attrs = [:id, :clinic_id, :consultation_price, :consultation_currency, timings_attributes: timings_attrs]
-doctor_attrs = [:clinic_id, :name, :description, :phone, :is_for_instant_booking, :id, :degree, :auto_confirmable, specialty_ids: [], doctor_employments_attributes: dr_em_attrs]
-user_attributes = [:make_role, doctor_attributes: doctor_attrs ]
-Spree::PermittedAttributes.user_attributes << user_attributes
+Spree.module_eval do 
+  # adjust permitted params
+  ex_attrs = [:start_year, :end_year, :place]
+  timings_attrs = Spree::Timing::PERMITTED_ATTRS
+  dr_em_attrs = [:id, :clinic_id, :consultation_price, :consultation_currency, timings_attributes: timings_attrs]
+  doctor_attrs = [:clinic_id, :name, :description, :phone, :is_for_instant_booking, :experience_years, :id, :degree, :auto_confirmable, specialty_ids: [], doctor_employments_attributes: dr_em_attrs, experiences_attributes: ex_attrs]
+  user_attributes = [:make_role, doctor_attributes: doctor_attrs ]
+  Spree::PermittedAttributes.user_attributes << user_attributes
+end

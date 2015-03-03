@@ -9,14 +9,32 @@
       = f.label :description
       = f.text_area :description, class: 'form-control'
     .row
-      .col-xs-4
+      .col-xs-3
         .form-group
           = f.label :degree
           = f.text_field :degree, class: 'form-control', placeholder: 'i.e. BDS'
-      .col-xs-8
+      .col-xs-6
         .form-group
           = f.label :phone
           = f.text_field :phone, class: 'form-control'
+      .col-xs-3
+        .form-group
+          = f.label :experience_years
+          = f.text_field :experience_years, class: 'form-control'
+    .row
+      .col-xs-12
+        .my-btn-group= f.add_nested_fields_link :experiences, 'Add experience', class: 'btn btn-success'
+        = f.nested_fields_for :experiences, class_name: 'Spree::Experience' do |de|
+          .row
+            .col-xs-3
+              .form-group
+                = de.select :start_year, options_for_select(experience_years(start: true)), {prompt: 'Select start year'}, class: 'form-control'
+            .col-xs-3
+              .form-group
+                = de.select :end_year, options_for_select(experience_years), {prompt: 'Select end year'}, class:  'form-control'
+            .col-xs-5
+              .form-group
+                = de.text_field :place, class: 'form-control', placeholder: 'Place'
     .checkbox
       = f.label :is_for_instant_booking do
         = f.check_box :is_for_instant_booking, "aria-described-by" => 'ib-help'

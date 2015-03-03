@@ -7,7 +7,6 @@
     = render 'search_details_form'
   .col-md-9
     - @result.result.each do |r|
-      .pull-right [debug] Appointments in last 30 days count: #{r.appointments.where(created_at: 30.days.ago..DateTime.now).count}
       - if params[:search_for] == 'clinic'
         = render 'clinic_card', clinic: r, for_search_page: true
       - else

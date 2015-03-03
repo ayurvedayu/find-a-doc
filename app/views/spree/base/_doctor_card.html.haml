@@ -1,27 +1,38 @@
 - for_search_page = false unless defined? for_search_page
-.row
-  .col-xs-12
-    %h3= link_to empl.doctor.name_with_dr, empl.doctor
-.row
-  .col-sm-6
-    %strong= empl.doctor.degree
-    %p= empl.doctor.specialties.all.map(&:name).join(', ')
-    - if for_search_page
-      %strong= link_to empl.clinic.name, empl.clinic
-  .col-sm-6
-    %ul.list-unstyled
-      - if empl.doctor.recommendations.present?
-        %li
-          %h4
-            %span.glyphicon.glyphicon-thumbs-up
-            %strong= t(:recommendations, count: empl.doctor.recommendations.count)
-      %li
-        %span.glyphicon.glyphicon-map-marker
-        = "#{empl.clinic.suburb.name}, #{empl.clinic.suburb.city.name}"
-      %li
-        %span.glyphicon.glyphicon-credit-card
-        = "#{empl.consultation_currency} #{empl.consultation_price.round.to_s}"
-      %li
-        %span.glyphicon.glyphicon-time
-        = human_timings empl.timings
-      %li= render 'booking_link', empl: empl 
+.media
+  .media-left
+    = render 'photo', who: empl.doctor
+  .media-body
+    .row
+      .col-xs-12
+        %h3= link_to empl.doctor.name_with_dr, empl.doctor
+    .row
+      .col-sm-6
+        %strong= empl.doctor.degree
+        - if empl.doctor.experience_years
+          %p #{empl.doctor.experience_years} years experience
+        %p= empl.doctor.specialties.all.map(&:name).join(', ')
+        - if for_search_page
+          %strong= link_to empl.clinic.name, empl.clinic
+        .row
+          .col-xs-12
+            - empl.clinic.images.limit(6).each do |i|
+              = link_to empl.clinic do
+                = image_tag i.attachment.url(:mini), size: '30x30'
+      .col-sm-6
+        %ul.list-unstyled
+          - if empl.doctor.recommendations.present?
+            %li
+              %h4
+                %span.glyphicon.glyphicon-thumbs-up
+                %strong= t(:recommendations, count: empl.doctor.recommendations.count)
+          %li
+            %span.glyphicon.glyphicon-map-marker
+            = "#{empl.clinic.suburb.name}, #{empl.clinic.suburb.city.name}"
+          %li
+            %span.glyphicon.glyphicon-credit-card
+            = "#{empl.consultation_currency} #{empl.consultation_price.round.to_s}"
+          %li
+            %span.glyphicon.glyphicon-time
+            = human_timings empl.timings
+          %li= render 'booking_link', empl: empl 

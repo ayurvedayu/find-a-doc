@@ -7,7 +7,9 @@ feature "PhoneVerifications", :type => :feature do
   scenario 'doctor verifies phone and available for search' do
     empl = create(:unverified_doctor_employment)
     doctor = empl.doctor
+    doctor.user.doctor = doctor
     login_as(doctor.user)
+    byebug
     visit spree.account_path
 
     click_button 'Send activation code'

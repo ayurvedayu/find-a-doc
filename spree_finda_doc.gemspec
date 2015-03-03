@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_finda_doc'
-  s.version     = '2.3.4.beta11'
+  s.version     = '2.3.4.beta14'
   s.summary     = 'Extension for internal use in Ayurvedayu'
   s.description = 'Doctor search extension for Ayurvedayu'
   s.required_ruby_version = '>= 1.9.3'
@@ -22,6 +22,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'bootstrap-sass', '~> 3.3.3'
   s.add_dependency 'jquery-ui-rails'
   s.add_dependency 'haml-rails'
+  s.add_dependency 'aws-sdk'
+  s.add_dependency 'nested_form_fields'
 
 
   s.add_development_dependency 'capybara', '~> 2.4'

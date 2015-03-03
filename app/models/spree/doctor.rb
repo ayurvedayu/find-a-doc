@@ -6,9 +6,13 @@ class Spree::Doctor < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
+
+  has_many :experiences
   has_many :doctor_employments
   has_many :clinics, through: :doctor_employments
+  has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
   accepts_nested_attributes_for :doctor_employments
+  accepts_nested_attributes_for :experiences, allow_destroy: true
 
   belongs_to :user
   has_and_belongs_to_many :specialties
@@ -17,6 +21,8 @@ class Spree::Doctor < ActiveRecord::Base
   has_many :reviews, through: :appointments
   has_many :recommendations
   # validate :has_specialties?
+
+  validates_associated :experiences
 
   before_validation :delete_empty_employments
 

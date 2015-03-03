@@ -12,7 +12,7 @@ Spree::User.class_eval do
   has_many :clinics
   has_many :reviews
   has_many :verifications, as: :verifiable
-
+  validates_associated :doctor
 
 
   def doctor?

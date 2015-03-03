@@ -54,3 +54,17 @@ the installer will append this file to the app vendored assets here: 'vendor/ass
 .my-btn-group{
 	margin-bottom: 15px;
 }
+
+.tab-panel{
+	margin-top: 10px;
+}
+
+.square-img{
+	width:200px;
+	height:200px;
+	overflow: hidden;
+	margin-left:5px;
+	img{
+		width: 100%;
+	}
+}

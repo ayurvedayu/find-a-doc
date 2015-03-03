@@ -10,7 +10,7 @@
       %th Address
       %th Description
       %th Clinic type
-      %th{:colspan => "3"}
+      %th{:colspan => "4"}
   %tbody
     - if clinics.count.zero?
       %tr
@@ -21,6 +21,7 @@
         %td= spree_clinic.full_address
         %td= spree_clinic.description
         %td= spree_clinic.clinic_type.name
+        %td= link_to 'Photos', spree.clinic_images_path(spree_clinic)
         %td= link_to 'Show', spree.clinic_path(spree_clinic)
         %td= link_to 'Edit', spree.edit_clinic_path(spree_clinic)
         %td= link_to 'Destroy', spree.clinic_path(spree_clinic), method: :delete, data: { confirm: 'Are you sure?' }

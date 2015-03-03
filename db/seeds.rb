@@ -9,4 +9,7 @@
 Spree::Specialty.find_or_create_by name: 'Ayurveda'
 Spree::Specialty.find_or_create_by name: 'Dentist'
 
+Spree::ClinicType.find_or_create_by name: 'Ayurveda'
+Spree::ClinicType.find_or_create_by name: 'Dental'
+
 

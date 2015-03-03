@@ -34,6 +34,9 @@ end
 
 and you need to specify email credentials in production.rb
 
+add `gem 'aws-sdk'` refering to https://guides.spreecommerce.com/developer/s3_storage.html
+
+
 
 Testing
 -------

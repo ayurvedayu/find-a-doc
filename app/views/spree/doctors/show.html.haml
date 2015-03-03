@@ -1,16 +1,23 @@
 .panel.panel-default
   .panel-heading
-    %h3= @spree_doctor.name_with_dr
-    %strong= @spree_doctor.degree
-    %h4= @spree_doctor.specialties.all.map(&:name).join(', ')
-    - if @spree_doctor.recommendations.present?
-      %h4
-        %span.glyphicon.glyphicon-thumbs-up
-        %strong= t(:recommendations, count: @spree_doctor.recommendations.count)
-    %p= @spree_doctor.description.to_s.truncate(80)
-    %div{:role => "tabpanel"}
+    .row
+      .pull-left
+        = render 'photo', who: @spree_doctor
+      .col-sm-4
+        %h3= @spree_doctor.name_with_dr
+        %strong= @spree_doctor.degree
+        - if @spree_doctor.experience_years
+          %p #{@spree_doctor.experience_years} years experience
+        %h4= @spree_doctor.specialties.all.map(&:name).join(', ')
+        - if @spree_doctor.recommendations.present?
+          %h4
+            %span.glyphicon.glyphicon-thumbs-up
+            %strong= t(:recommendations, count: @spree_doctor.recommendations.count)
+        %p= @spree_doctor.description.to_s.truncate(80)
+    %div.tab-panel{:role => "tabpanel"}
       %ul.nav.nav-pills{:role => "tablist"}
         %li{:class => "active", :role => "presentation"}= link_to 'Info', '#info', data: { toggle: 'tab' }
+        %li{:class => "", :role => "presentation"}= link_to 'Photos', '#photos', data: { toggle: 'tab' }
         %li{:class => "", :role => "presentation"}= link_to 'Reviews', '#reviews', id: 'clinic_map_tab_link', data: { toggle: 'tab' }
   .panel-body
     .tab-content
@@ -40,6 +47,15 @@
                 .col-sm-4.col-sm-offset-8
                   = render partial: 'booking_link', locals: { empl: empl }
               %hr/
+        .row
+          .col-xs-12
+            %h3 Experience
+            %ul
+              - @spree_doctor.experiences.each do |exp|
+                %li #{exp.start_year} &mdash; #{exp.human_end_year} at #{exp.place}
+      #photos.tab-pane
+        = render @spree_doctor.images
+
       #reviews.tab-pane
         - @spree_doctor.reviews.all.each do |review|
           %p

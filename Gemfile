@@ -8,7 +8,8 @@ gem 'geocoder', '~> 1.2'
 gem 'friendly_id', '~> 5.0'
 gem 'haml'
 gem 'haml-rails'
-# gem 'jquery-ui-rails'
+gem 'aws-sdk'
+gem 'nested_form_fields'
 
 group :development, :test do
   gem 'rspec-rails'

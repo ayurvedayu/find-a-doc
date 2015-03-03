@@ -1,5 +1,5 @@
 class Spree::Timing < ActiveRecord::Base
-  PERMITTED_ATTRS = [:start_time,:end_time,:day,:is_working_day]
+  PERMITTED_ATTRS = [:start_time,:end_time,:day,:is_working_day, :id]
   
   belongs_to :timeslotable, polymorphic: true
 

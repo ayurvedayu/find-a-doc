@@ -14,6 +14,9 @@
         Manage clinics
       - if @user.doctor?
         = link_to 'View public profile', @user.doctor, class: 'btn btn-info'
+        = link_to doctor_images_path, class: 'btn btn-info' do
+          %span.glyphicon.glyphicon-camera
+          My Photos
     .pull-right
       = @user.email
 -#.row

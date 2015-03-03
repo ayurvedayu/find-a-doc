@@ -53,9 +53,6 @@
     .form-group
       = f.label :clinic_type_id
       = f.collection_select :clinic_type_id, Spree::ClinicType.all, :id, :name, {}, {  class: 'form-control' }
-    .form-group
-      %label Images
-      = file_field_tag :images, multiple: true
     %label Working time
     = f.fields_for :timings do |tf|
       = render 'spree/shared/timing_panel', tf: tf
