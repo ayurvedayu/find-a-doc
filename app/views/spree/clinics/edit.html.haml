@@ -1,3 +1,5 @@
 %h1 Editing clinic
 = form_for(@spree_clinic) do |f|
   = render partial: 'form', locals: { :f => f }
+  .form-group
+    = f.submit 'Update', class: 'btn btn-primary'

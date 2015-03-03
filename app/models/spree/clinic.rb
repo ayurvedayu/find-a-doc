@@ -21,16 +21,16 @@ class Spree::Clinic < ActiveRecord::Base
 
   has_and_belongs_to_many :services
 
-  geocoded_by :full_address
-  after_validation :geocode, if: ->(obj){ obj.latitude.nil? || obj.longitude.nil? }
 
   validates_presence_of :suburb, :name, :clinic_type, :phone
   validates_uniqueness_of :name
 
+  geocoded_by :full_address
+  after_validation :geocode, if: ->(obj){ obj.latitude.nil? || obj.longitude.nil? }
   after_save :parse_services
 
   def full_address
-    "#{building} #{street} #{suburb.name.titleize}, #{suburb.city.name}"
+    "#{building} #{street} #{suburb.try(:name).titleize}, #{suburb.city.try(:name)}"
   end
 
   def to_s
