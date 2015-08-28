@@ -69,7 +69,7 @@ GIT
 PATH
   remote: .
   specs:
-    spree_finda_doc (2.3.4.beta15)
+    spree_finda_doc (2.3.4.beta16)
       aws-sdk
       bootstrap-sass (~> 3.3.3)
       deface (~> 1.0.0rc3)
@@ -195,7 +195,7 @@ GEM
       railties (>= 3.2, < 5.0)
     friendly_id (5.0.4)
       activerecord (>= 4.0.0)
-    geocoder (1.2.6)
+    geocoder (1.2.9)
     haml (4.0.6)
       tilt
     haml-rails (0.8.0)
@@ -395,3 +395,6 @@ DEPENDENCIES
   spree_auth_devise!
   spree_finda_doc!
   sqlite3
+
+BUNDLED WITH
+   1.10.4
