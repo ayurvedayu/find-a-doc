@@ -1,0 +1,14 @@
+.row
+  .col-xs-12
+    h2 Doctor Search
+    = render 'search_form'
+.row
+  .col-md-3
+    = render 'search_details_form'
+  .col-md-9
+    - @result.result.each do |r|
+      - if params[:search_for] == 'clinic'
+        = render 'clinic_card', clinic: r, for_search_page: true
+      - else
+        = render partial: 'doctor_card', locals: { empl: r, for_search_page: true }
+      hr/

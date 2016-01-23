@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_finda_doc'
-  s.version     = '2.3.4.beta16'
+  s.version     = '3.1.1.1'
   s.summary     = 'Extension for internal use in Ayurvedayu'
   s.description = 'Doctor search extension for Ayurvedayu'
   s.required_ruby_version = '>= 1.9.3'
@@ -16,12 +16,12 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '~> 2.3.4'
+  s.add_dependency 'solidus_core', '~> 1.1'
   s.add_dependency 'deface', '~> 1.0.0rc3'
   s.add_dependency 'geocoder', '~> 1.2'
-  s.add_dependency 'bootstrap-sass', '~> 3.2.0'
+  s.add_dependency 'bootstrap-sass', '~> 3.3.6'
   s.add_dependency 'jquery-ui-rails'
-  s.add_dependency 'haml-rails'
+  s.add_dependency 'slim-rails'
   s.add_dependency 'aws-sdk'
   s.add_dependency 'nested_form_fields'
 

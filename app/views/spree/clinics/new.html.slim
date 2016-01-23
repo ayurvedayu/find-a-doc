@@ -1,0 +1,5 @@
+h1 New Clinic
+= form_for([:account, @spree_clinic], html: { multipart: true }) do |f|
+  = render partial: 'form', locals: { f: f }
+  .form-group
+    = f.submit 'Create', class: 'btn btn-primary'

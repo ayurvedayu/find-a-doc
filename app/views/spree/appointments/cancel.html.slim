@@ -1,0 +1,10 @@
+h1 Please specify the reason of cancellation
+.row
+  .col-md-4
+    = form_for [:account, @apt] do |f|
+      = f.hidden_field :status, value: 'canceled'
+      = f.hidden_field :canceled_by, value: @he
+      .form-group
+        = f.label :comment
+        = f.text_area :comment, class: 'form-control'
+      = f.submit 'Proceed'

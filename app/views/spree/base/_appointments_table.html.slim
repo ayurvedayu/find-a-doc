@@ -1,0 +1,21 @@
+- if appointments.present?
+  table
+    thead
+      tr
+        th= doctor ? 'Patient' : 'Doctor'
+        th Phone
+        th Status
+        th Time
+        th colspan="2" 
+    tbody
+      - appointments.each do |app; doctor_or_client|
+        - doctor_or_client = doctor ? app : app.appointmentable
+        tr
+          td= doctor_or_client.name
+          td= doctor_or_client.phone
+          td= app.status.capitalize
+          td= app.scheduled_at
+          - appointment_actions(app, doctor).each do |action|
+            td= raw action
+- else
+  p You have no appointments yet

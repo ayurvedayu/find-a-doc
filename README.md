@@ -9,7 +9,7 @@ Installation
 Add spree_finda_doc and haml to your Gemfile:
 
 ```ruby
-gem 'haml'
+gem 'slim'
 gem 'spree_finda_doc'
 ```
 

@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'spree', github: 'spree/spree', branch: '2-3-stable'
+gem 'solidus', github: 'solidusio/solidus', branch: 'v1.1'
 # Provides basic authentication functionality for testing parts of your engine
-gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-3-stable'
+gem 'solidus_auth_devise', github: 'solidusio/solidus_auth_devise', branch: 'master'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'geocoder', '~> 1.2'
 gem 'friendly_id', '~> 5.0'
-gem 'haml'
-gem 'haml-rails'
+gem 'slim'
+gem 'slim-rails'
 gem 'aws-sdk'
 gem 'nested_form_fields'
 

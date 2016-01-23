@@ -13,12 +13,12 @@ Spree::Core::Engine.routes.draw do
   resources :appointments, only: [:show]
 
   resource :account, :controller => 'users' do
-      resources :clinics, shallow: true do
-        member do
-          resources :images, module: 'clinic', as: 'clinic_images'
-        end
+    resources :clinics, shallow: true do
+      member do
+        resources :images, module: 'clinic', as: 'clinic_images'
       end
-      resources :appointments, except: [:new, :destroy]
+    end
+    resources :appointments, except: [:new, :destroy]
     authenticate :spree_user do
       resources :verifications, only: [:update, :create, :destroy] do
         post 'complete', on: :collection

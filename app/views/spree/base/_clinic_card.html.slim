@@ -1,0 +1,31 @@
+- for_search_page = false unless defined? for_search_page
+.media
+  .media-left
+    = render 'photo', who: clinic
+  .media-body
+    .row
+      .col-xs-12
+        h3= link_to clinic.name, clinic
+    .row
+      .col-sm-6
+        div
+          strong= clinic.clinic_type.name
+        p= clinic.full_address
+        p= clinic.services_list
+      .col-sm-6
+        ul.list-unstyled
+          - if clinic.recommendations_total
+            li
+              h4
+                span.glyphicon.glyphicon-thumbs-up
+                strong= t(:recommendations, count: clinic.recommendations_total)
+          li
+            span.glyphicon.glyphicon-map-marker
+            = "#{clinic.suburb.name}, #{clinic.suburb.city.name}"
+          /%li
+            span.glyphicon.glyphicon-credit-card
+            = "#{empl.consultation_currency} #{empl.consultation_price.round.to_s}"
+          li
+            span.glyphicon.glyphicon-time
+            = human_timings clinic.timings
+          li= render 'booking_link', empl: clinic

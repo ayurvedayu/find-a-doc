@@ -1,0 +1,3 @@
+h3 New appointment
+| Appointment scheduled at #{@appointment.scheduled_at} to #{link_to @appointment.appointmentable, @appointment.to_doctor? ? spree.doctor_url(@appointment.appointmentable.doctor) : polymorphic_url([spree, @appointment.appointmentable])} (#{@appointment.appointmentable.phone}) at #{@appointment.full_address}.
+| Ayurvedayu
