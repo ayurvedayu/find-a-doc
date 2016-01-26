@@ -5,7 +5,7 @@ p You will be available for search only if your phone is verified
   .panel
     = form_for [:account, Spree::Verification.new] do |f|
       = hidden_field_tag 'verification[phone]', @user.doctor.phone
-      = f.submit 'Send activation code'
+      = f.submit 'Send activation code', class: 'btn btn-primary'
 - elsif @user.verifications.active.any?
   .panel
     | [debug] sent confirmation code: #{@user.verifications.active.last.token}
@@ -13,8 +13,8 @@ p You will be available for search only if your phone is verified
     = form_tag complete_account_verifications_path do
       = label_tag 'Activation code:'
       = text_field_tag "verification[token]"
-      = submit_tag 'Verify'
+      = submit_tag 'Verify', class: 'btn btn-success'
     p
       = form_for [:account, Spree::Verification.new] do |f|
         = hidden_field_tag 'verification[phone]', @user.doctor.phone
-        = f.submit 'Send activation code again'
+        = f.submit 'Send activation code again', class: 'btn btn-warning'

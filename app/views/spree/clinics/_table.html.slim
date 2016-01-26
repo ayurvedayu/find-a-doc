@@ -24,4 +24,4 @@ table.table
         td= link_to 'Photos', spree.clinic_images_path(spree_clinic)
         td= link_to 'Show', spree.clinic_path(spree_clinic)
         td= link_to 'Edit', spree.edit_clinic_path(spree_clinic)
-        td= link_to 'Destroy', spree.clinic_path(spree_clinic), method: :delete, data:   confirm: 'Are you sure?'  
+        td= link_to 'Delete', spree.clinic_path(spree_clinic), method: :delete, data: { confirm: 'Are you sure?' }

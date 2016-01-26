@@ -21,7 +21,7 @@ Spree::StoreHelper.module_eval do
   
   def human_timings timings
     raw(sequence_of_days(timings).map do |s|
-      day_abbr_name(s.first.day) + ("&ndash;#{day_abbr_name(s.last.day)}" if s.size > 1).to_s + "<br>#{s.first.start_time}&mdash;#{s.first.end_time}"
+      day_abbr_name(s.first.day) + (" &ndash; #{day_abbr_name(s.last.day)}" if s.size > 1).to_s + ": #{s.first.start_time}&mdash;#{s.first.end_time}"
     end.join('<br>'))
   end
 
@@ -39,21 +39,21 @@ Spree::StoreHelper.module_eval do
     t_arr = timings.to_a
 
     t_arr.each.with_index do |t,i|
-      if t.working? and seq.empty?
+      if t.working? && seq.empty?
         seq << t
         next
       end
 
-      if seq.empty? and t.not_working?
+      if seq.empty? && t.not_working?
         next
       end
-      if i == t_arr.size - 1 and t.end_time == seq.last.end_time and t.start_time == seq.last.start_time and t.working?
+      if i == t_arr.size - 1 && t.end_time == seq.last.end_time && t.start_time == seq.last.start_time && t.working?
         seq << t
         arr << seq
         next
       end
 
-      if i != t_arr.size - 1 and t.end_time == seq.last.end_time and t.start_time == seq.last.start_time and t.working?
+      if i != t_arr.size - 1 && t.end_time == seq.last.end_time && t.start_time == seq.last.start_time && t.working?
         seq << t
         next
       end
@@ -67,7 +67,7 @@ Spree::StoreHelper.module_eval do
   end
   
   def r_timings_sequence timings, i
-    if timings[i+1] and timings[i].end_time == timings[i+1].end_time and timings[i].start_time == timings[i+1].start_time
+    if timings[i+1] && timings[i].end_time == timings[i+1].end_time && timings[i].start_time == timings[i+1].start_time
       r_timings_sequence(timings, i+1)
     else
       return timings[i].day
@@ -77,7 +77,7 @@ Spree::StoreHelper.module_eval do
 end
 
 # alla.working.each_with_index.chunk do |c,i| 
-#   if alla.working[i-1] and alla.working[i-1]
+#   if alla.working[i-1] && alla.working[i-1]
 #     c.day - alla.working[i-1].day < 2 or alla.working[i+1].day - c.day < 2
 #   else 
 #     true

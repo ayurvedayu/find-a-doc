@@ -14,6 +14,9 @@ Spree::User.class_eval do
   has_many :verifications, as: :verifiable
   validates_associated :doctor
 
+  def has_doctor_profile?
+    doctor.present?
+  end
 
   def doctor?
     has_spree_role? 'doctor'

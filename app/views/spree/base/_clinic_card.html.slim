@@ -18,11 +18,11 @@
             li
               h4
                 span.glyphicon.glyphicon-thumbs-up
-                strong= t(:recommendations, count: clinic.recommendations_total)
+                strong= Spree.t(:recommendations, count: clinic.recommendations_total)
           li
             span.glyphicon.glyphicon-map-marker
             = "#{clinic.suburb.name}, #{clinic.suburb.city.name}"
-          /%li
+          li
             span.glyphicon.glyphicon-credit-card
             = "#{empl.consultation_currency} #{empl.consultation_price.round.to_s}"
           li

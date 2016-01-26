@@ -12,7 +12,8 @@ Spree::UsersController.class_eval do
 
   def build_employment
     if current_spree_user.doctor?
-      @new_employment = current_spree_user.doctor.doctor_employments.build
+      @new_doctor_profile = current_spree_user.has_doctor_profile? ? current_spree_user.doctor : current_spree_user.build_doctor
+      @new_employment = @new_doctor_profile.doctor_employments.build
       
       @new_employment.timings = Spree::Timing.new_for_all_weekdays
     end

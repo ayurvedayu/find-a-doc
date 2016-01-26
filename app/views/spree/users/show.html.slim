@@ -1,66 +1,68 @@
 .row
-  .col-xs-12
-    - if @user.doctor? and !@user.phone_is_verified? and @user.doctor.phone
-      = render 'phone_verification'
-    - elsif @user.doctor? and !@user.doctor.phone
-      .alert.alert-warning Fill in your # link_to 'profile', spree.edit_account_path, class: 'alert-link'  to let users find you.
-  .col-xs-12
-    - if @user.doctor? or @user.clinic?
-      = link_to spree.edit_account_path, class: 'btn btn-default' do
-        span.glyphicon.glyphicon-cog
-        | Edit profile
-      = link_to account_clinics_path, class: 'btn btn-default' do
-        span.glyphicon.glyphicon-th-list
-        | Manage clinics
-      - if @user.doctor?
-        = link_to 'View public profile', @user.doctor, class: 'btn btn-info'
-        = link_to doctor_images_path, class: 'btn btn-info' do
-          span.glyphicon.glyphicon-camera
-          | My Photos
-    .pull-right
-      = @user.email
-/.row
-  .col-xs-12
+  .col-xs-3.col-md-3
     h1
       = accurate_title
-      small
-        | (#{link_to Spree.t(:edit), spree.edit_account_path})
+  .col-xs-12.col-md-12
+    - if @user.doctor? && @user.has_doctor_profile? && !@user.phone_is_verified? && @user.doctor.phone
+      = render 'spree/users/phone_verification'
+    - elsif @user.doctor? && !@user.has_doctor_profile?
+      .alert.alert-warning Fill in your #{link_to 'profile', spree.edit_account_path, class: 'alert-link'}  to let users find you.
+  .col-md-7.col-xs-7
+    = link_to spree.edit_account_path, class: 'btn btn-default' do
+      span.glyphicon.glyphicon-cog
+      |  #{Spree.t(:edit)} profile
+    |  
+    - if @user.doctor? || @user.clinic?
+      = link_to account_clinics_path, class: 'btn btn-default' do
+        span.glyphicon.glyphicon-th-list
+        |  Manage clinics
+      |  
+      - if @user.doctor?
+        = link_to 'View public profile', @user.doctor, class: 'btn btn-info'
+        |  
+        = link_to doctor_images_path, class: 'btn btn-info' do
+          span.glyphicon.glyphicon-camera
+          |  My Photos
+  
 .row
-  /.col-md-4
+  .col-xs-12.col-md-12.margin-top-10
     .account-summary data-hook="account_summary" 
       dl#user-info
-        - if @user.doctor?
-          br
-          /
-            dt Name
-            dd= @user.doctor.name
-            dt Clinics
-            - @user.doctor.doctor_employments.all.each do |employment|
-              dd
-                = employment.clinic.name
-                - if employment.clinic.user == spree_current_user
-                  | (#{link_to 'Edit', edit_clinic_path(employment.clinic)})
-              dd
-                = employment.consultation_price
-                = employment.consultation_currency
-            dt About
-            dd= @user.doctor.description
-            dt Degree
-            dd= @user.doctor.degree
-            dt Phone
-            dd= @user.doctor.phone
-            dt Available for instant booking
-            dd= t @user.doctor.is_for_instant_booking.class
-            dt Specialties
-            dd= @user.doctor.specialties.all.map(&:name).join(', ')
+        - if @user.doctor? && @user.has_doctor_profile?
+          br/
+          dt Name
+          dd= @user.doctor.name
+          dt Clinics
+          - @user.doctor.doctor_employments.all.each do |employment|
+            dd
+              = employment.clinic.name
+              - if employment.clinic.user == spree_current_user
+                | (#{link_to 'Edit', edit_clinic_path(employment.clinic)})
+            dd
+              = employment.consultation_price
+              = employment.consultation_currency
+          dt About
+          dd= @user.doctor.description
+          dt Degree
+          dd= @user.doctor.degree
+          dt Phone
+          dd= @user.doctor.phone
+          dt Available for instant booking
+          dd= t @user.doctor.is_for_instant_booking.class
+          dt Specialties
+          dd= @user.doctor.specialties.all.map(&:name).join(', ')
         dt= Spree.t(:email)
         dd
           = @user.email
-  .col-md-8
+
+hr/
+
+.row
+  .col-xs-12
     - if @user.clinic?
       = render 'spree/clinics/table', clinics: @user.clinics
     h3 My Appointments
-    - if @user.doctor?
+    - if @user.doctor? && @user.has_doctor_profile?
       - @user.doctor.doctor_employments.each do |empl|
         h5
           | at #{empl.clinic.name}:
@@ -73,12 +75,15 @@
         = render 'appointments_table', appointments: clinic.appointments, doctor: true
       h5 Own appointments
     = render partial: 'appointments_table', locals: { appointments: @user.appointments, doctor: false}
+
+hr/
+
 .row
   .col-xs-12
     .account-my-orders data-hook="account_my_orders" 
       h3= Spree.t(:my_orders)
       - if @orders.present?
-        table.order-summary
+        table.order-summary.table.table-bordered
           thead
             tr
               th.order-number= I18n.t(:number, :scope => 'activerecord.attributes.spree/order')
@@ -92,9 +97,9 @@
               tr class="#{cycle('even', 'odd')}" 
                 td.order-number= link_to order.number, order_url(order)
                 td.order-date= l order.completed_at.to_date
-                td.order-status= Spree.t("order_state.# order.state ").titleize
-                td.order-payment-state= Spree.t("payment_states.# order.payment_state ").titleize if order.payment_state
-                td.order-shipment-state= Spree.t("shipment_states.# order.shipment_state ").titleize if order.shipment_state
+                td.order-status= Spree.t("order_state.#{order.state}").titleize
+                td.order-payment-state= Spree.t("payment_states.#{order.payment_state}").titleize if order.payment_state
+                td.order-shipment-state= Spree.t("shipment_states.#{order.shipment_state}").titleize if order.shipment_state
                 td.order-total= order.display_total
       - else
         p= Spree.t(:you_have_no_orders_yet)

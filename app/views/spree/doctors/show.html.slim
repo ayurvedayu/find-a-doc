@@ -7,7 +7,7 @@
         h3= @spree_doctor.name_with_dr
         strong= @spree_doctor.degree
         - if @spree_doctor.experience_years
-          p # @spree_doctor.experience_years  years experience
+          p= "#{@spree_doctor.experience_years} years experience"
         h4= @spree_doctor.specialties.all.map(&:name).join(', ')
         - if @spree_doctor.recommendations.present?
           h4
@@ -16,9 +16,12 @@
         p= @spree_doctor.description.to_s.truncate(80)
     div.tab-panel role="tabpanel" 
       ul.nav.nav-pills role="tablist" 
-        li class="active" role=("presentation"}= link_to 'Info'), '#info', data: { toggle: 'tab'  
-        li class="" role=("presentation"}= link_to 'Photos'), '#photos', data: { toggle: 'tab'  
-        li class="" role=("presentation"}= link_to 'Reviews'), '#reviews', id: 'clinic_map_tab_link', data: { toggle: 'tab'  
+        li class="active" role="presentation"
+          = link_to 'Info', '#info', data: { toggle: 'tab' }
+        li class="" role="presentation"
+          = link_to 'Photos', '#photos', data: { toggle: 'tab' }
+        li class="" role="presentation"
+          = link_to 'Reviews', '#reviews', id: 'clinic_map_tab_link', data: { toggle: 'tab' }
   .panel-body
     .tab-content
       #info.tab-pane.active
@@ -29,20 +32,24 @@
               .row
                 .col-xs-12
                   h5
-                    strong # empl.clinic.suburb.name ,
-                    #{empl.clinic.suburb.city.name}
+                    strong= "#{empl.clinic.suburb.name}, #{empl.clinic.suburb.city.name}"
               .row
                 .col-sm-4
                   h4
                     span.glyphicon.glyphicon-map-marker
+                    |  
                     = link_to empl.clinic.name, empl.clinic
                   = empl.clinic.full_address
-                .col-sm-4
-                  span.glyphicon.glyphicon-credit-card
-                  = "#{empl.consultation_currency} #{empl.consultation_price.round.to_s}"
-                .col-sm-4
-                  span.glyphicon.glyphicon-time
-                  = human_timings empl.timings
+                .col-sm-6
+                  .col-md-12
+                    span.glyphicon.glyphicon-credit-card
+                    |  
+                    = "#{empl.consultation_currency} #{empl.consultation_price.round.to_s}"
+                  .col-md-12
+                    span.glyphicon.glyphicon-time
+                    |  Timings
+                    br 
+                    = human_timings empl.timings
               .row
                 .col-sm-4.col-sm-offset-8
                   = render partial: 'booking_link', locals: { empl: empl }
@@ -52,17 +59,10 @@
             h3 Experience
             ul
               - @spree_doctor.experiences.each do |exp|
-                li # exp.start_year} &mdash; #{exp.human_end_year} at #{exp.place 
+                li
+                  | #{exp.start_year} &mdash; #{exp.human_end_year} at #{exp.place} 
       #photos.tab-pane
         = render @spree_doctor.images
 
       #reviews.tab-pane
-        - @spree_doctor.reviews.all.each do |review|
-          p
-            strong= review.appointment.name
-            br/
-            = review.text
-            br/
-            = l review.created_at
-        - end.empty? and begin
-          p Doctor hasn't any reviews yet
+        
