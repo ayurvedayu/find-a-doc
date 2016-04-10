@@ -29,8 +29,4 @@
         = hidden_field_tag 'filter[price][max]', @filter[:price][:max], class: 'slider-input slider-price-input slider-price-input-to', readonly: false, id: "end_price"
         .slider-price-value
         .slider-price-range
-
-
-
-
-      = submit_tag 'Refine Search'
+      = submit_tag 'Refine Search', class: 'btn btn-warning'
