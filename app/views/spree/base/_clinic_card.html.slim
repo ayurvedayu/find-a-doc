@@ -23,9 +23,6 @@
             span.glyphicon.glyphicon-map-marker
             = "#{clinic.suburb.name}, #{clinic.suburb.city.name}"
           li
-            span.glyphicon.glyphicon-credit-card
-            = "#{empl.consultation_currency} #{empl.consultation_price.round.to_s}"
-          li
             span.glyphicon.glyphicon-time
             = human_timings clinic.timings
           li= render 'booking_link', empl: clinic
