@@ -11,7 +11,7 @@ class Spree::Doctor < ActiveRecord::Base
   has_many :doctor_employments
   has_many :clinics, through: :doctor_employments
   has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
-  accepts_nested_attributes_for :doctor_employments
+  accepts_nested_attributes_for :doctor_employments, reject_if: proc { |atributes| atributes['clinic_id'].blank? }
   accepts_nested_attributes_for :experiences, allow_destroy: true
 
   belongs_to :user

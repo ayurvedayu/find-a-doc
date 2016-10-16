@@ -12,6 +12,8 @@ class Spree::Verification < ActiveRecord::Base
   before_update :check_token, if: "entered_token"
   after_update :run_verifiable_callbacks, if: "completed?"
 
+  validates_presence_of :phone, :verifiable, :token, :status
+
   def run_verifiable_callbacks
     verifiable.save!
   end

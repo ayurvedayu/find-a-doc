@@ -9,6 +9,8 @@ class Spree::VerificationsController < Spree::HomeController
 
     if vrf.save
       redirect_to spree.account_path, notice: 'Verification code sent to your phone'
+    else
+      redirect :back, error: 'Verification code could not be sent to your phone'
     end
   end
 

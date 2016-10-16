@@ -15,6 +15,7 @@ class Spree::DoctorEmployment < ActiveRecord::Base
   validates_numericality_of :consultation_price
 
   validates_uniqueness_of :clinic, scope: :doctor
+  validates_presence_of :clinic
 
 
   geocoded_by :_clinic_address, :latitude => 'spree_clinics.latitude', :longitude => 'spree_clinics.longitude'
