@@ -2,7 +2,7 @@ Spree::User.class_eval do
   devise :confirmable
 
   attr_accessor :make_role
-  before_create :update_role
+  before_create :update_role, :skip_phone_verification
 
   has_one :doctor
   accepts_nested_attributes_for :doctor
@@ -52,6 +52,10 @@ Spree::User.class_eval do
     if make_role and Spree::Role::CIVIL_ROLES.include? make_role
       send("make_#{make_role}")
     end
+  end
+
+  def skip_phone_verification
+    self.phone_is_verified = true
   end
 end
 
