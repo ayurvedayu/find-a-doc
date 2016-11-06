@@ -3,6 +3,7 @@ Spree::User.class_eval do
 
   attr_accessor :make_role
   before_create :update_role, :skip_phone_verification
+  before_save :skip_phone_verification
 
   has_one :doctor
   accepts_nested_attributes_for :doctor
