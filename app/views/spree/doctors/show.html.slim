@@ -32,7 +32,7 @@
               .row
                 .col-xs-12
                   h5
-                    strong= "#{empl.clinic.suburb.name}, #{empl.clinic.suburb.city.name}"
+                    strong= "#{empl.clinic.try(:suburb).try(:name)}, #{empl.clinic.try(:suburb).try(:city).try(:name)}"
               .row
                 .col-sm-4
                   h4

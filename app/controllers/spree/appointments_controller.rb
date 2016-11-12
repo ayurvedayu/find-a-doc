@@ -29,7 +29,7 @@ class Spree::AppointmentsController < Spree::HomeController
     
 
     if @spree_appointment.save
-      redirect_to edit_verification_path(@spree_appointment.active_verification) and return if need_to_verify_phone
+      # redirect_to edit_verification_path(@spree_appointment.active_verification) and return if need_to_verify_phone
       redirect_to @spree_appointment, notice: 'Appointment was successfully created.'
     else
       @appointee = @spree_appointment.appointmentable
